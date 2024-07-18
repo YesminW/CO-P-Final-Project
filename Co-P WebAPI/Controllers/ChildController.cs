@@ -45,6 +45,19 @@ namespace Co_P_WebAPI.Controllers
 
         }
 
+        [HttpGet]
+        [Route("GetChildByKindergarten")]
+        public dynamic GetChildByKindergarten(string kindergartenName)
+        {
+            IEnumerable<Child> children = db.Children.Where(c=> c.KindergartenName == kindergartenName).Select(x => new Child()
+            { 
+                ChildFirstName = x.ChildFirstName,
+                ChildSurname = x.ChildSurname,
+            });
+            return children;
+
+        }
+
         [HttpPost]
         [Route("AddChildrenByExcel")]
         public async Task<IActionResult> UploadExcel(IFormFile file)

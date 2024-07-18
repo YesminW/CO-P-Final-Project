@@ -3,6 +3,7 @@ using Microsoft.AspNetCore.Mvc;
 using System.Text;
 using Newtonsoft.Json;
 using Azure.Storage.Blobs;
+using Newtonsoft.Json.Linq;
 
 namespace Co_P_WebAPI.Controllers
 {
@@ -58,18 +59,36 @@ namespace Co_P_WebAPI.Controllers
             using ByteArrayContent content = new ByteArrayContent(byteData);
             content.Headers.ContentType = new System.Net.Http.Headers.MediaTypeHeaderValue("application/octet-stream");
 
+            // Log request details
+            Console.WriteLine($"Request URL: {uri}");
+            Console.WriteLine($"Request Headers: {client.DefaultRequestHeaders}");
+            Console.WriteLine($"Request Content Type: {content.Headers.ContentType}");
+            Console.WriteLine($"Request Content Length: {byteData.Length}");
+
             HttpResponseMessage response = await client.PostAsync(uri, content);
             string responseContent = await response.Content.ReadAsStringAsync();
 
-            dynamic face = JsonConvert.DeserializeObject(responseContent);
+            // Log response details
+            Console.WriteLine($"Response Status Code: {response.StatusCode}");
+            Console.WriteLine($"Response Content: {responseContent}");
 
-            if (face == null || face.Count == 0)
+            if (!response.IsSuccessStatusCode)
+            {
+                // Log the response content for debugging purposes
+                throw new Exception($"Error: {responseContent}");
+            }
+
+            var faces = JsonConvert.DeserializeObject<List<dynamic>>(responseContent);
+
+            if (faces == null || faces.Count == 0)
             {
                 throw new Exception("No face detected.");
             }
 
-            return face[0].faceId;
+            return faces[0].faceId.ToString();
         }
+
+
 
         public static async Task<List<string>> IdentifyFaceAsync(string personGroupId, string faceId)
         {
