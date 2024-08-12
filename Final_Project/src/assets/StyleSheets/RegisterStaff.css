@@ -1,0 +1,13 @@
+.screen-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    background-color: #e9e0e5;
+    margin-bottom: 20px;
+  }
+
+  .bonusExplanation {
+    color: #E16162;
+    font-size: 25px;
+}

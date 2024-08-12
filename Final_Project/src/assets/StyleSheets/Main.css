@@ -1,0 +1,93 @@
+.loginh1 {
+  color: #07676D;
+  font-family: 'Karantina', cursive;
+  font-size: 58px;
+}
+
+.buttons {
+  margin-top: 20px;
+}
+
+.btn {
+  background-color: rgba(7, 103, 109, 0.6);
+  border: none;
+  color: white;
+  padding: 10px 30px;
+  text-align: center;
+  text-decoration: none;
+  display: inline-block;
+  font-size: 40px;
+  margin: 10px 5px;
+  cursor: pointer;
+  border-radius: 5px;
+  box-shadow: 2px 2px 5px rgba(0, 0, 0, 0.5);
+  font-family: 'Karantina', cursive;
+}
+
+.custom-btn {
+  display: inline-block;
+  padding: 10px 20px;
+  font-size: 40px;
+  color: #6196A6;
+  background-color: transparent;
+  border: 2px solid #6196A6;
+  border-radius: 50px;
+  text-align: center;
+  text-decoration: none;
+  transition: background-color 0.3s ease, color 0.3s ease;
+  outline: none;
+  margin: 5px;
+  font-family: 'Karantina', cursive;
+}
+
+.custom-btn:hover {
+  background-color: #6196A6;
+  color: #ffffff;
+}
+
+.custom-button:focus {
+  outline: none;
+  box-shadow: none;
+}
+
+.custom-textfield .MuiOutlinedInput-root {
+  border-radius: 8px;
+  background-color: rgba(7, 103, 109, 0.6);
+}
+
+.custom-textfield .MuiOutlinedInput-root input {
+  color: white;
+  direction: rtl;
+}
+
+.custom-textfield .MuiOutlinedInput-root fieldset {
+  border-color: white;
+}
+
+.custom-textfield .MuiOutlinedInput-root.Mui-focused fieldset {
+  border-color: white;
+}
+
+.custom-textfield .MuiInputLabel-root {
+  color: white;
+  direction: rtl;
+  transform-origin: top right;
+  right: 0;
+  left: 70%;
+  font-size: 1.2rem;
+  font-family: 'Karantina', cursive;
+}
+
+.custom-textfield .MuiInputLabel-shrink {
+  transform: translate(0, -1.5rem) scale(0.75); /* שינוי מיקום וגודל התגית כשהשדה במיקוד */
+  color: white;
+
+}
+
+.custom-textfield .MuiOutlinedInput-notchedOutline {
+  border-color: white;
+}
+
+h3 {
+  color: #ffffff;
+}

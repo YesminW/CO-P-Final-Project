@@ -1,0 +1,127 @@
+.chat-title {
+    background-color: rgba(45, 139, 144, 0.6);
+    padding: 2rem;
+    color: white;
+    border-radius: 50px;
+    height: 100px;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    gap: 20px;
+}
+
+.chats-list-container {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+    border-radius: 15px;
+    padding: 1rem;
+    overflow-y: scroll;
+    height: calc(100vh - 100px - 200px);
+}
+
+.chat-container {
+    display: flex;
+    flex-direction: row;
+    height: 100px;
+    width: 100%;
+    gap: 20px;
+    align-items: center;
+}
+
+.chat-img {
+    height: 80%;
+    aspect-ratio: 1;
+    border-radius: 50%;
+    border: 5px solid rgba(249, 188, 96);
+}
+
+.chat-text-container {
+    background-color: #abd1c6;
+    color: white;
+    border: none;
+    flex-grow: 1;
+    padding: 1rem;
+    border-radius: 8px;
+    box-shadow: 0px 3px 10px black;
+}
+
+.chat-messages-container {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    width: 100%;
+    overflow-y: scroll;
+    height: 100%;
+    padding: 1rem;
+    border-radius: 25px;
+}
+
+.chat-message-text {
+    font-size: 4rem;
+    padding: 0.5rem 1rem;
+    text-align: start;
+}
+
+.chat-message {
+    display: flex;
+    flex-direction: row;
+    height: 80px;
+    width: 100%;
+    gap: 20px;
+}
+
+.chat-message-img {
+    height: 100%;
+}
+
+.chat-message-timestamp {
+    color: white;
+    align-self: flex-start;
+}
+
+.reverse {
+    direction: ltr;
+}
+
+.rest-of-page {
+    flex-grow: 1;
+}
+
+.chat-input-container {
+    display: flex;
+    flex-direction: row;
+    width: 100%;
+    gap: 8px;
+    align-items: center;
+}
+
+.chat-input {
+    flex-grow: 1;
+    background-color: rgba(185, 220, 209, 1);
+    border: none;
+    outline: none;
+    border-radius: 5px;
+    padding: 0.5rem;
+    height: 40px;
+    font-size: 2rem;
+}
+
+.chat-send-btn {
+    height: 36px;
+    width: 36px;
+    background-color: rgba(185, 220, 209, 1);
+    border: none;
+    border-radius: 50px;
+    color: rgba(7, 103, 109, 0.6);
+    font-size: 2rem;
+}
+
+.chat-content-container {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+    padding: 1rem;
+    border-radius: 25px;
+    height: calc(90vh - 100px - 20px);
+}

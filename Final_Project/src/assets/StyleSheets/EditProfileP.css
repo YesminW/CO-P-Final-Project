@@ -1,0 +1,41 @@
+.bootstrap-edit-profile-container {
+  background-color: #07676D;
+  padding: 20px;
+  border-radius: 8px;
+  text-align: center;
+  width: 90%;
+  max-width: 400px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  height: 85vh;
+}
+
+.bootstrap-edit-profile-header {
+  text-align: center;
+  margin: 0;
+  color: white;
+  font-size: 48px;
+  margin-bottom: 20px;
+  position: relative; /* מיקום יחסי כדי להבטיח שהיא צמודה לראש ההורה */
+  top: 0; /* מיקום העליון לראש */
+  padding-top: 0; /* הסרת ה-padding העליון */
+
+}
+
+.bootstrap-edit-profile-button {
+  display: block;
+  width: 80%;
+  margin: 10px 0;
+  background-color: #ABD1C6;
+  border-color: #ABD1C6;
+  color: white;
+  font-size: 48px;
+  padding: 10px 0; /* הגדלת הכפתורים אנכית */
+  text-align: center; /* לוודא שהטקסט ממורכז */
+}
+
+.bootstrap-edit-profile-button:hover {
+  background-color: #89B3B5;
+  border-color: #89B3B5;
+}

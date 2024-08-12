@@ -1,0 +1,29 @@
+.footer-icons {
+  display: flex;
+  justify-content: space-around;
+  width: 100%;
+  background-color: white;
+  padding: 10px 0;
+  box-shadow: 0 -1px 5px rgba(0, 0, 0, 0.1);
+  position: fixed;
+  bottom: 0;
+  right: 0;
+  height: var(--footer-height);
+}
+
+.footer-icon {
+  width: 40px;
+  height: 40px;
+  cursor: pointer;
+  transition: transform 0.2s;
+  color: #07676d;
+}
+
+.footer-icon:hover {
+  transform: scale(1.1);
+}
+
+.logofooter {
+  width: 100%;
+  height: auto;
+}
