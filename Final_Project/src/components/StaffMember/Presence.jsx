@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react';
 import { Box, Container, Typography, IconButton, Avatar, Button } from '@mui/material';
 import SearchIcon from '@mui/icons-material/Search';
 import EfooterS from '../../Elements/EfooterS';
-import defaultimg from '../../Images/default.png';
+import defaultimg from '/Images/default.png';
 
 import '../../assets/StyleSheets/Presence.css';
 

@@ -43,57 +43,53 @@ const apiUtl = "";
 
 function App() {
   return (
-    <Router>
-      <div className="app">
-        <Routes>
-          <Route path="/" element={<First />} />
-          <Route path="/chat/:id" element={<Chat />} />
-          <Route path="/ChatList" element={<ChatsList />} />
-          <Route path="/WeekCalendar" element={<WeekCalendar />} />
-          <Route path="/WatchDayHourList" element={<DayHoursList />} />
-          <Route path="/ActivitiesList" element={<ActivitiesList />} />
+    <Routes>
+      <Route path="/" element={<First />} />
+      <Route path="/chat/:id" element={<Chat />} />
+      <Route path="/ChatList" element={<ChatsList />} />
+      <Route path="/WeekCalendar" element={<WeekCalendar />} />
+      <Route path="/WatchDayHourList" element={<DayHoursList />} />
+      <Route path="/ActivitiesList" element={<ActivitiesList />} />
 
-          <Route path="/LoginManage" element={<LoginManage />} />
-          <Route path="/ManagerRegister" element={<ManagerRegister />} />
-          <Route path="/ManagerRegister2" element={<ManagerRegister2 />} />
-          <Route
-            path="/KindergartenManagement"
-            element={<KindergartenManagement />}
-          />
-          <Route
-            path="/KindergartenDetails/:gardenName"
-            element={<KindergartenDetails />}
-          />
-          <Route path="/AddKindergarden" element={<AddKindergarden />} />
-          <Route path="AddSAndP" element={<AddsAndP />} />
+      <Route path="/LoginManage" element={<LoginManage />} />
+      <Route path="/ManagerRegister" element={<ManagerRegister />} />
+      <Route path="/ManagerRegister2" element={<ManagerRegister2 />} />
+      <Route
+        path="/KindergartenManagement"
+        element={<KindergartenManagement />}
+      />
+      <Route
+        path="/KindergartenDetails/:gardenName"
+        element={<KindergartenDetails />}
+      />
+      <Route path="/AddKindergarden" element={<AddKindergarden />} />
+      <Route path="AddSAndP" element={<AddsAndP />} />
 
-          <Route path="/LoginStaffMember" element={<LoginStaffMember />} />
-          <Route path="/MainStaffMember" element={<MainStaffMember />} />
-          <Route
-            path="/ActivitiesStaffMember"
-            element={<ActivitiesStaffMember />}
-          />
-          <Route path="/BonusStaffMember" element={<BonusStaffMember />} />
-          <Route path="/EditProfileS" element={<EditProfileS />} />
-          <Route path="/EditProfileS2" element={<EditProfileS2 />} />
-          <Route path="/Presence" element={<Presence />} />
-          <Route path="/Meals" element={<Meals />} />
-          <Route path="/WatchMeal" element={<WatchMeal />} />
-          <Route path="/AddMeal" element={<AddMeal />} />
-          <Route path="/ChildDuty" element={<ChildDuty />} />
-          <Route path="/TeamStaff" element={<TeamStaff />} />
-          <Route path="/BirthDayChild" element={<BirthDayChild />} />
+      <Route path="/LoginStaffMember" element={<LoginStaffMember />} />
+      <Route path="/MainStaffMember" element={<MainStaffMember />} />
+      <Route
+        path="/ActivitiesStaffMember"
+        element={<ActivitiesStaffMember />}
+      />
+      <Route path="/BonusStaffMember" element={<BonusStaffMember />} />
+      <Route path="/EditProfileS" element={<EditProfileS />} />
+      <Route path="/EditProfileS2" element={<EditProfileS2 />} />
+      <Route path="/Presence" element={<Presence />} />
+      <Route path="/Meals" element={<Meals />} />
+      <Route path="/WatchMeal" element={<WatchMeal />} />
+      <Route path="/AddMeal" element={<AddMeal />} />
+      <Route path="/ChildDuty" element={<ChildDuty />} />
+      <Route path="/TeamStaff" element={<TeamStaff />} />
+      <Route path="/BirthDayChild" element={<BirthDayChild />} />
 
-          <Route path="/LogInParent" element={<LoginParent />} />
-          <Route path="/MainParent" element={<MainParent />} />
-          <Route path="/EditProfile" element={<EditProfile />} />
-          <Route path="/EditProfileChild" element={<EditProfileChild />} />
-          <Route path="/EditProfileP" element={<EditProfileP />} />
-          <Route path="/Allergies" element={<Allergies />} />
-          <Route path="/CalendarStaff" element={<CalendarStaff />} />
-        </Routes>
-      </div>
-    </Router>
+      <Route path="/LogInParent" element={<LoginParent />} />
+      <Route path="/MainParent" element={<MainParent />} />
+      <Route path="/EditProfile" element={<EditProfile />} />
+      <Route path="/EditProfileChild" element={<EditProfileChild />} />
+      <Route path="/EditProfileP" element={<EditProfileP />} />
+      <Route path="/Allergies" element={<Allergies />} />
+      <Route path="/CalendarStaff" element={<CalendarStaff />} />
+    </Routes>
   );
 }
 
