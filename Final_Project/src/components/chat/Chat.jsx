@@ -24,7 +24,7 @@ export default function Chat() {
     if (!inputRef.current.value.trim()) return;
     const messageData = {
       chatId: id,
-      sender: "1",
+      sender: localStorage.getItem("user_id"),
       text: inputRef.current.value.trim(),
       sentAt: Timestamp.now(),
     };
@@ -41,14 +41,16 @@ export default function Chat() {
     async function getChatById() {
       try {
         const chat = await getDoc(doc(db, "chats", id));
-        setMessages(
-          await Promise.all(
-            chat.data().messages.map(async (mId) => {
-              const message = await getDoc(doc(db, "messages", mId));
-              return { id: mId, ...message.data() };
-            })
-          )
-        );
+        if (chat.data().messages?.length > 0) {
+          setMessages(
+            await Promise.all(
+              chat.data().messages?.map(async (mId) => {
+                const message = await getDoc(doc(db, "messages", mId));
+                return { id: mId, ...message.data() };
+              })
+            )
+          );
+        }
         setChat({ id, ...chat.data() });
       } catch (e) {
         console.error(e);

@@ -39,9 +39,11 @@ const EfooterS = (
         <Notifications sx={{ fontSize: 30 }} className="footer-icon" />
       </IconButton>
     </Link>
-    <IconButton>
-      <SendOutlinedIcon sx={{ fontSize: 30 }} className="footer-icon" />
-    </IconButton>
+    <Link to="/ChatList">
+      <IconButton>
+        <SendOutlinedIcon sx={{ fontSize: 30 }} className="footer-icon" />
+      </IconButton>
+    </Link>
   </div>
 );
 

@@ -54,7 +54,7 @@ export default function MainParent() {
       <br />
       <div className="info-card">
         <h2>
-          {greeting} {userData.UserPrivetName}
+          {greeting} {userData.userPrivetName}
         </h2>
       </div>
       <div className="grid-container">
@@ -63,9 +63,11 @@ export default function MainParent() {
             {currentDay} <br /> {currentDate}
           </h3>
         </div>
-        <div className="grid-item">
-          <h3>שליחת הודעה לגננת</h3>
-        </div>
+        <Link to={"/chatlist"}>
+          <div className="grid-item">
+            <h3>שליחת הודעה לגננת</h3>
+          </div>
+        </Link>
       </div>
       <div>
         <div className="grid-item">
