@@ -24,7 +24,7 @@ export default function MainStaffMember() {
   };
 
   const navigate = useNavigate();
-  const [userData, setUserData] = useState([]);
+  const [userData, setUserData] = useState(null);
   let greeting = getGreeting();
   const [currentDate, setCurrentDate] = useState("");
   const [currentDay, setCurrentDay] = useState("");
@@ -65,7 +65,7 @@ export default function MainStaffMember() {
       {Elogo1}
       <div className="info-card">
         <h2>
-          {greeting} {userData.UserPrivetName}
+          {greeting} {userData.userPrivetName}
         </h2>
       </div>
       <div className="grid-container">

@@ -116,3 +116,13 @@ export async function getMealByKindergardenAndDate(date, kindergartenNumber) {
     console.error(error);
   }
 }
+
+export async function getAllChild() {
+  try {
+    const response = await fetch(`${SERVER_URL}/AllChild`);
+    const data = await response.json();
+    return data;
+  } catch (error) {
+    console.error(error);
+  }
+}

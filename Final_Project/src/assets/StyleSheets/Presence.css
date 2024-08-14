@@ -14,14 +14,14 @@
   justify-content: space-between;
   align-items: center;
   width: 100%;
-  background-color: #ABD1C6;
+  background-color: #abd1c6;
   padding: 10px;
   border-radius: 5px;
   margin-bottom: 30px;
 }
 
 .presencetitle {
-  background-color: #07676D;
+  background-color: #07676d;
   margin: 20px;
   height: 10vh;
   border-radius: 20px;
@@ -39,7 +39,7 @@
 .search-box {
   display: flex;
   align-items: center;
-  color: #07676D;
+  color: #07676d;
 }
 
 .search-input {
@@ -47,11 +47,10 @@
   border: none;
   border-radius: 5px;
   margin-right: 10px;
-  color: #07676D;
+  color: #07676d;
   font-size: 18px;
   height: 42px;
 }
-
 
 .students-grid {
   display: flex;
@@ -73,8 +72,12 @@
   transition: background-color 0.3s;
 }
 
-.student-circle.present {
+.student-circle-present {
   background-color: green;
+}
+
+.student-circle-went-home {
+  background-color: black;
 }
 
 .student-avatar {
@@ -84,9 +87,9 @@
 
 .student-name {
   text-align: center;
-  color: #07676D;
+  color: #07676d;
 }
 
 input::placeholder {
-  color: #07676D;
+  color: #07676d;
 }
