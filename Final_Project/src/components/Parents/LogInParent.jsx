@@ -1,24 +1,14 @@
-import {
-  FormControl,
-  IconButton,
-  InputAdornment,
-  TextField,
-} from "@mui/material";
 import Elogo from "../../Elements/Elogo";
-import { Visibility, VisibilityOff } from "@mui/icons-material";
 import { useState } from "react";
 import { login } from "../../utils/apiCalls";
 import { useNavigate } from "react-router-dom";
+import { BsEye, BsEyeSlash } from "react-icons/bs";
 
 export default function LoginParent() {
   const [showPassword, setShowPassword] = useState(false);
   const navigate = useNavigate();
   const [error, setErrors] = useState("");
   const handleClickShowPassword = () => setShowPassword((show) => !show);
-
-  const handleMouseDownPassword = (event) => {
-    event.preventDefault();
-  };
 
   async function loginUserP(e) {
     e.preventDefault();
@@ -38,42 +28,29 @@ export default function LoginParent() {
   return (
     <form onSubmit={loginUserP}>
       {Elogo}
-      <FormControl fullWidth margin="normal" style={{ width: "80%" }}>
-        <TextField
-          id="ID"
-          label="שם משתמש"
-          name="ID"
-          type="text"
-          variant="outlined"
-          className="custom-textfield"
-          required
-        />
-      </FormControl>
-      <FormControl fullWidth margin="normal" style={{ width: "80%" }}>
-        <TextField
-          id="password"
-          label="סיסמא"
-          name="password"
-          className="custom-textfield"
+      <br />
+      <input
+        type="text"
+        className="inputs"
+        placeholder="שם משתמש"
+        name="ID"
+        required
+      />
+      <br />
+      <div className="inputs flex-row">
+        <input
+          className="password-inputs"
           type={showPassword ? "text" : "password"}
+          placeholder="סיסמא"
+          name="password"
           required
-          InputProps={{
-            endAdornment: (
-              <InputAdornment position="end">
-                <IconButton
-                  aria-label="toggle password visibility"
-                  onClick={handleClickShowPassword}
-                  onMouseDown={handleMouseDownPassword}
-                  edge="end"
-                >
-                  {showPassword ? <Visibility /> : <VisibilityOff />}
-                </IconButton>
-              </InputAdornment>
-            ),
-          }}
         />
-      </FormControl>
-      <button type="submit" className="btn">
+
+        <i onClick={handleClickShowPassword}>
+          {showPassword ? <BsEyeSlash /> : <BsEye />}
+        </i>
+      </div>
+      <button className="custom-btn" type="submit">
         כניסה
       </button>
       {error && <p style={{ color: "#6196A6" }}>{error}</p>}

@@ -77,6 +77,9 @@ export async function uploadUserPhoto(data) {
     const photo = await fetch(`${SERVER_URL}/UploadUserPhoto/${userId}`, {
       method: "PUT",
       body: formData,
+      headers: new Headers({
+        "Content-Type": "application/json; charset=UTF-8",
+      }),
     });
     const photoData = await photo.json();
     return photoData;

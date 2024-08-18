@@ -1,12 +1,5 @@
 import React, { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
-import {
-  FormControl,
-  IconButton,
-  InputAdornment,
-  TextField,
-} from "@mui/material";
-import { Visibility, VisibilityOff } from "@mui/icons-material";
 import Elogo from "../../Elements/Elogo";
 import { login } from "../../utils/apiCalls";
 import { BsEye, BsEyeSlash } from "react-icons/bs";
@@ -18,13 +11,8 @@ export default function LoginManage() {
 
   const handleClickShowPassword = () => setShowPassword((show) => !show);
 
-  const handleMouseDownPassword = (event) => {
-    event.preventDefault();
-  };
-
   async function loginUserM(e) {
     e.preventDefault();
-
     try {
       const formData = new FormData(e.target);
       const data = Object.fromEntries(formData);
