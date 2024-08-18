@@ -29,6 +29,13 @@
   color: white;
 }
 
+.login-buttons {
+  display: flex;
+  flex-direction: row;
+  width: 100%;
+  justify-content: center;
+}
+
 .buttons {
   margin-top: 20px;
   width: 80%;
