@@ -9,6 +9,7 @@ import {
 import { Visibility, VisibilityOff } from "@mui/icons-material";
 import Elogo from "../../Elements/Elogo";
 import { login } from "../../utils/apiCalls";
+import { BsEye, BsEyeSlash } from "react-icons/bs";
 
 export default function LoginManage() {
   const [showPassword, setShowPassword] = useState(false);
@@ -40,47 +41,34 @@ export default function LoginManage() {
     <form onSubmit={loginUserM}>
       {Elogo}
       <br />
-      <FormControl fullWidth margin="normal" style={{ width: "80%" }}>
-        <TextField
-          id="ID"
-          label="שם משתמש"
-          name="ID"
-          type="text"
-          variant="outlined"
-          className="custom-textfield"
-          required
-        />
-      </FormControl>
-      <FormControl fullWidth margin="normal" style={{ width: "80%" }}>
-        <TextField
-          id="password"
-          label="סיסמא"
-          name="password"
-          className="custom-textfield"
+      <input
+        type="text"
+        className="inputs"
+        placeholder="שם משתמש"
+        name="ID"
+        required
+      />
+      <br />
+      <div className="inputs flex-row">
+        <input
+          className="password-inputs"
           type={showPassword ? "text" : "password"}
+          placeholder="סיסמא"
+          name="password"
           required
-          InputProps={{
-            endAdornment: (
-              <InputAdornment position="end">
-                <IconButton
-                  aria-label="toggle password visibility"
-                  onClick={handleClickShowPassword}
-                  onMouseDown={handleMouseDownPassword}
-                  edge="end"
-                >
-                  {showPassword ? <Visibility /> : <VisibilityOff />}
-                </IconButton>
-              </InputAdornment>
-            ),
-          }}
         />
-      </FormControl>
-      <div className="buttons">
+
+        <i onClick={handleClickShowPassword}>
+          {showPassword ? <BsEyeSlash /> : <BsEye />}
+        </i>
+      </div>
+
+      <div className="buttons flex-column">
         <button className="custom-btn" type="submit">
           כניסה
         </button>
-        <Link to="/ManagerRegister">
-          <button className="custom-btn">הרשמה</button>
+        <Link to="/ManagerRegister" className="custom-btn">
+          הרשמה
         </Link>
       </div>
       {error && <p style={{ color: "#6196A6" }}>{error}</p>}

@@ -9,6 +9,7 @@ import {
 } from "@mui/material";
 import { useNavigate } from "react-router-dom";
 import CloudUploadIcon from "@mui/icons-material/CloudUpload";
+import { uploadUserPhoto } from "../../utils/apiCalls";
 
 export default function ManagerRegister() {
   const [errors, setErrors] = useState({});
@@ -20,13 +21,12 @@ export default function ManagerRegister() {
     UserBirthDate: "",
     UserGender: "",
     UserId: "",
-    file:""
+    file: "",
   });
 
   const handleFileUpload = (event) => {
     const file = event.target.files[0];
     if (file && (file.type === "image/jpeg" || file.type === "image/jpg")) {
-      console.log("Uploaded file:", file);
       setFile(file);
     } else {
       alert("יש להעלות קובץ מסוג JPG או JPEG בלבד.");
@@ -95,9 +95,8 @@ export default function ManagerRegister() {
   const handleSubmit = async (e) => {
     e.preventDefault();
 
-
-
     if (validateForm()) {
+      if (file) uploadUserPhoto({ userId: formValues.UserId, file });
       navigate("/ManagerRegister2", { state: formValues });
     } else {
       console.log("Form has validation errors. Cannot submit.");
@@ -164,23 +163,21 @@ export default function ManagerRegister() {
           role={undefined}
           variant="contained"
           tabIndex={0}
+          startIcon={<CloudUploadIcon />}
           sx={{
-            fontFamily: "Karantina",
-            fontSize: "20px",
-            margin: "20px",
+            margin: "10px",
             backgroundColor: "#076871",
             "&:hover": {
               backgroundColor: "#6196A6",
             },
+            fontSize: "15px",
           }}
         >
           העלאת תמונת פרופיל
-          {<CloudUploadIcon style={{ margin: "10px" }} />}
           <input
             type="file"
-            name="file"
             style={{ display: "none" }}
-            accept="image/jpg, image/jpeg"
+            accept="image/png, image/jpeg"
             onChange={handleFileUpload}
           />
         </Button>

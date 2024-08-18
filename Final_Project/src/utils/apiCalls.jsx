@@ -53,7 +53,6 @@ export async function getChildByParent(parent_id) {
 
 export async function updateUserById(details) {
   try {
-    console.log(details);
     const { userId, ...rest } = details;
     const user = await fetch(`${SERVER_URL}/updateUser/${userId}`, {
       method: "PUT",
@@ -120,6 +119,22 @@ export async function getMealByKindergardenAndDate(date, kindergartenNumber) {
 export async function getAllChild() {
   try {
     const response = await fetch(`${SERVER_URL}/AllChild`);
+    const data = await response.json();
+    return data;
+  } catch (error) {
+    console.error(error);
+  }
+}
+
+export async function managerRegisterion(details) {
+  try {
+    const response = await fetch(`${SERVER_URL}/ManagerRegisterion`, {
+      method: "POST",
+      body: JSON.stringify(details),
+      headers: new Headers({
+        "Content-Type": "application/json; charset=UTF-8",
+      }),
+    });
     const data = await response.json();
     return data;
   } catch (error) {

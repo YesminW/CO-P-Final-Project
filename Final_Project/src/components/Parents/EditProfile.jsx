@@ -47,7 +47,7 @@ export default function EditProfile() {
           state={userData}
           className="btn btn-primary bootstrap-edit-profile-button"
         >
-          פרטים אישיים {userData.UserPrivetName}
+          פרטים אישיים {userData.userPrivetName}
         </Link>
       </form>
       {Efooter}

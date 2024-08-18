@@ -1,11 +1,37 @@
 .loginh1 {
-  color: #07676D;
-  font-family: 'Karantina', cursive;
+  color: #07676d;
+  font-family: "Karantina", cursive;
   font-size: 58px;
+}
+
+.inputs {
+  border: 1px solid white;
+  border-radius: 4px;
+  background-color: #07676d;
+  padding: 1rem 0.5rem;
+  color: white;
+  outline: white;
+  width: 80%;
+  gap: 4px;
+}
+
+.password-inputs {
+  border: none;
+  background-color: transparent;
+  padding: 0;
+  color: white;
+  outline: none;
+  width: 90%;
+}
+
+.password-inputs::placeholder,
+.inputs::placeholder {
+  color: white;
 }
 
 .buttons {
   margin-top: 20px;
+  width: 80%;
 }
 
 .btn {
@@ -21,27 +47,28 @@
   cursor: pointer;
   border-radius: 5px;
   box-shadow: 2px 2px 5px rgba(0, 0, 0, 0.5);
-  font-family: 'Karantina', cursive;
+  font-family: "Karantina", cursive;
 }
 
 .custom-btn {
   display: inline-block;
   padding: 10px 20px;
-  font-size: 40px;
-  color: #6196A6;
-  background-color: transparent;
-  border: 2px solid #6196A6;
-  border-radius: 50px;
+  font-size: 28px;
+  color: white;
+  width: 100%;
+  background-color: #07676d;
+  border: 2px solid #6196a6;
+  border-radius: 8px;
   text-align: center;
   text-decoration: none;
   transition: background-color 0.3s ease, color 0.3s ease;
   outline: none;
   margin: 5px;
-  font-family: 'Karantina', cursive;
+  font-family: "Karantina", cursive;
 }
 
 .custom-btn:hover {
-  background-color: #6196A6;
+  background-color: #6196a6;
   color: #ffffff;
 }
 
@@ -72,16 +99,16 @@
   color: white;
   direction: rtl;
   transform-origin: top right;
-  right: 0;
-  left: 70%;
+  /* right: 0; */
+  /* left: 70%; */
+  text-align: right;
   font-size: 1.2rem;
-  font-family: 'Karantina', cursive;
+  font-family: "Karantina", cursive;
 }
 
 .custom-textfield .MuiInputLabel-shrink {
   transform: translate(0, -1.5rem) scale(0.75); /* שינוי מיקום וגודל התגית כשהשדה במיקוד */
   color: white;
-
 }
 
 .custom-textfield .MuiOutlinedInput-notchedOutline {
