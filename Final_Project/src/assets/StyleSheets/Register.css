@@ -54,18 +54,34 @@ button[type="submit"]:hover,
   background-color: #57888f;
 }
 
+.register-input {
+  background-color: #b9dcd1;
+  border: none;
+  outline: none;
+  padding: 0.5rem 1rem;
+  color: black;
+  border-radius: 8px;
+  font-size: 24px;
+}
+
+.register-input::placeholder {
+  color: black;
+}
+
 .register-textfield .MuiOutlinedInput-root {
   border-radius: 8px;
   background-color: #b9dcd1;
+  font-size: 16px;
+  font-weight: bold;
 }
 
 .register-textfield .MuiOutlinedInput-root input {
-  color: white;
+  color: black;
   direction: rtl;
 }
 
 .register-textfield .MuiInputLabel-root {
-  color: white;
+  color: black;
   transform-origin: top right;
   right: 0;
   left: 60%;

@@ -53,12 +53,6 @@ export default function ManagerRegister() {
     const newErrors = {};
     const hebrewRegex = /^[\u0590-\u05FF\s]+$/;
 
-    if (!formValues.UserPrivetName) {
-      newErrors.UserPrivetName = "יש למלא את שם פרטי";
-    } else if (!hebrewRegex.test(formValues.UserPrivetName)) {
-      newErrors.UserPrivetName = "יש למלא בשפה העברית בלבד";
-    }
-
     if (!formValues.UserSurname) {
       newErrors.UserSurname = "יש למלא את שם משפחה";
     } else if (!hebrewRegex.test(formValues.UserSurname)) {
@@ -78,6 +72,7 @@ export default function ManagerRegister() {
     if (!formValues.UserId) {
       newErrors.UserId = "יש להוסיף תעודת זהות";
     }
+    console.log(newErrors);
 
     setErrors(newErrors);
     return Object.keys(newErrors).length === 0;
@@ -96,7 +91,6 @@ export default function ManagerRegister() {
     e.preventDefault();
 
     if (validateForm()) {
-      if (file) uploadUserPhoto({ userId: formValues.UserId, file });
       navigate("/ManagerRegister2", { state: formValues });
     } else {
       console.log("Form has validation errors. Cannot submit.");
@@ -110,27 +104,23 @@ export default function ManagerRegister() {
         <h2 style={{ textAlign: "center", margin: 0 }}>פרטים אישיים</h2>
       </div>
       <FormControl fullWidth margin="normal" style={{ width: "120%" }}>
-        <TextField
-          label="שם פרטי"
+        <input
+          placeholder="שם פרטי"
           name="UserPrivetName"
-          value={formValues.UserPrivetName}
-          onChange={handleChange}
-          error={!!errors.UserPrivetName}
-          helperText={errors.UserPrivetName}
-          className="register-textfield"
+          className="register-input"
           variant="outlined"
+          pattern="^[\u0590-\u05FF\s]+$"
+          title="יש למלא בשפה העברית בלבד"
           required
         />
         <br />
-        <TextField
-          label="שם משפחה"
+        <input
+          placeholder="שם משפחה"
           name="UserSurname"
-          value={formValues.UserSurname}
-          onChange={handleChange}
-          error={!!errors.UserSurname}
-          helperText={errors.UserSurname}
-          className="register-textfield"
+          className="register-input"
           variant="outlined"
+          pattern="^[\u0590-\u05FF\s]+$"
+          title="יש למלא בשפה העברית בלבד"
           required
         />
         <br />
@@ -158,30 +148,6 @@ export default function ManagerRegister() {
           variant="outlined"
           required
         />
-        <Button
-          component="label"
-          role={undefined}
-          variant="contained"
-          tabIndex={0}
-          startIcon={<CloudUploadIcon />}
-          sx={{
-            margin: "10px",
-            backgroundColor: "#076871",
-            "&:hover": {
-              backgroundColor: "#6196A6",
-            },
-            fontSize: "15px",
-          }}
-        >
-          העלאת תמונת פרופיל
-          <input
-            type="file"
-            style={{ display: "none" }}
-            accept="image/png, image/jpeg"
-            onChange={handleFileUpload}
-          />
-        </Button>
-        {errors.profilePicture && <p>{errors.profilePicture}</p>}
       </FormControl>
       <FormControl
         fullWidth

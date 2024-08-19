@@ -6,7 +6,7 @@ import {
   InputAdornment,
   IconButton,
 } from "@mui/material";
-import { json, useNavigate } from "react-router-dom";
+import { useLocation, useNavigate } from "react-router-dom";
 import { Visibility, VisibilityOff } from "@mui/icons-material";
 import CloudUploadIcon from "@mui/icons-material/CloudUpload";
 import { managerRegisterion } from "../../utils/apiCalls";
@@ -14,12 +14,15 @@ import { managerRegisterion } from "../../utils/apiCalls";
 export default function AdditionalRegistrationForm(props) {
   const [errors, setErrors] = useState({});
   const navigate = useNavigate();
+  const location = useLocation();
+  const data = location.state;
   const [showPassword, setShowPassword] = useState(false);
   const [formValues, setFormValues] = useState({
     UserPhoneNumber: "",
     UserAddress: "",
     UserEmail: "",
     UserpPassword: "",
+    ...data,
   });
 
   useEffect(() => {
