@@ -144,3 +144,13 @@ export async function managerRegisterion(details) {
     console.error(error);
   }
 }
+
+export async function fetchBirthdays() {
+  try {
+    const birthdays = await fetch(`${SERVER_URL}/current-month-birthdays`);
+    const data = await birthdays.json();
+    return data;
+  } catch (error) {
+    console.error(error);
+  }
+}

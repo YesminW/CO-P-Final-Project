@@ -214,6 +214,14 @@ body {
   height: 70%;
 }
 
+.height-80-percent {
+  height: 80%;
+}
+
+.height-90-percent {
+  height: 90%;
+}
+
 .rounded-corners-25 {
   border-radius: 25px;
 }

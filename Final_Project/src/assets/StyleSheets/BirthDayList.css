@@ -1,0 +1,10 @@
+.birthday-row {
+  display: flex;
+  flex-direction: row;
+  padding: 2rem;
+  background-color: #b9dcd1;
+  border-radius: 24px;
+  width: 100%;
+  justify-content: space-between;
+  align-items: center;
+}

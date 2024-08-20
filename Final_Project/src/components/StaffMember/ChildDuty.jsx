@@ -25,7 +25,7 @@ export default function ChildDuty() {
   );
 }
 
-function GridItem() {
+export function GridItem() {
   return (
     <div className="flex-column space-evenly duty-grid-item radius-25">
       <h2 className="white">2.4</h2>
