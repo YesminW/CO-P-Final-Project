@@ -37,14 +37,7 @@ export default function AdditionalRegistrationForm(props) {
 
   const validateForm = () => {
     const newErrors = {};
-    const phoneRegex = /^\d{10}$/; // Example: assuming phone number should be 10 digits
     const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-
-    if (!formValues.UserPhoneNumber) {
-      newErrors.UserPhoneNumber = "יש למלא את מספר הטלפון";
-    } else if (!phoneRegex.test(formValues.UserPhoneNumber)) {
-      newErrors.UserPhoneNumber = "מספר טלפון לא תקין";
-    }
 
     if (!formValues.UserAddress) {
       newErrors.UserAddress = "יש למלא את הכתובת";
@@ -102,28 +95,27 @@ export default function AdditionalRegistrationForm(props) {
       <div className="registerdiv">
         <h2 style={{ textAlign: "center", margin: 0 }}>פרטים אישיים</h2>
       </div>
-      <FormControl fullWidth margin="normal">
-        <TextField
-          label="מספר טלפון"
+      <FormControl fullWidth margin="normal" style={{ width: "120%" }}>
+        <input
+          placeholder="מספר טלפון"
           name="UserPhoneNumber"
-          value={formValues.UserPhoneNumber}
-          onChange={handleChange}
-          error={!!errors.UserPhoneNumber}
-          helperText={errors.UserPhoneNumber}
-          className="register-textfield"
+          className="register-input"
           variant="outlined"
+          maxLength="10"
+          minLength="10"
+          type="number"
+          title="מספר הטלפון לא תקין"
+          required
         />
-      </FormControl>
-      <FormControl fullWidth margin="normal">
-        <TextField
-          label="כתובת"
+        <br />
+        <input
+          placeholder="כתובת"
           name="UserAddress"
-          value={formValues.UserAddress}
-          onChange={handleChange}
-          error={!!errors.UserAddress}
-          helperText={errors.UserAddress}
-          className="register-textfield"
+          className="register-input"
           variant="outlined"
+          pattern="^[\u0590-\u05FF\s]+$"
+          title="יש למלא בשפה העברית בלבד"
+          required
         />
       </FormControl>
       <FormControl fullWidth margin="normal">

@@ -53,12 +53,6 @@ export default function ManagerRegister() {
     const newErrors = {};
     const hebrewRegex = /^[\u0590-\u05FF\s]+$/;
 
-    if (!formValues.UserSurname) {
-      newErrors.UserSurname = "יש למלא את שם משפחה";
-    } else if (!hebrewRegex.test(formValues.UserSurname)) {
-      newErrors.UserSurname = "יש למלא בשפה העברית בלבד";
-    }
-
     if (!formValues.UserBirthDate) {
       newErrors.UserBirthDate = "יש למלא את תאריך הלידה";
     } else if (calculateAge(formValues.UserBirthDate) < 18) {
@@ -69,9 +63,6 @@ export default function ManagerRegister() {
       newErrors.UserGender = "יש לבחור את המין";
     }
 
-    if (!formValues.UserId) {
-      newErrors.UserId = "יש להוסיף תעודת זהות";
-    }
     console.log(newErrors);
 
     setErrors(newErrors);
@@ -124,30 +115,36 @@ export default function ManagerRegister() {
           required
         />
         <br />
-        <TextField
-          label="תעודת זהות"
+        <input
+          placeholder="תעודת זהות"
           name="UserId"
-          value={formValues.UserId}
-          onChange={handleChange}
-          error={!!errors.UserId}
-          helperText={errors.UserId}
-          className="register-textfield"
+          className="register-input"
           variant="outlined"
+          pattern="\d{9}"
+          maxLength="9"
+          title="תעודת הזהות לא תקינה"
           required
         />
         <br />
-        <TextField
+        <input
+          placeholder="תאריך לידה"
           name="UserBirthDate"
           type="date"
-          value={formValues.UserBirthDate}
-          onChange={handleChange}
-          error={!!errors.UserBirthDate}
-          helperText={errors.UserBirthDate}
-          InputLabelProps={{ shrink: true }}
-          className="register-textfield"
+          className="register-input"
           variant="outlined"
+          onChange={handleChange}
           required
         />
+        <br />
+        <select id="gender" name="UserGender" className="register-input">
+          <option value="" disabled>
+            מין{" "}
+          </option>
+          <option value="male">Male</option>
+          <option value="female">Female</option>
+          <option value="non-binary">Non-binary</option>
+          <option value="prefer-not-to-say">Prefer not to say</option>
+        </select>
       </FormControl>
       <FormControl
         fullWidth
@@ -173,9 +170,9 @@ export default function ManagerRegister() {
         </Select>
         {errors.UserGender && <p>{errors.UserGender}</p>}
       </FormControl>
-      <Button type="submit" variant="contained">
+      <button type="submit" variant="contained">
         המשך
-      </Button>
+      </button>
     </form>
   );
 }
