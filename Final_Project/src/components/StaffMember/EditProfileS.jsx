@@ -74,6 +74,11 @@ export default function EditProfileS() {
   ) : (
     <>
       <form>
+        <div className="registerdiv">
+          <h2 style={{ textAlign: "center", margin: 0 }}>
+            {userData.firstName} פרטים אישיים
+          </h2>
+        </div>
         <div
           style={{
             backgroundColor: "#cce7e8",
