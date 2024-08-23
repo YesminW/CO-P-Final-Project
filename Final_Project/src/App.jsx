@@ -9,7 +9,8 @@ import AddsAndP from "./components/Management/AddSAndP";
 import KindergartenManagement from "./components/Management/ManageKinderGarden";
 import KindergartenDetails from "./components/Management/KindergartenDetails";
 
-import LoginStaffMember from "./components/StaffMember/LoginStaffMember";
+import LoginSP from "./components/StaffMember/LoginSP";
+
 import MainStaffMember from "./components/StaffMember/MainStaffMember";
 import ActivitiesStaffMember from "./components/StaffMember/ActivitiesStaffMember";
 import BonusStaffMember from "./components/StaffMember/BonusStaffMember";
@@ -35,7 +36,6 @@ import "./App.css";
 import WeekCalendar from "./components/WeekCalendar/WeekCalendar";
 import DayHoursList from "./components/DayHoursList/DayHoursList";
 import ActivitiesList from "./components/ActivitiesList/ActivitiesList";
-import LoginParent from "./components/Parents/LogInParent";
 import CalendarStaff from "./components/CalendarStaff/CalendarStaff";
 import ChatsList from "./components/chat/ChatsList";
 import Chat from "./components/chat/Chat";
@@ -65,7 +65,7 @@ function App() {
       <Route path="/AddKindergarden" element={<AddKindergarden />} />
       <Route path="AddSAndP" element={<AddsAndP />} />
 
-      <Route path="/LoginStaffMember" element={<LoginStaffMember />} />
+      <Route path="/LoginSP" element={<LoginSP />} />
       <Route path="/MainStaffMember" element={<MainStaffMember />} />
       <Route
         path="/ActivitiesStaffMember"
@@ -82,7 +82,6 @@ function App() {
       <Route path="/TeamStaff" element={<TeamStaff />} />
       <Route path="/BirthDayChild" element={<BirthDayChild />} />
 
-      <Route path="/LogInParent" element={<LoginParent />} />
       <Route path="/MainParent" element={<MainParent />} />
       <Route path="/EditProfile" element={<EditProfile />} />
       <Route path="/EditProfileChild" element={<EditProfileChild />} />

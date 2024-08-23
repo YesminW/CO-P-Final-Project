@@ -11,10 +11,10 @@ export default function First() {
       <br />
       <h1 className="loginh1">מי אתה/את?</h1>
       <div className="login-buttons">
-        <Link to="/LoginParent" className="btn">
+        <Link to="/LoginSP" className="btn">
           הורה
         </Link>
-        <Link to="/LoginStaffMember" className="btn">
+        <Link to="/LoginSP" className="btn">
           איש צוות
         </Link>
       </div>

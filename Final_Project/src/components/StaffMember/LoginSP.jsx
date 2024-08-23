@@ -17,8 +17,14 @@ export default function LoginStaffMember() {
       const formData = new FormData(e.target);
       const data = Object.fromEntries(formData);
       const { user_id } = await login(data);
+      const { userCode } = await login(data);
       localStorage.setItem("user_id", user_id);
-      navigate("/MainStaffMember");
+      localStorage.setItem("role_code", userCode);
+      if (userCode == "222") {
+        navigate("/MainParent");
+      } else {
+        navigate("/MainStaffMember");
+      }
     } catch (error) {
       console.error(error);
       setErrors("המייל / הסיסמא שגויים");
