@@ -105,6 +105,22 @@ export async function addUserByExcel(file) {
   }
 }
 
+export async function addChildrenByExcel(file) {
+  try {
+    const formData = new FormData();
+    formData.append("file", file);
+    const files = await await fetch(`${SERVER_URL}/AddChildrenByExcel`, {
+      method: "POST",
+      body: formData,
+    });
+    const filesData = await files.json();
+    return filesData;
+  } catch (error) {
+    console.error(error);
+    throw new Error(error);
+  }
+}
+
 export async function getMealByKindergardenAndDate(date, kindergartenNumber) {
   try {
     const response = await fetch(
@@ -149,6 +165,16 @@ export async function fetchBirthdays() {
   try {
     const birthdays = await fetch(`${SERVER_URL}/current-month-birthdays`);
     const data = await birthdays.json();
+    return data;
+  } catch (error) {
+    console.error(error);
+  }
+}
+
+export async function getAllKindergartens() {
+  try {
+    const response = await fetch(`${SERVER_URL}/ShowKindergarten`);
+    const data = await response.json();
     return data;
   } catch (error) {
     console.error(error);

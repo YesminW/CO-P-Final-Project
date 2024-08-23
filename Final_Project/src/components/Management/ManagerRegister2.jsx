@@ -26,16 +26,6 @@ export default function AdditionalRegistrationForm(props) {
     ...data,
   });
 
-  useEffect(() => {
-    const savedData = JSON.parse(localStorage.getItem("registrationData"));
-    if (savedData) {
-      setFormValues((prevData) => ({
-        ...prevData,
-        ...savedData,
-      }));
-    }
-  }, []);
-
   const validateForm = () => {
     const newErrors = {};
     const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;

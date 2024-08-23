@@ -29,13 +29,7 @@ export default function LoginManage() {
     <form onSubmit={loginUserM}>
       {Elogo}
       <br />
-      <input
-        type="text"
-        className="inputs"
-        placeholder="שם משתמש"
-        name="ID"
-        required
-      />
+      <input type="text" className="inputs" placeholder="שם משתמש" name="ID" />
       <br />
       <div className="inputs flex-row">
         <input
@@ -43,7 +37,6 @@ export default function LoginManage() {
           type={showPassword ? "text" : "password"}
           placeholder="סיסמא"
           name="password"
-          required
         />
 
         <i onClick={handleClickShowPassword}>
