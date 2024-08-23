@@ -1,37 +1,17 @@
 import React, { useState } from "react";
-import {
-  TextField,
-  Button,
-  MenuItem,
-  FormControl,
-  InputLabel,
-  Select,
-} from "@mui/material";
+import { FormControl } from "@mui/material";
 import { useNavigate } from "react-router-dom";
-import CloudUploadIcon from "@mui/icons-material/CloudUpload";
-import { uploadUserPhoto } from "../../utils/apiCalls";
 
 export default function ManagerRegister() {
   const [errors, setErrors] = useState({});
   const navigate = useNavigate();
-  const [file, setFile] = useState("");
   const [formValues, setFormValues] = useState({
     UserPrivetName: "",
     UserSurname: "",
     UserBirthDate: "",
     UserGender: "",
     UserId: "",
-    file: "",
   });
-
-  const handleFileUpload = (event) => {
-    const file = event.target.files[0];
-    if (file && (file.type === "image/jpeg" || file.type === "image/jpg")) {
-      setFile(file);
-    } else {
-      alert("יש להעלות קובץ מסוג JPG או JPEG בלבד.");
-    }
-  };
 
   const calculateAge = (UserBirthDate) => {
     const today = new Date();
@@ -53,6 +33,24 @@ export default function ManagerRegister() {
     const newErrors = {};
     const hebrewRegex = /^[\u0590-\u05FF\s]+$/;
 
+    if (!formValues.UserPrivetName) {
+      newErrors.UserPrivetName = "יש למלא את השם הפרטי";
+    } else if (!hebrewRegex.test(formValues.UserPrivetName)) {
+      newErrors.UserPrivetName = "יש למלא בשפה העברית בלבד";
+    }
+
+    if (!formValues.UserSurname) {
+      newErrors.UserSurname = "יש למלא את השם משפחה";
+    } else if (!hebrewRegex.test(formValues.UserSurname)) {
+      newErrors.UserSurname = "יש למלא בשפה העברית בלבד";
+    }
+
+    if (!formValues.UserId) {
+      newErrors.UserId = "יש למלא את תעודת זהות";
+    } else if (!/^\d{9}$/.test(formValues.UserId)) {
+      newErrors.UserId = "תעודת זהות חייבת להכיל 9 ספרות";
+    }
+
     if (!formValues.UserBirthDate) {
       newErrors.UserBirthDate = "יש למלא את תאריך הלידה";
     } else if (calculateAge(formValues.UserBirthDate) < 18) {
@@ -62,8 +60,6 @@ export default function ManagerRegister() {
     if (!formValues.UserGender) {
       newErrors.UserGender = "יש לבחור את המין";
     }
-
-    console.log(newErrors);
 
     setErrors(newErrors);
     return Object.keys(newErrors).length === 0;
@@ -80,7 +76,6 @@ export default function ManagerRegister() {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-
     if (validateForm()) {
       navigate("/ManagerRegister2", { state: formValues });
     } else {
@@ -100,31 +95,27 @@ export default function ManagerRegister() {
           name="UserPrivetName"
           className="register-input"
           variant="outlined"
-          pattern="^[\u0590-\u05FF\s]+$"
-          title="יש למלא בשפה העברית בלבד"
-          required
+          onChange={handleChange}
         />
+        {errors.UserPrivetName && <p>{errors.UserPrivetName}</p>}
         <br />
         <input
           placeholder="שם משפחה"
           name="UserSurname"
           className="register-input"
           variant="outlined"
-          pattern="^[\u0590-\u05FF\s]+$"
-          title="יש למלא בשפה העברית בלבד"
-          required
+          onChange={handleChange}
         />
+        {errors.UserSurname && <p>{errors.UserSurname}</p>}
         <br />
         <input
           placeholder="תעודת זהות"
           name="UserId"
           className="register-input"
           variant="outlined"
-          pattern="\d{9}"
-          maxLength="9"
-          title="תעודת הזהות לא תקינה"
-          required
+          onChange={handleChange}
         />
+        {errors.UserId && <p>{errors.UserId}</p>}
         <br />
         <input
           placeholder="תאריך לידה"
@@ -133,41 +124,21 @@ export default function ManagerRegister() {
           className="register-input"
           variant="outlined"
           onChange={handleChange}
-          required
         />
+        {errors.UserBirthDate && <p>{errors.UserBirthDate}</p>}
         <br />
-        <select id="gender" name="UserGender" className="register-input">
-          <option value="" disabled>
-            מין{" "}
-          </option>
-          <option value="male">Male</option>
-          <option value="female">Female</option>
-          <option value="non-binary">Non-binary</option>
-          <option value="prefer-not-to-say">Prefer not to say</option>
-        </select>
-      </FormControl>
-      <FormControl
-        fullWidth
-        margin="normal"
-        style={{ width: "120%", direction: "rtl", padding: "10px 0" }}
-      >
-        <InputLabel style={{ fontFamily: "Karantina", fontSize: "20px" }}>
-          מין
-        </InputLabel>
-        <Select
-          style={{ direction: "rtl", backgroundColor: "#B9DCD1" }}
-          labelId="gender-label"
+        <select
+          id="gender"
           name="UserGender"
-          value={formValues.UserGender}
+          className="register-input"
           onChange={handleChange}
-          error={!!errors.UserGender}
-          className="register-textfield"
-          required
+          value={formValues.UserGender}
         >
-          <MenuItem value="male">זכר</MenuItem>
-          <MenuItem value="female">נקבה</MenuItem>
-          <MenuItem value="other">אחר</MenuItem>
-        </Select>
+          <option value=" "> מין</option>
+          <option value="male">זכר</option>
+          <option value="female">נקבה</option>
+          <option value="other">אחר</option>
+        </select>
         {errors.UserGender && <p>{errors.UserGender}</p>}
       </FormControl>
       <button type="submit" variant="contained">

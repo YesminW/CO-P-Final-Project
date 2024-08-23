@@ -26,7 +26,6 @@ export default function LoginStaffMember() {
         navigate("/MainStaffMember");
       }
     } catch (error) {
-      console.error(error);
       setErrors("המייל / הסיסמא שגויים");
     }
   }
@@ -35,13 +34,7 @@ export default function LoginStaffMember() {
     <form onSubmit={loginUserS}>
       {Elogo}
       <br />
-      <input
-        type="text"
-        className="inputs"
-        placeholder="שם משתמש"
-        name="ID"
-        required
-      />
+      <input type="text" className="inputs" placeholder="שם משתמש" name="ID" />
       <br />
       <div className="inputs flex-row">
         <input
@@ -49,7 +42,6 @@ export default function LoginStaffMember() {
           type={showPassword ? "text" : "password"}
           placeholder="סיסמא"
           name="password"
-          required
         />
 
         <i onClick={handleClickShowPassword}>

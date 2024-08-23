@@ -10,6 +10,7 @@ import { useLocation, useNavigate } from "react-router-dom";
 import { Visibility, VisibilityOff } from "@mui/icons-material";
 import CloudUploadIcon from "@mui/icons-material/CloudUpload";
 import { managerRegisterion } from "../../utils/apiCalls";
+import { BsEye, BsEyeSlash } from "react-icons/bs";
 
 export default function AdditionalRegistrationForm(props) {
   const [errors, setErrors] = useState({});
@@ -38,6 +39,12 @@ export default function AdditionalRegistrationForm(props) {
   const validateForm = () => {
     const newErrors = {};
     const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+
+    if (!formValues.UserPhoneNumber) {
+      newErrors.UserPhoneNumber = "יש למלא את מספר הטלפון";
+    } else if (!/^\d{10}$/.test(formValues.UserPhoneNumber)) {
+      newErrors.UserPhoneNumber = "מספר טלפון לא תקין";
+    }
 
     if (!formValues.UserAddress) {
       newErrors.UserAddress = "יש למלא את הכתובת";
@@ -68,11 +75,10 @@ export default function AdditionalRegistrationForm(props) {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
+    console.log(formValues);
 
     if (validateForm()) {
       try {
-        console.log(formValues);
-
         const data = await managerRegisterion(formValues);
         navigate("/LoginManage");
       } catch (error) {
@@ -101,36 +107,28 @@ export default function AdditionalRegistrationForm(props) {
           name="UserPhoneNumber"
           className="register-input"
           variant="outlined"
-          maxLength="10"
-          minLength="10"
-          type="number"
-          title="מספר הטלפון לא תקין"
-          required
+          onChange={handleChange}
         />
+        {errors.UserPhoneNumber && <p>{errors.UserPhoneNumber}</p>}
         <br />
         <input
           placeholder="כתובת"
           name="UserAddress"
           className="register-input"
           variant="outlined"
-          pattern="^[\u0590-\u05FF\s]+$"
-          title="יש למלא בשפה העברית בלבד"
-          required
-        />
-      </FormControl>
-      <FormControl fullWidth margin="normal">
-        <TextField
-          label="מייל"
-          name="UserEmail"
-          value={formValues.UserEmail}
           onChange={handleChange}
-          error={!!errors.UserEmail}
-          helperText={errors.UserEmail}
-          className="register-textfield"
-          variant="outlined"
         />
-      </FormControl>
-      <FormControl fullWidth margin="normal">
+        {errors.UserAddress && <p>{errors.UserAddress}</p>}
+        <br />
+        <input
+          placeholder="אימייל"
+          name="UserEmail"
+          className="register-input"
+          variant="outlined"
+          onChange={handleChange}
+        />
+        {errors.UserEmail && <p>{errors.UserEmail}</p>}
+        <br />
         <TextField
           id="password"
           label="סיסמא"
@@ -154,34 +152,6 @@ export default function AdditionalRegistrationForm(props) {
             ),
           }}
         />
-      </FormControl>
-      <FormControl fullWidth margin="normal">
-        <Button
-          component="label"
-          role={undefined}
-          variant="contained"
-          tabIndex={0}
-          sx={{
-            fontSize: "20px",
-            margin: "20px",
-            fontFamily: "Karantina",
-            backgroundColor: "#076871",
-            "&:hover": {
-              backgroundColor: "#6196A6",
-            },
-          }}
-        >
-          העלאת מסמכים
-          {<CloudUploadIcon style={{ margin: "10px" }} />}
-          <input
-            type="file"
-            name="file"
-            style={{ display: "none" }}
-            accept="application/pdf"
-            onChange={handleChange}
-          />
-        </Button>
-        {errors.file && <p>{errors.file}</p>}
       </FormControl>
       <Button type="submit" variant="contained" color="primary">
         המשך
