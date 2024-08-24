@@ -43,7 +43,7 @@ namespace Co_P_WebAPI.Controllers
 
         [HttpPost]
         [Route("AddUser")]
-        public dynamic AddUser(string ID, string privetName, string surName, DateTime Bdate, string phoneNumber, string password, int code, int year, string kinderName)
+        public dynamic AddUser(string ID, string privetName, string surName, DateTime Bdate, string phoneNumber, string password, int code, int year, string kinderNumber)
         {
             User u = new User();
             u.UserId = ID;
@@ -54,7 +54,7 @@ namespace Co_P_WebAPI.Controllers
             u.UserpPassword = password;
             u.UserCode = code;
             u.CurrentAcademicYear = year;
-            u.KindergartenName = kinderName;
+            u.KindergartenNumber = kinderNumber;
 
             db.Users.Add(u);
             db.SaveChanges();
@@ -73,8 +73,6 @@ namespace Co_P_WebAPI.Controllers
             ExcelPackage.LicenseContext = OfficeOpenXml.LicenseContext.NonCommercial; // Set the license context
 
             var users = new List<User>();
-        
-
 
             using (var stream = new MemoryStream())
             {
@@ -94,17 +92,41 @@ namespace Co_P_WebAPI.Controllers
                         try
                         {
                             var userId = worksheet.Cells[row, 1].Text;
-                            var userPrivetName = worksheet.Cells[row, 2].Text; // Change from int to string
-                            var userSurname = worksheet.Cells[row, 3].Text;  // Change from int to string
-                            var userBirthDate = DateTime.Parse(worksheet.Cells[row, 4].Text); // Parse DateTime
+                            var userPrivetName = worksheet.Cells[row, 2].Text;
+                            var userSurname = worksheet.Cells[row, 3].Text;
+                            var userBirthDateStr = worksheet.Cells[row, 4].Text;
+                            DateTime userBirthDate;
+                            if (!DateTime.TryParse(userBirthDateStr, out userBirthDate))
+                            {
+                                return BadRequest($"Row {row} has invalid date format: {userBirthDateStr}");
+                            }
                             var userAddress = worksheet.Cells[row, 5].Text;
                             var userPhoneNumber = worksheet.Cells[row, 6].Text;
                             var userGender = worksheet.Cells[row, 7].Text;
                             var userEmail = worksheet.Cells[row, 8].Text;
                             var userpPassword = worksheet.Cells[row, 9].Text;
-                            var userCode = int.Parse(worksheet.Cells[row, 10].Text);
-                            var CurrentAcademicYear = 2024;
-                            var KindergartenNumber = 1;
+                            var userCodeStr = worksheet.Cells[row, 10].Text;
+                            int userCode;
+                            if (!int.TryParse(userCodeStr, out userCode))
+                            {
+                                return BadRequest($"Row {row} has invalid number format in UserCode: {userCodeStr}");
+                            }
+                            var currentAcademicYearStr = worksheet.Cells[row, 11].Text;
+                            int currentAcademicYear;
+                            if (!int.TryParse(currentAcademicYearStr, out currentAcademicYear))
+                            {
+                                return BadRequest($"Row {row} has invalid number format in CurrentAcademicYear: {currentAcademicYearStr}");
+                            }
+                            var kindergartenName = int.Parse(worksheet.Cells[row, 12].Text);
+
+                            // Check if the KindergartenName exists in the Kindergarten table
+                            var kindergarten = db.Kindergartens.FirstOrDefault(k => k.KindergartenName == kindergartenName);
+                            if (kindergarten == null)
+                            {
+                                return BadRequest($"Row {row} has invalid KindergartenName: {kindergartenName}");
+                            }
+
+                            var kindergartenNumber = kindergarten.KindergartenNumber;
 
                             var user = db.Users.FirstOrDefault(u => u.UserId == userId);
                             if (user == null)
@@ -121,11 +143,12 @@ namespace Co_P_WebAPI.Controllers
                                     UserEmail = userEmail,
                                     UserpPassword = userpPassword,
                                     UserCode = userCode,
-                                    UserPhotoName = null,
+                                    CurrentAcademicYear = currentAcademicYear,
+                                    KindergartenNumber = kindergartenNumber,
+                                   
                                 };
-                               
-                                users.Add(newUser);
 
+                                users.Add(newUser);
                             }
                         }
                         catch (FormatException ex)
@@ -142,14 +165,13 @@ namespace Co_P_WebAPI.Controllers
                 }
             }
 
-
             db.Users.AddRange(users);
             await db.SaveChangesAsync();
 
-
-
             return Ok(new { Message = "Data imported successfully." });
         }
+
+
 
         //[HttpPost]
         //public dynamic Parents(int code, int KindergartenNumber, int CurrentAcademicYear, string ID)

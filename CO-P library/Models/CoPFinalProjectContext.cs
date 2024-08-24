@@ -350,7 +350,7 @@ public partial class CoPFinalProjectContext : DbContext
                 .IsUnicode(false)
                 .IsFixedLength()
                 .HasColumnName("UserID");
-            entity.Property(e => e.KindergartenName).HasMaxLength(20);
+            entity.Property(e => e.kinderNumber).HasMaxLength(20);
             entity.Property(e => e.UserAddress).HasMaxLength(30);
             entity.Property(e => e.UserBirthDate).HasColumnType("datetime");
             entity.Property(e => e.UserEmail)
