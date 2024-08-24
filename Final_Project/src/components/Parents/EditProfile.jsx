@@ -36,18 +36,18 @@ export default function EditProfile() {
       <form className="bootstrap-edit-profile-container">
         <h2 className="bootstrap-edit-profile-header"> עריכת פרטים</h2>
         <Link
-          to="/EditProfileChild"
-          state={child}
-          className="btn btn-primary bootstrap-edit-profile-button"
-        >
-          פרטים אישיים {child.childFirstName}
-        </Link>
-        <Link
           to="/EditProfileP"
           state={userData}
           className="btn btn-primary bootstrap-edit-profile-button"
         >
           פרטים אישיים {userData.userPrivetName}
+        </Link>
+        <Link
+          to="/EditProfileChild"
+          state={child}
+          className="btn btn-primary bootstrap-edit-profile-button"
+        >
+          פרטים אישיים {child.childFirstName}
         </Link>
       </form>
       {Efooter}

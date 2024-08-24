@@ -4,11 +4,13 @@ import { Button, CircularProgress, TextField } from "@mui/material";
 import EfooterP from "../../Elements/EfooterP";
 import CloudUploadIcon from "@mui/icons-material/CloudUpload";
 import { updateUserById, uploadUserPhoto } from "../../utils/apiCalls";
+import { BsEye, BsEyeSlash } from "react-icons/bs";
 
 export default function EditProfileP() {
   const navigate = useNavigate();
   const [file, setFile] = useState("");
   const location = useLocation();
+  const [showPassword, setShowPassword] = useState(false);
   const [details, setDetails] = useState(location.state);
   const [loading, setLoading] = useState(false);
 
@@ -19,6 +21,8 @@ export default function EditProfileP() {
       [name]: value,
     }));
   };
+
+  const handleClickShowPassword = () => setShowPassword((show) => !show);
 
   const handleFileUpload = (event) => {
     const file = event.target.files[0];
@@ -35,12 +39,6 @@ export default function EditProfileP() {
       setLoading(true);
       const formData = new FormData(e.target);
       const data = Object.fromEntries(formData);
-      if (
-        !/^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/.test(data.userEmail)
-      ) {
-        console.error("Not a valid email");
-        return;
-      }
       if (!data["UserpPassword"].trim()) {
         data["UserpPassword"] = details.userpPassword;
       }
@@ -63,90 +61,82 @@ export default function EditProfileP() {
             backgroundColor: "#cce7e8",
             padding: 10,
             borderRadius: 5,
-            marginBottom: 10,
+            marginBottom: 30,
           }}
         >
           <h2 style={{ textAlign: "center", margin: 0 }}>
-            {" "}
-            פרטים אישיים {details.UserPrivetName}{" "}
+            פרטים אישיים {details.userPrivetName}
           </h2>
         </div>
-        <TextField
-          fullWidth
-          margin="normal"
-          label="תעודת זהות"
+        <input
           name="userId"
-          value={details.userId}
-          InputProps={{ readOnly: true }}
+          className="register-input"
           variant="outlined"
-          className="register-textfield"
+          defaultValue={details.userId}
+          inputprops={{ readOnly: true }}
         />
-        <TextField
-          fullWidth
-          margin="normal"
-          label="שם פרטי"
+        <br />
+        <input
           name="UserPrivetName"
-          InputProps={{ readOnly: true }}
-          value={details.userPrivetName}
+          className="register-input"
           variant="outlined"
-          className="register-textfield"
+          defaultValue={details.userPrivetName}
+          inputprops={{ readOnly: true }}
         />
-        <TextField
-          fullWidth
-          margin="normal"
-          label="שם משפחה"
-          InputProps={{ readOnly: true }}
+        <br />
+        <input
           name="UserSurname"
-          value={details.userSurname}
+          className="register-input"
           variant="outlined"
-          className="register-textfield"
+          defaultValue={details.userSurname}
+          inputprops={{ readOnly: true }}
         />
-        <TextField
-          fullWidth
-          margin="normal"
-          label="כתובת"
+        <br />
+        <input
+          placeholder="כתובת"
           name="UserAddress"
+          className="register-input"
+          variant="outlined"
           value={details.userAddress}
           onChange={handleInputChange}
-          variant="outlined"
-          className="register-textfield"
         />
-        <TextField
-          fullWidth
-          margin="normal"
-          label="מייל"
+        <br />
+        <input
+          placeholder="אימייל"
           name="UserEmail"
-          type="email"
+          className="register-input"
+          variant="outlined"
           value={details.userEmail}
           onChange={handleInputChange}
-          variant="outlined"
-          className="register-textfield"
         />
-        <TextField
-          fullWidth
-          margin="normal"
-          label="פלאפון"
-          name="UserPhoneNumber"
+        <br />
+        <input
+          name="userPhoneNumber"
+          type="numbers"
+          className="register-input"
+          variant="outlined"
           value={details.userPhoneNumber}
           onChange={handleInputChange}
-          variant="outlined"
-          className="register-textfield"
         />
-        <TextField
-          fullWidth
-          margin="normal"
-          label="שינוי סיסמא"
-          type="password"
-          name="UserpPassword"
-          variant="outlined"
-          className="register-textfield"
-        />
+        <br />
+        <div className="register-inputs flex-row">
+          <input
+            className="password-inputs"
+            type={showPassword ? "text" : "password"}
+            placeholder="סיסמא"
+            name="UserpPassword"
+            onChange={handleInputChange}
+          />
+
+          <i onClick={handleClickShowPassword}>
+            {showPassword ? <BsEyeSlash /> : <BsEye />}
+          </i>
+        </div>
         <Button
           component="label"
           role={undefined}
           variant="contained"
           tabIndex={0}
-          startIcon={<CloudUploadIcon />}
           sx={{
             margin: "10px",
             backgroundColor: "#076871",
@@ -157,6 +147,7 @@ export default function EditProfileP() {
           }}
         >
           העלאת תמונת פרופיל
+          <CloudUploadIcon style={{ margin: "10px" }} />
           <input
             type="file"
             style={{ display: "none" }}

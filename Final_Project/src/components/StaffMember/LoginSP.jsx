@@ -23,7 +23,7 @@ export default function LoginStaffMember() {
       if (userCode == "222") {
         navigate("/MainParent");
       } else {
-        navigate("/MainStaffMember");
+        navigate("/MainParent");
       }
     } catch (error) {
       setErrors("המייל / הסיסמא שגויים");
