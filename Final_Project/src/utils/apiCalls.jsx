@@ -87,6 +87,23 @@ export async function uploadUserPhoto(data) {
   }
 }
 
+export async function UploadChildPhoto(data) {
+  try {
+    const { userId, file } = data;
+    const formData = new FormData();
+    formData.append("file", file);
+    const photo = await fetch(`${SERVER_URL}/UploadChildPhoto/${userId}`, {
+      method: "PUT",
+      body: formData,
+    });
+    const photoData = await photo.json();
+    return photoData;
+  } catch (error) {
+    console.error(error);
+    throw new Error(error);
+  }
+}
+
 export async function addUserByExcel(file) {
   try {
     const formData = new FormData();

@@ -18,6 +18,8 @@ export default function EditProfile() {
           getChildByParent(localStorage.getItem("user_id")),
           getUserById(localStorage.getItem("user_id")),
         ]);
+        console.log(childData);
+
         setChild(childData);
         setUserData(user);
       } catch (error) {
