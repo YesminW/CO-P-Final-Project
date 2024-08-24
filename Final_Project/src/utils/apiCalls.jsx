@@ -186,3 +186,14 @@ export async function getAllKindergartens() {
     throw new Error(error);
   }
 }
+
+export async function getAllChildDuty() {
+  try {
+    const response = await fetch(`${SERVER_URL}/allDuties`);
+    const data = await response.json();
+    return data;
+  } catch (error) {
+    console.error(error);
+    throw new Error(error);
+  }
+}
