@@ -108,29 +108,28 @@ export default function AddKindergarden() {
         <h2 style={{ textAlign: "center", margin: 0 }}>הקמת גן</h2>
       </div>
 
-      <FormControl fullWidth margin="normal" className="register-textfield">
-        <TextField
-          label="שם הגן"
+      <FormControl fullWidth margin="normal">
+        <input
+          placeholder="שם הגן"
           name="KindergartenName"
-          value={formValues.KindergartenName}
-          onChange={handleChange}
-          error={!!errors.KindergartenName}
-          helperText={errors.KindergartenName}
+          className="register-input"
           variant="outlined"
+          onChange={handleChange}
         />
-      </FormControl>
-
-      <FormControl fullWidth margin="normal" className="register-textfield">
-        <TextField
-          label="כתובת"
+        {errors.KindergartenName && (
+          <p className="perrors">{errors.KindergartenName}</p>
+        )}
+        <br />
+        <input
+          placeholder="כתובת"
           name="KindergartenAddress"
-          value={formValues.KindergartenAddress}
-          onChange={handleChange}
-          error={!!errors.KindergartenAddress}
-          helperText={errors.KindergartenAddress}
+          className="register-input"
           variant="outlined"
-          className="rtl-input"
+          onChange={handleChange}
         />
+        {errors.KindergartenAddress && (
+          <p className="perrors">{errors.KindergartenAddress}</p>
+        )}
       </FormControl>
 
       <FormControl fullWidth margin="normal">

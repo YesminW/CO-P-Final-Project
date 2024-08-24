@@ -1,14 +1,7 @@
-import React, { useState, useEffect } from "react";
-import {
-  TextField,
-  Button,
-  FormControl,
-  InputAdornment,
-  IconButton,
-} from "@mui/material";
+import React, { useState } from "react";
+import { Button, FormControl } from "@mui/material";
 import { useLocation, useNavigate } from "react-router-dom";
-import { Visibility, VisibilityOff } from "@mui/icons-material";
-import CloudUploadIcon from "@mui/icons-material/CloudUpload";
+
 import { managerRegisterion } from "../../utils/apiCalls";
 import { BsEye, BsEyeSlash } from "react-icons/bs";
 
@@ -81,10 +74,6 @@ export default function AdditionalRegistrationForm(props) {
   };
 
   const handleClickShowPassword = () => setShowPassword((show) => !show);
-
-  const handleMouseDownPassword = (event) => {
-    event.preventDefault();
-  };
 
   return (
     <form onSubmit={handleSubmit} noValidate>
