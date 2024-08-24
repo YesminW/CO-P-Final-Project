@@ -97,7 +97,9 @@ export default function ManagerRegister() {
           variant="outlined"
           onChange={handleChange}
         />
-        {errors.UserPrivetName && <p>{errors.UserPrivetName}</p>}
+        {errors.UserPrivetName && (
+          <p className="perrors">{errors.UserPrivetName}</p>
+        )}
         <br />
         <input
           placeholder="שם משפחה"
@@ -106,7 +108,7 @@ export default function ManagerRegister() {
           variant="outlined"
           onChange={handleChange}
         />
-        {errors.UserSurname && <p>{errors.UserSurname}</p>}
+        {errors.UserSurname && <p className="perrors">{errors.UserSurname}</p>}
         <br />
         <input
           placeholder="תעודת זהות"
@@ -115,7 +117,7 @@ export default function ManagerRegister() {
           variant="outlined"
           onChange={handleChange}
         />
-        {errors.UserId && <p>{errors.UserId}</p>}
+        {errors.UserId && <p className="perrors">{errors.UserId}</p>}
         <br />
         <input
           placeholder="תאריך לידה"
@@ -125,7 +127,9 @@ export default function ManagerRegister() {
           variant="outlined"
           onChange={handleChange}
         />
-        {errors.UserBirthDate && <p>{errors.UserBirthDate}</p>}
+        {errors.UserBirthDate && (
+          <p className="perrors">{errors.UserBirthDate}</p>
+        )}
         <br />
         <select
           id="gender"
@@ -139,7 +143,7 @@ export default function ManagerRegister() {
           <option value="female">נקבה</option>
           <option value="other">אחר</option>
         </select>
-        {errors.UserGender && <p>{errors.UserGender}</p>}
+        {errors.UserGender && <p className="perrors">{errors.UserGender}</p>}
       </FormControl>
       <button type="submit" variant="contained">
         המשך

@@ -23,6 +23,7 @@ export default function AdditionalRegistrationForm(props) {
     UserAddress: "",
     UserEmail: "",
     UserpPassword: "",
+    KindergartenName: "",
     ...data,
   });
 

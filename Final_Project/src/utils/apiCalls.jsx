@@ -147,7 +147,7 @@ export async function getAllChild() {
 
 export async function managerRegisterion(details) {
   try {
-    const response = await fetch(`${SERVER_URL}/ManagerRegisterion`, {
+    const response = await fetch(`http://localhost:5068/ManagerRegisterion`, {
       method: "POST",
       body: JSON.stringify(details),
       headers: new Headers({
@@ -158,6 +158,7 @@ export async function managerRegisterion(details) {
     return data;
   } catch (error) {
     console.error(error);
+    throw new Error(error);
   }
 }
 

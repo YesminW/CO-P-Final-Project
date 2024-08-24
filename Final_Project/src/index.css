@@ -225,3 +225,10 @@ body {
 .rounded-corners-25 {
   border-radius: 25px;
 }
+
+.perrors {
+  color: red;
+  padding: 0;
+  font-size: 24px;
+  margin: 0;
+}
