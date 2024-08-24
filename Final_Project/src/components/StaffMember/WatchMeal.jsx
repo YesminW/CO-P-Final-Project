@@ -12,7 +12,7 @@ const WatchMeal = () => {
   const navigate = useNavigate();
   const date = location.state;
   const kindergartenNumber = 2; // Assuming kindergarten number is always 2
-
+  
   const [mealData, setMealData] = useState([]);
   const [isDataLoaded, setIsDataLoaded] = useState(false);
 

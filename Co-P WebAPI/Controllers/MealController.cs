@@ -67,7 +67,7 @@ namespace Co_P_WebAPI.Controllers
         }
 
         [HttpGet]
-        [Route("getbydateandkindergarten")]
+        [Route("getbydateandkindergarten/{kindergartenNumner}/{today}")]
         public dynamic Getbydateandkindergarten(int kindergartenNumner, DateTime today)
         {
             var ActualActivities = db.ActualActivities.Where(a => a.ActivityDate == today && a.KindergartenNumber == kindergartenNumner && a.ActivityNumber == 10).Select(m => new MealsInKindergartenDTO()
