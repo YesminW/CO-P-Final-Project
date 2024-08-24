@@ -1,11 +1,14 @@
-import { Button, TextField } from '@mui/material';
-import React, { useState } from 'react';
-import { useLocation, useNavigate } from 'react-router-dom';
-import EfooterS from '../../Elements/EfooterS';
-import '../../assets/StyleSheets/RegisterStaff.css';
+import { Button, TextField } from "@mui/material";
+import React, { useState } from "react";
+import { useLocation, useNavigate } from "react-router-dom";
+import EfooterS from "../../Elements/EfooterS";
+import "../../assets/StyleSheets/RegisterStaff.css";
+import { BsEye, BsEyeSlash } from "react-icons/bs";
+import { updateUserById } from "../../utils/apiCalls";
 
 export default function EditProfileS2() {
   const location = useLocation();
+  const [showPassword, setShowPassword] = useState(false);
   const initialDetails = location.state || {};
   const [details, setDetails] = useState(initialDetails);
   const navigate = useNavigate();
@@ -18,48 +21,41 @@ export default function EditProfileS2() {
     });
   };
 
+  const handleClickShowPassword = () => setShowPassword((show) => !show);
+
   const handleSubmit = (e) => {
     e.preventDefault();
-    const urlSR = 'http://localhost:5108/updateUser';
 
-    fetch(urlSR + '/' + details.userId, {
-      method: 'PUT',
-      body: JSON.stringify(details),
-      headers: new Headers({
-        'Content-type': 'application/json; charset=UTF-8', // very important to add the 'charset=UTF-8'!!!!
-      }),
-    })
-      .then((res) => {
-        console.log('res=', res);
-        return res.json();
-      })
-      .then(
-        (result) => {
-          console.log('fetch POST= ', result);
-          console.log(result.Avg);
-          navigate('/MainStaffMember');
-        },
-        (error) => {
-          console.log('err post=', error);
-        }
-      );
+    try {
+      updateUserById(details);
+      navigate("/MainStaffMember");
+    } catch (error) {
+      console.log("err post=", error);
+    }
   };
 
   return (
     <>
       <form onSubmit={handleSubmit}>
-        <div style={{ backgroundColor: '#cce7e8', padding: 10, borderRadius: 5, marginBottom: 30 }}>
-          <h2 style={{ textAlign: 'center', margin: 0 }}> פרטים אישיים {details.firstName} </h2>
+        <div
+          style={{
+            backgroundColor: "#cce7e8",
+            padding: 10,
+            borderRadius: 5,
+            marginBottom: 30,
+          }}
+        >
+          <h2 style={{ textAlign: "center", margin: 0 }}>
+            פרטים אישיים {details.userPrivetName}
+          </h2>
         </div>
-        <TextField
-          fullWidth
-          margin="normal"
-          label="כתובת"
-          name="userAddress"
+        <input
+          placeholder="כתובת"
+          name="UserAddress"
+          className="register-input"
+          variant="outlined"
           value={details.userAddress}
           onChange={handleChange}
-          variant="outlined"
-          className='register-textfield'
         />
         <TextField
           fullWidth
@@ -69,48 +65,43 @@ export default function EditProfileS2() {
           value={details.userGender}
           onChange={handleChange}
           variant="outlined"
-          className='register-textfield'
+          className="register-textfield"
         />
-        <TextField
-          fullWidth
-          margin="normal"
-          label="אימייל"
-          name="userEmail"
+        <br />
+        <input
+          placeholder="אימייל"
+          name="UserEmail"
+          className="register-input"
+          variant="outlined"
           value={details.userEmail}
           onChange={handleChange}
-          variant="outlined"
-          className='register-textfield'
         />
-        <TextField
-          fullWidth
-          margin="normal"
-          label="בעיות בריאות"
-          name="healthIssues"
+        <br />
+        <input
+          placeholder="בעיות בריאותיןת"
+          name="UserEmail"
+          className="register-input"
+          variant="outlined"
           value={details.healthIssues}
           onChange={handleChange}
-          variant="outlined"
-          className='register-textfield'
         />
-        <TextField
-          fullWidth
-          margin="normal"
-          label="שינוי סיסמא"
-          type="password"
-          name="userpPassword"
-          value={details.userpPassword}
-          onChange={handleChange}
-          variant="outlined"
-          className='register-textfield'
-        />
-        <Button
-          fullWidth
-          variant="contained"
-          color="primary"
-          sx={{ mt: 2 }}
-          type="submit"
-        >
+        <br />
+        <div className="register-inputs flex-row">
+          <input
+            className="password-inputs"
+            type={showPassword ? "text" : "password"}
+            placeholder="סיסמא"
+            name="UserpPassword"
+            onChange={handleChange}
+          />
+
+          <i onClick={handleClickShowPassword}>
+            {showPassword ? <BsEyeSlash /> : <BsEye />}
+          </i>
+        </div>
+        <button type="submit" variant="contained">
           אישור
-        </Button>
+        </button>
       </form>
       {EfooterS}
     </>

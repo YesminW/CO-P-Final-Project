@@ -2,21 +2,24 @@ import { Button, CircularProgress, TextField } from "@mui/material";
 import React, { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import EfooterS from "../../Elements/EfooterS";
+import CloudUploadIcon from "@mui/icons-material/CloudUpload";
 
 import "../../assets/StyleSheets/RegisterStaff.css";
-import { getUserById } from "../../utils/apiCalls";
+import { getUserById, uploadUserPhoto } from "../../utils/apiCalls";
 
 export default function EditProfileS() {
   const navigate = useNavigate();
   const [file, setFile] = useState("");
   const [userData, setUserData] = useState({});
   const [loading, setLoading] = useState(true);
+  const formattedDate = formatDateToYMD(userData.userBirthDate);
 
   useEffect(() => {
     async function getData() {
       try {
         setLoading(true);
-        setUserData(getUserById(localStorage.getItem("user_id")));
+        const user = await getUserById(localStorage.getItem("user_id"));
+        setUserData(user);
       } catch (error) {
         console.error(error);
       } finally {
@@ -26,12 +29,21 @@ export default function EditProfileS() {
     getData();
   }, []);
 
-  const handlePhoneNumberChange = (event) => {
-    setUserData((prev) => ({
-      ...prev,
-      UserPhoneNumber: event.target.value,
+  function formatDateToYMD(dateString) {
+    const date = new Date(dateString);
+    const year = date.getFullYear();
+    const month = String(date.getMonth() + 1).padStart(2, "0");
+    const day = String(date.getDate()).padStart(2, "0");
+    return `${year}-${month}-${day}`;
+  }
+
+  function handlePhoneNumberChange(e) {
+    const { value } = e.target;
+    setUserData((prevData) => ({
+      ...prevData,
+      userPhoneNumber: value,
     }));
-  };
+  }
 
   const handleFileUpload = (event) => {
     const file = event.target.files[0];
@@ -44,28 +56,14 @@ export default function EditProfileS() {
 
   const handleSubmit = () => {
     if (file) {
-      const urlphotol = "http://localhost:5108/UploadUserPhoto";
-      const formData = new FormData();
-      formData.append("file", file);
-
-      fetch(urlphotol + "/" + userData.userId, {
-        method: "PUT",
-        body: formData,
-      })
-        .then((res) => {
-          console.log("res=", res);
-          return res.json();
-        })
-        .then(
-          () => {
-            navigate("/EditProfileS2", { state: userData });
-          },
-          (error) => {
-            console.log("err post=", error);
-          }
-        );
+      try {
+        uploadUserPhoto({ userId: userData.userId, file });
+        navigate("/EditProfileS2", { state: userData });
+      } catch (error) {
+        console.error(error);
+      }
     } else {
-      navigate("/StaffRegister2", { state: userData });
+      navigate("/EditProfileS2", { state: userData });
     }
   };
 
@@ -73,12 +71,7 @@ export default function EditProfileS() {
     <CircularProgress />
   ) : (
     <>
-      <form>
-        <div className="registerdiv">
-          <h2 style={{ textAlign: "center", margin: 0 }}>
-            {userData.firstName} פרטים אישיים
-          </h2>
-        </div>
+      <form onSubmit={handleSubmit}>
         <div
           style={{
             backgroundColor: "#cce7e8",
@@ -88,80 +81,76 @@ export default function EditProfileS() {
           }}
         >
           <h2 style={{ textAlign: "center", margin: 0 }}>
-            {" "}
-            פרטים אישיים {userData.firstName}{" "}
+            פרטים אישיים {userData.userPrivetName}
           </h2>
         </div>
-        <TextField
-          fullWidth
-          margin="normal"
-          label="שם פרטי"
-          value={userData.UserPrivetName}
-          InputProps={{ readOnly: true }}
+        <input
+          name="UserPrivetName"
+          className="register-input"
           variant="outlined"
-          className="register-textfield"
+          defaultValue={userData.userPrivetName}
+          inputprops={{ readOnly: true }}
         />
-        <TextField
-          fullWidth
-          margin="normal"
-          label="שם משפחה"
-          value={userData.UserSurname}
-          InputProps={{ readOnly: true }}
+        <br />
+        <input
+          name="UserSurname"
+          className="register-input"
           variant="outlined"
-          className="register-textfield"
+          defaultValue={userData.userSurname}
+          inputprops={{ readOnly: true }}
         />
-
-        <TextField
-          fullWidth
-          margin="normal"
-          label="תעודת זהות"
-          value={userData.UserId}
-          InputProps={{ readOnly: true }}
+        <br />
+        <input
+          name="userId"
+          className="register-input"
           variant="outlined"
-          className="register-textfield"
+          defaultValue={userData.userId}
+          inputprops={{ readOnly: true }}
         />
-        <TextField
-          fullWidth
-          margin="normal"
-          label="תאריך לידה"
-          value={userData.UserBirthDate}
-          InputProps={{ readOnly: true }}
+        <br />
+        <input
+          name="UserBirthDate"
+          type="date"
+          className="register-input"
           variant="outlined"
-          className="register-textfield"
+          defaultValue={formattedDate}
+          inputprops={{ readOnly: true }}
         />
-        <TextField
-          fullWidth
-          margin="normal"
-          label="מספר טלפון"
-          value={userData.UserPhoneNumber}
+        <br />
+        <input
+          name="userPhoneNumber"
+          type="numbers"
+          className="register-input"
+          variant="outlined"
+          value={userData.userPhoneNumber}
           onChange={handlePhoneNumberChange}
-          variant="outlined"
-          className="register-textfield"
         />
         <Button
-          variant="contained"
           component="label"
-          fullWidth
-          color="primary"
-          sx={{ mt: 2, mb: 2 }}
+          role={undefined}
+          variant="contained"
+          tabIndex={0}
+          sx={{
+            margin: "10px",
+            backgroundColor: "#076871",
+            "&:hover": {
+              backgroundColor: "#6196A6",
+            },
+            fontSize: "15px",
+          }}
         >
-          העלאת תמונה
+          העלאת תמונת פרופיל
+          <CloudUploadIcon style={{ margin: "10px" }} />
           <input
             type="file"
-            accept="image/jpeg,image/jpg"
-            hidden
+            style={{ display: "none" }}
+            accept="image/png, image/jpeg"
             onChange={handleFileUpload}
           />
         </Button>
-        <Button
-          fullWidth
-          variant="contained"
-          color="primary"
-          sx={{ mt: 2 }}
-          onClick={handleSubmit}
-        >
+        <button type="submit" variant="contained">
           המשך
-        </Button>
+        </button>
       </form>
       {EfooterS}
     </>

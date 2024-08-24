@@ -75,9 +75,6 @@ export async function uploadUserPhoto(data) {
     const { userId, file } = data;
     const formData = new FormData();
     formData.append("file", file);
-    console.log(Object.fromEntries(formData));
-    console.log(userId);
-
     const photo = await fetch(`${SERVER_URL}/UploadUserPhoto/${userId}`, {
       method: "PUT",
       body: formData,
