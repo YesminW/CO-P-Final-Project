@@ -10,7 +10,7 @@ import SendOutlinedIcon from "@mui/icons-material/SendOutlined";
 
 const EfooterP = (
   <div className="footer-icons center-a">
-    <Link style={{ width: "10%" }} to="/MainStaffMember">
+    <Link style={{ width: "10%" }} to="/MainParent">
       <img src={logo} alt="My Logo" className="logofooter" />
     </Link>
     <Link to="/TeamStaff">

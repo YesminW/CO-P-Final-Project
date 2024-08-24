@@ -45,7 +45,7 @@ export default function EditProfileP() {
       const promises = [updateUserById(data)];
       if (file) promises.push(uploadUserPhoto({ userId: data.userId, file }));
       await Promise.all(promises);
-      navigate("/MainParent");
+      navigate("/EditProfile");
     } catch (error) {
       console.error(error);
     } finally {

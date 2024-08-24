@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
-import Efooter from "../../Elements/EfooterP";
+import Efooterp from "../../Elements/EfooterP";
 import "../../assets/StyleSheets/EditProfileP.css";
 import { getChildByParent, getUserById } from "../../utils/apiCalls";
 import { CircularProgress } from "@mui/material";
@@ -18,8 +18,6 @@ export default function EditProfile() {
           getChildByParent(localStorage.getItem("user_id")),
           getUserById(localStorage.getItem("user_id")),
         ]);
-        console.log(childData);
-
         setChild(childData);
         setUserData(user);
       } catch (error) {
@@ -52,7 +50,7 @@ export default function EditProfile() {
           פרטים אישיים {child.childFirstName}
         </Link>
       </form>
-      {Efooter}
+      {Efooterp}
     </div>
   );
 }
