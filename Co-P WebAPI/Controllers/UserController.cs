@@ -117,13 +117,13 @@ namespace Co_P_WebAPI.Controllers
                             {
                                 return BadRequest($"Row {row} has invalid number format in CurrentAcademicYear: {currentAcademicYearStr}");
                             }
-                            var kindergartenName = int.Parse(worksheet.Cells[row, 12].Text);
+                            var KindergartenNumber = int.Parse(worksheet.Cells[row, 12].Text);
 
-                            // Check if the KindergartenName exists in the Kindergarten table
-                            var kindergarten = db.Kindergartens.FirstOrDefault(k => k.KindergartenName == kindergartenName);
+                            //Check if the KindergartenNumber exists in the Kindergarten table
+                           var kindergarten = db.Kindergartens.FirstOrDefault(k => k.KindergartenNumber == KindergartenNumber);
                             if (kindergarten == null)
                             {
-                                return BadRequest($"Row {row} has invalid KindergartenName: {kindergartenName}");
+                                return BadRequest($"Row {row} has invalid KindergartenName: {KindergartenNumber}");
                             }
 
                             var kindergartenNumber = kindergarten.KindergartenNumber;
@@ -144,8 +144,8 @@ namespace Co_P_WebAPI.Controllers
                                     UserpPassword = userpPassword,
                                     UserCode = userCode,
                                     CurrentAcademicYear = currentAcademicYear,
-                                    KindergartenNumber = kindergartenNumber,
-                                   
+                                    //KindergartenNumber = kindergartenNumber,
+
                                 };
 
                                 users.Add(newUser);

@@ -30,7 +30,7 @@ namespace Co_P_WebAPI.Controllers
 
                 // חלוקת המשתמשים לקבוצות לפי שם הגן שלהם
                 var groupedUsers = filteredUsers
-                                    .GroupBy(user => user.KindergartenName)
+                                    .GroupBy(user => user.KindergartenNumber)
                                     .Select(group => new
                                     {
                                         KindergartenName = group.Key,
