@@ -120,29 +120,36 @@ export default function AdditionalRegistrationForm(props) {
         />
         {errors.UserEmail && <p>{errors.UserEmail}</p>}
         <br />
-        <TextField
-          id="password"
-          label="סיסמא"
-          name="UserpPassword"
-          value={formValues.UserpPassword}
-          onChange={handleChange}
-          className="register-textfield"
-          type={showPassword ? "text" : "password"}
-          InputProps={{
-            endAdornment: (
-              <InputAdornment position="end">
-                <IconButton
-                  aria-label="toggle password visibility"
-                  onClick={handleClickShowPassword}
-                  onMouseDown={handleMouseDownPassword}
-                  edge="end"
-                >
-                  {showPassword ? <Visibility /> : <VisibilityOff />}
-                </IconButton>
-              </InputAdornment>
-            ),
-          }}
-        />
+        <div className="register-inputs flex-row">
+          <input
+            className="password-inputs"
+            type={showPassword ? "text" : "password"}
+            placeholder="סיסמא"
+            name="UserpPassword"
+            onChange={handleChange}
+          />
+
+          <i onClick={handleClickShowPassword}>
+            {showPassword ? <BsEyeSlash /> : <BsEye />}
+          </i>
+        </div>
+        <br />
+        <div className="register-inputs flex-row">
+          <input
+            className="password-inputs"
+            type={showPassword ? "text" : "password"}
+            placeholder="אימות סיסמא"
+            name="password"
+            onChange={(e) => {
+              if (e.target.value !== formValues.UserpPassword) {
+                console.log("Not matching");
+              }
+            }}
+          />
+          <i onClick={handleClickShowPassword}>
+            {showPassword ? <BsEyeSlash /> : <BsEye />}
+          </i>
+        </div>
       </FormControl>
       <Button type="submit" variant="contained" color="primary">
         המשך

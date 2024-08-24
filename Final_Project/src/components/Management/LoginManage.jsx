@@ -52,7 +52,7 @@ export default function LoginManage() {
           הרשמה
         </Link>
       </div>
-      {error && <p style={{ color: "#6196A6" }}>{error}</p>}
+      {error && <p className="perrors">{error}</p>}
     </form>
   );
 }

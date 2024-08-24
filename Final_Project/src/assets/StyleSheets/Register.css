@@ -17,7 +17,6 @@ form {
   text-align: center;
   margin-bottom: 20px;
   font-size: 48px;
-  /* הגדלת גודל הגופן */
   color: white;
 }
 
@@ -109,4 +108,25 @@ button[type="submit"]:hover,
   font-family: "Karantina";
   font-size: 20px;
   direction: rtl;
+}
+
+.password-field {
+  color: white;
+  background-color: transparent;
+  outline: none;
+  border: none;
+}
+
+.password-field::placeholder {
+  color: white;
+}
+
+.register-inputs {
+  border-radius: 8px;
+  background-color: #b9dcd1;
+  padding: 0.5rem 1rem;
+  color: white;
+  outline: white;
+  gap: 4px;
+  font-size: 38px;
 }

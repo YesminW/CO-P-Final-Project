@@ -40,24 +40,8 @@ export default function AddsAndP() {
 
   return (
     <form onSubmit={handleSubmit}>
-      <div
-        style={{
-          backgroundColor: "rgba(255, 255, 255, 0.28)",
-          padding: 10,
-          borderRadius: 5,
-          marginBottom: 30,
-        }}
-      >
-        <h2
-          style={{
-            textAlign: "center",
-            margin: 0,
-            color: "white",
-            fontSize: "28px",
-          }}
-        >
-          הוספת משתמשים
-        </h2>
+      <div className="registerdiv">
+        <h2 style={{ textAlign: "center", margin: 0 }}>הוספת משתמשים</h2>
       </div>
 
       <FormControl fullWidth margin="normal">

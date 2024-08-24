@@ -51,7 +51,7 @@ export default function LoginStaffMember() {
       <button className="custom-btn" type="submit">
         כניסה
       </button>
-      {error && <p style={{ color: "#6196A6" }}>{error}</p>}
+      {error && <p className="perrors">{error}</p>}
     </form>
   );
 }

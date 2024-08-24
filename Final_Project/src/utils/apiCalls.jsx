@@ -133,6 +133,7 @@ export async function getMealByKindergardenAndDate(date, kindergartenNumber) {
     return data;
   } catch (error) {
     console.error(error);
+    throw new Error(error);
   }
 }
 
@@ -143,6 +144,7 @@ export async function getAllChild() {
     return data;
   } catch (error) {
     console.error(error);
+    throw new Error(error);
   }
 }
 
@@ -170,6 +172,7 @@ export async function fetchBirthdays() {
     return data;
   } catch (error) {
     console.error(error);
+    throw new Error(error);
   }
 }
 
@@ -180,5 +183,6 @@ export async function getAllKindergartens() {
     return data;
   } catch (error) {
     console.error(error);
+    throw new Error(error);
   }
 }
