@@ -5,25 +5,25 @@ namespace CO_P_library.Models;
 
 public partial class User
 {
-    public string UserId { get; set; } = null!;
+    public string? UserId { get; set; } 
 
-    public string UserPrivetName { get; set; } = null!;
+    public string? UserPrivetName { get; set; } 
 
-    public string UserSurname { get; set; } = null!;
+    public string? UserSurname { get; set; } 
 
     public DateTime? UserBirthDate { get; set; }
 
     public string? UserAddress { get; set; }
 
-    public string UserPhoneNumber { get; set; } = null!;
+    public string? UserPhoneNumber { get; set; }
 
     public string? UserGender { get; set; }
 
     public string? UserEmail { get; set; }
 
-    public string UserpPassword { get; set; } = null!;
+    public string? UserpPassword { get; set; } 
 
-    public string KindergartenNumber { get; set; } = null!;
+    public string? KindergartenNumber { get; set; } 
 
     public int CurrentAcademicYear { get; set; }
 

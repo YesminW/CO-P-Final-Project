@@ -1,6 +1,7 @@
 import { formatDate, formatForCSharp } from "./functions";
 
-const SERVER_URL = "https://proj.ruppin.ac.il/bgroup31/test2/tar1";
+// const SERVER_URL = "https://proj.ruppin.ac.il/bgroup31/test2/tar1";
+const SERVER_URL = "http://localhost:5068";
 
 export async function login(data) {
   try {
@@ -147,7 +148,7 @@ export async function getAllChild() {
 
 export async function managerRegisterion(details) {
   try {
-    const response = await fetch(`http://localhost:5068/ManagerRegisterion`, {
+    const response = await fetch(`${SERVER_URL}/ManagerRegisterion`, {
       method: "POST",
       body: JSON.stringify(details),
       headers: new Headers({
