@@ -22,7 +22,7 @@ namespace Co_P_WebAPI.Controllers
             {
                 if (users[i].UserId == ID && users[i].UserpPassword == password)
                 {
-                    return new { user_id = users[i].UserId };
+                    return new { user_id = users[i].UserId ,user_code = users[i].UserCode };
                 }
 
             }

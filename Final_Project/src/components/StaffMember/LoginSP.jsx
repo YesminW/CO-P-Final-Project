@@ -16,14 +16,13 @@ export default function LoginStaffMember() {
     try {
       const formData = new FormData(e.target);
       const data = Object.fromEntries(formData);
-      const { user_id } = await login(data);
-      const { userCode } = await login(data);
-      localStorage.setItem("user_id", user_id);
-      localStorage.setItem("role_code", userCode);
-      if (userCode == "222") {
+      const user_Data = await login(data);
+      localStorage.setItem("user_id", user_Data.user_id);
+      localStorage.setItem("role_code", user_Data.user_code);
+      if (user_Data.user_code == "222") {
         navigate("/MainParent");
       } else {
-        navigate("/MainParent");
+        navigate("/MainStaffMember");
       }
     } catch (error) {
       setErrors("המייל / הסיסמא שגויים");

@@ -6,14 +6,16 @@ const SERVER_URL = "http://localhost:5068";
 export async function login(data) {
   try {
     const { ID, password } = data;
-    const user_id = await fetch(`${SERVER_URL}/LogIn/${ID}/${password}`, {
+    const user = await fetch(`${SERVER_URL}/LogIn/${ID}/${password}`, {
       method: "GET",
       headers: new Headers({
         "Content-Type": "application/json; charset=UTF-8",
       }),
     });
-    const user_idData = await user_id.json();
-    return user_idData;
+    const user_Data = await user.json();
+    console.log(user_Data);
+
+    return user_Data;
   } catch (error) {
     console.error(error);
     throw new Error(error);
