@@ -47,6 +47,7 @@ public partial class CoPFinalProjectContext : DbContext
     public virtual DbSet<ServedIn> ServedIns { get; set; }
 
     public virtual DbSet<User> Users { get; set; }
+    public virtual DbSet<UserInKindergarten> UserInKindergartens { get; set; }
 
     protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
     {

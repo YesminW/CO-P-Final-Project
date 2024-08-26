@@ -10,6 +10,9 @@ namespace Co_P_WebAPI.Controllers
     {
         CoPFinalProjectContext db = new CoPFinalProjectContext();
 
+        //-----------------------------------------------------------------------------------------------------------------------------------------------------//
+        //GET - הבאת משתמשים//
+
         [HttpGet]
         [Route("getAllUsers")]
         public dynamic GetAllUsers()
@@ -40,6 +43,38 @@ namespace Co_P_WebAPI.Controllers
             return u;
         }
 
+        [HttpGet]
+        [Route("GetAllTeacher")]
+        public IActionResult GetAllUsersWithCode111()
+        {
+            var usersWithCode111 = db.Users
+                                     .Where(u => u.UserCode == 111)
+                                     .Select(u => new
+                                     {
+                                         u.UserPrivetName,
+                                         u.UserSurname
+                                     })
+                                     .ToList();
+
+            return Ok(usersWithCode111);
+        }
+        [HttpGet]
+        [Route("GetAllAssistants")]
+        public IActionResult GetAllAssistants()
+        {
+            var assistants = db.Users
+                               .Where(u => u.UserCode == 333)
+                               .Select(u => new
+                               {
+                                   u.UserPrivetName,
+                                   u.UserSurname
+                               })
+                               .ToList();
+
+            return Ok(assistants);
+        }
+        //-----------------------------------------------------------------------------------------------------------------------------------------------------//
+        //POST - העלאת משתמשים //
 
         [HttpPost]
         [Route("AddUser")]
@@ -62,15 +97,15 @@ namespace Co_P_WebAPI.Controllers
         }
 
         [HttpPost]
-        [Route("AddUserByExcel")]
-        public async Task<IActionResult> UploadUserExcel(IFormFile file)
+        [Route("UploadStaffExcel")]
+        public async Task<IActionResult> UploadStaffExcel(IFormFile file)
         {
             if (file == null || file.Length == 0)
             {
                 return BadRequest("Please upload a valid Excel file.");
             }
 
-            ExcelPackage.LicenseContext = OfficeOpenXml.LicenseContext.NonCommercial; // Set the license context
+            ExcelPackage.LicenseContext = OfficeOpenXml.LicenseContext.NonCommercial;
 
             var users = new List<User>();
 
@@ -79,54 +114,37 @@ namespace Co_P_WebAPI.Controllers
                 await file.CopyToAsync(stream);
                 using (var package = new ExcelPackage(stream))
                 {
-                    var worksheet = package.Workbook.Worksheets.First();
-                    if (worksheet.Dimension == null)
+                    var worksheet = package.Workbook.Worksheets.FirstOrDefault();
+                    if (worksheet == null || worksheet.Dimension == null)
                     {
                         return BadRequest("The Excel file is empty.");
                     }
-                    var rowCount = worksheet.Dimension.Rows;
-                    Console.WriteLine($"Row count: {rowCount}");
 
-                    for (int row = 2; row <= rowCount; row++) // Assuming the first row is the header
+                    var rowCount = worksheet.Dimension.Rows;
+                    for (int row = 2; row <= rowCount; row++) 
                     {
                         try
                         {
-                            var userId = worksheet.Cells[row, 1].Text;
-                            var userPrivetName = worksheet.Cells[row, 2].Text;
-                            var userSurname = worksheet.Cells[row, 3].Text;
-                            var userBirthDateStr = worksheet.Cells[row, 4].Text;
-                            DateTime userBirthDate;
-                            if (!DateTime.TryParse(userBirthDateStr, out userBirthDate))
+                            var userId = worksheet.Cells[row, 1].Text.Trim();
+                            var userPrivetName = worksheet.Cells[row, 2].Text.Trim();
+                            var userSurname = worksheet.Cells[row, 3].Text.Trim();
+                            var userBirthDateStr = worksheet.Cells[row, 4].Text.Trim();
+                            DateTime? userBirthDate = null;
+                            if (DateTime.TryParse(userBirthDateStr, out var parsedDate))
                             {
-                                return BadRequest($"Row {row} has invalid date format: {userBirthDateStr}");
+                                userBirthDate = parsedDate;
                             }
-                            var userAddress = worksheet.Cells[row, 5].Text;
-                            var userPhoneNumber = worksheet.Cells[row, 6].Text;
-                            var userGender = worksheet.Cells[row, 7].Text;
-                            var userEmail = worksheet.Cells[row, 8].Text;
-                            var userpPassword = worksheet.Cells[row, 9].Text;
-                            var userCodeStr = worksheet.Cells[row, 10].Text;
+                            var userAddress = worksheet.Cells[row, 5].Text.Trim();
+                            var userPhoneNumber = worksheet.Cells[row, 6].Text.Trim();
+                            var userGender = worksheet.Cells[row, 7].Text.Trim();
+                            var userEmail = worksheet.Cells[row, 8].Text.Trim();
+                            var userpPassword = worksheet.Cells[row, 9].Text.Trim();
+                            var userCodeStr = worksheet.Cells[row, 10].Text.Trim();
                             int userCode;
                             if (!int.TryParse(userCodeStr, out userCode))
                             {
-                                return BadRequest($"Row {row} has invalid number format in UserCode: {userCodeStr}");
+                                return BadRequest($"Row {row}: Invalid number format in column 'UserCode': {userCodeStr}");
                             }
-                            var currentAcademicYearStr = worksheet.Cells[row, 11].Text;
-                            int currentAcademicYear;
-                            if (!int.TryParse(currentAcademicYearStr, out currentAcademicYear))
-                            {
-                                return BadRequest($"Row {row} has invalid number format in CurrentAcademicYear: {currentAcademicYearStr}");
-                            }
-                            var KindergartenNumber = int.Parse(worksheet.Cells[row, 12].Text);
-
-                            //Check if the KindergartenNumber exists in the Kindergarten table
-                           var kindergarten = db.Kindergartens.FirstOrDefault(k => k.KindergartenNumber == KindergartenNumber);
-                            if (kindergarten == null)
-                            {
-                                return BadRequest($"Row {row} has invalid KindergartenName: {KindergartenNumber}");
-                            }
-
-                            var kindergartenNumber = kindergarten.KindergartenNumber;
 
                             var user = db.Users.FirstOrDefault(u => u.UserId == userId);
                             if (user == null)
@@ -143,23 +161,17 @@ namespace Co_P_WebAPI.Controllers
                                     UserEmail = userEmail,
                                     UserpPassword = userpPassword,
                                     UserCode = userCode,
-                                    CurrentAcademicYear = currentAcademicYear,
-                                    //KindergartenNumber = kindergartenNumber,
-
+                                    KindergartenNumber = null,  
+                                    CurrentAcademicYear = 0,   
+                                    UserPhotoName = null       
                                 };
 
                                 users.Add(newUser);
                             }
                         }
-                        catch (FormatException ex)
-                        {
-                            Console.WriteLine($"Row {row} has invalid data: {ex.Message}");
-                            return BadRequest($"Row {row} has invalid data: {ex.Message}");
-                        }
                         catch (Exception ex)
                         {
-                            Console.WriteLine($"Row {row} encountered an error: {ex.Message}");
-                            return BadRequest($"Row {row} encountered an error: {ex.Message}");
+                            return BadRequest($"Row {row}: An error occurred: {ex.Message}");
                         }
                     }
                 }
@@ -168,39 +180,95 @@ namespace Co_P_WebAPI.Controllers
             db.Users.AddRange(users);
             await db.SaveChangesAsync();
 
-            return Ok(new { Message = "Data imported successfully." });
+            return Ok(new { Message = "Staff data imported successfully." });
         }
 
+        [HttpPost]
+        [Route("UploadParentsExcel")]
+        public async Task<IActionResult> UploadParentsExcel(IFormFile file, string kindergartenNumber, int currentAcademicYear)
+        {
+            if (file == null || file.Length == 0)
+            {
+                return BadRequest("Please upload a valid Excel file.");
+            }
 
+            ExcelPackage.LicenseContext = OfficeOpenXml.LicenseContext.NonCommercial; 
 
-        //[HttpPost]
-        //public dynamic Parents(int code, int KindergartenNumber, int CurrentAcademicYear, string ID)
-        //{
-        //        var newP = new Parent
-        //        {
-        //            UserId = ID,
-        //            CurrentAcademicYear = CurrentAcademicYear,
-        //            KindergartenNumber = KindergartenNumber
-        //        };
-        //    db.Parents.Add(newP);
-        //    db.SaveChanges();
-        //    return Ok(new { Message = "Data imported successfully." });
+            var users = new List<User>();
 
-        //}
+            using (var stream = new MemoryStream())
+            {
+                await file.CopyToAsync(stream);
+                using (var package = new ExcelPackage(stream))
+                {
+                    var worksheet = package.Workbook.Worksheets.FirstOrDefault();
+                    if (worksheet == null || worksheet.Dimension == null)
+                    {
+                        return BadRequest("The Excel file is empty.");
+                    }
 
-        //[HttpPost]
-        //public dynamic Staff(int code, int KindergartenNumber, int CurrentAcademicYear, string ID)
-        //{
-        //        var newS = new StaffMember
-        //        {
-        //            UserId = ID,
-        //            CurrentAcademicYear = CurrentAcademicYear,
-        //            KindergartenNumber = KindergartenNumber
-        //        };
-        //    db.StaffMembers.Add(newS);
-        //    db.SaveChanges();
-        //    return Ok(new { Message = "Data imported successfully." });
-        //}
+                    var rowCount = worksheet.Dimension.Rows;
+                    for (int row = 2; row <= rowCount; row++) 
+                    {
+                        try
+                        {
+                            var userId = worksheet.Cells[row, 1].Text.Trim();
+                            var userPrivetName = worksheet.Cells[row, 2].Text.Trim();
+                            var userSurname = worksheet.Cells[row, 3].Text.Trim();
+                            var userBirthDateStr = worksheet.Cells[row, 4].Text.Trim();
+                            DateTime? userBirthDate = null;
+                            if (DateTime.TryParse(userBirthDateStr, out var parsedDate))
+                            {
+                                userBirthDate = parsedDate;
+                            }
+                            var userAddress = worksheet.Cells[row, 5].Text.Trim();
+                            var userPhoneNumber = worksheet.Cells[row, 6].Text.Trim();
+                            var userGender = worksheet.Cells[row, 7].Text.Trim();
+                            var userEmail = worksheet.Cells[row, 8].Text.Trim();
+                            var userpPassword = worksheet.Cells[row, 9].Text.Trim();
+                            var userCodeStr = worksheet.Cells[row, 10].Text.Trim();
+                            int userCode;
+                            if (!int.TryParse(userCodeStr, out userCode))
+                            {
+                                return BadRequest($"Row {row}: Invalid number format in column 'UserCode': {userCodeStr}");
+                            }
+
+                            var user = db.Users.FirstOrDefault(u => u.UserId == userId);
+                            if (user == null)
+                            {
+                                var newUser = new User
+                                {
+                                    UserId = userId,
+                                    UserPrivetName = userPrivetName,
+                                    UserSurname = userSurname,
+                                    UserBirthDate = userBirthDate,
+                                    UserAddress = userAddress,
+                                    UserPhoneNumber = userPhoneNumber,
+                                    UserGender = userGender,
+                                    UserEmail = userEmail,
+                                    UserpPassword = userpPassword,
+                                    UserCode = userCode,
+                                    KindergartenNumber = kindergartenNumber,  
+                                    CurrentAcademicYear = currentAcademicYear, 
+                                    UserPhotoName = null 
+                                };
+
+                                users.Add(newUser);
+                            }
+                        }
+                        catch (Exception ex)
+                        {
+                            return BadRequest($"Row {row}: An error occurred: {ex.Message}");
+                        }
+                    }
+                }
+            }
+
+            db.Users.AddRange(users);
+            await db.SaveChangesAsync();
+
+            return Ok(new { Message = "Parents data imported successfully." });
+        }
 
         [HttpPost]
         [Route("ManagerRegisterion")]
@@ -229,6 +297,42 @@ namespace Co_P_WebAPI.Controllers
             }
             return BadRequest(new { Message = "Manager already registerd" });
         }
+
+        //-----------------------------------------------------------------------------------------------------------------------------------------------------//
+        //PUT - עדכונים //
+
+        [HttpPut]
+        [Route("AssignStaffToKindergarten")]
+        public IActionResult AssignStaffToKindergarten(string kindergartenNumber, int currentAcademicYear, string firstName, string lastName)
+        {
+            var user = db.Users.FirstOrDefault(u => u.UserPrivetName == firstName && u.UserSurname == lastName);
+
+            if (user == null)
+            {
+                return NotFound(new { Message = "User not found with the given first name and last name." });
+            }
+
+            var userInKindergarten = new UserInKindergarten
+            {
+                StartDate = DateTime.Now,
+                CurrentAcademicYear = currentAcademicYear,
+                KindergartenNumber = kindergartenNumber,
+                UserID = user.UserId
+            };
+
+            db.UserInKindergartens.Add(userInKindergarten);
+
+            user.KindergartenNumber = kindergartenNumber;
+            user.CurrentAcademicYear = currentAcademicYear;
+            db.Users.Update(user);
+
+            db.SaveChanges();
+
+            return Ok(new { Message = "Staff assigned to kindergarten and user information updated successfully." });
+        }
+
+
+
 
         [HttpPut]
         [Route("updateUser/{ID}")]
@@ -266,6 +370,8 @@ namespace Co_P_WebAPI.Controllers
             }
 
         }
+        //-----------------------------------------------------------------------------------------------------------------------------------------------------//
+        //DELETE - מחיקת משתמש //
 
         [HttpDelete]
         [Route("DeleteUser")]

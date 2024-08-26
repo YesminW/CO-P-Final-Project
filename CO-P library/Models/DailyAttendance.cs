@@ -11,13 +11,9 @@ public partial class DailyAttendance
 
     public string ChildId { get; set; } = null!;
 
-    public int MorningPresence { get; set; }
-
-    public int AfternoonPresence { get; set; }
-
-    public virtual Attendance AfternoonPresenceNavigation { get; set; } = null!;
+    public string? AttendanceStatus { get; set; }
 
     public virtual Child Child { get; set; } = null!;
 
-    public virtual Attendance MorningPresenceNavigation { get; set; } = null!;
+   
 }
