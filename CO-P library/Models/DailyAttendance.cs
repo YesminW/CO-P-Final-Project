@@ -15,6 +15,6 @@ public partial class DailyAttendance
 
     public virtual Child Child { get; set; } = null!;
 
-    public virtual ICollection<Attendance> AttendanceStatus1Navigations { get; set; } = new List<Attendance>();
+    public virtual ICollection<Attendance> AttendanceNavigations { get; set; } = new List<Attendance>();
 
 }

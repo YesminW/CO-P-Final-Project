@@ -17,22 +17,22 @@ namespace Co_P_WebAPI.Controllers
             {
                 date = a.Date,
                 ChildName = a.Child.ChildFirstName + " " + a.Child.ChildSurname,
-                MorningPresence = a.MorningPresenceNavigation.AttendanceCodeName,
-                AfternoonPresence = a.AfternoonPresenceNavigation.AttendanceCodeName
+                //MorningPresence = a.MorningPresenceNavigation.AttendanceCodeName,
+                //AfternoonPresence = a.AfternoonPresenceNavigation.AttendanceCodeName
 
             });
 
             return attendace;
         }
 
-        [HttpGet]
-        [Route("CountAttendance")]
-        public dynamic CountAttendance()
-        {
-            var kids = db.Children.Count();
-            var Attendance = db.DailyAttendances.Where(x => x.Date == DateTime.Today && x.AttendanceStatus ==1).Count();
-            return ($"{Attendance} / {kids}");
-        }
+        //[HttpGet]
+        //[Route("CountAttendance")]
+        //public dynamic CountAttendance()
+        //{
+        //    var kids = db.Children.Count();
+        //    var Attendance = db.DailyAttendances.Where(x => x.Date == DateTime.Today && x.AttendanceStatus = 1).Count();
+        //    return ($"{Attendance} / {kids}");
+        //}
 
 
         [HttpPost]
