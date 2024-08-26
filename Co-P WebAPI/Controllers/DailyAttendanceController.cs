@@ -30,43 +30,48 @@ namespace Co_P_WebAPI.Controllers
         public dynamic CountAttendance()
         {
             var kids = db.Children.Count();
-            var Attendance = db.DailyAttendances.Where(x => x.Date == DateTime.Today && x.MorningPresence == 1 && x.AfternoonPresence == 0).Count();
+            var Attendance = db.DailyAttendances.Where(x => x.Date == DateTime.Today && x.AttendanceStatus ==1).Count();
             return ($"{Attendance} / {kids}");
         }
 
 
         [HttpPost]
-        [Route("AddMorningPresence")]
-        public dynamic addMorningPresence(string childID, int MorningP)
+        [Route("UpdateAttendanceStatus")]
+        public dynamic UpdateAttendanceStatus(string childID, DateTime date)
         {
-            DailyAttendance DA = new DailyAttendance();
-            DA.Date = DateTime.Today;
-            DA.ChildId = childID;
-            DA.MorningPresence = MorningP;
+            var dailyAttendance = db.DailyAttendances
+                .Where(x => x.ChildId == childID && x.Date == date)
+                .FirstOrDefault();
 
-            db.DailyAttendances.Add(DA);
-            db.SaveChanges();
-            return DA;
-
-        }
-
-        [HttpPost]
-        [Route("AddAfternoonPresence")]
-        public dynamic addAfternoonPresence(string ID, int AfternoonP)
-        {
-            var dateNow = DateTime.Today;
-            DailyAttendance daily = db.DailyAttendances.Where(x => x.ChildId == ID && x.Date == dateNow).FirstOrDefault();
-            if (daily == null)
+            if (dailyAttendance == null)
             {
-                return ("Child did not found");
+                // If no record is found, create a new one with status 1 (indicating morning presence)
+                DailyAttendance newAttendance = new DailyAttendance();
+                newAttendance.Date = date;
+                newAttendance.ChildId = childID;
+                newAttendance.AttendanceStatus = "1"; // Morning presence
+                db.DailyAttendances.Add(newAttendance);
+                db.SaveChanges();
+                return newAttendance;
             }
-            daily.AfternoonPresence = AfternoonP;
+            else
+            {
+                // Update the status if the record exists
+                if (dailyAttendance.AttendanceStatus == "0")
+                {
+                    dailyAttendance.AttendanceStatus = "1"; // Update to morning presence
+                }
+                else if (dailyAttendance.AttendanceStatus == "1")
+                {
+                    dailyAttendance.AttendanceStatus = "2"; // Update to afternoon presence
+                }
 
-            db.DailyAttendances.Update(daily);
-            db.SaveChanges();
-            return daily;
-
+                db.DailyAttendances.Update(dailyAttendance);
+                db.SaveChanges();
+                return dailyAttendance;
+            }
         }
+
 
     }
 }
