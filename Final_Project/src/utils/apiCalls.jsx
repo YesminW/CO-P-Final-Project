@@ -106,11 +106,27 @@ export async function UploadChildPhoto(data) {
   }
 }
 
-export async function addUserByExcel(file) {
+export async function uploadStaffExcel(file) {
   try {
     const formData = new FormData();
     formData.append("file", file);
-    const files = await await fetch(`${SERVER_URL}/AddUserByExcel`, {
+    const files = await await fetch(`${SERVER_URL}/UploadStaffExcel`, {
+      method: "POST",
+      body: formData,
+    });
+    const filesData = await files.json();
+    return filesData;
+  } catch (error) {
+    console.error(error);
+    throw new Error(error);
+  }
+}
+
+export async function uploadParentsExcel(file) {
+  try {
+    const formData = new FormData();
+    formData.append("file", file);
+    const files = await await fetch(`${SERVER_URL}/UploadParentsExcel`, {
       method: "POST",
       body: formData,
     });
