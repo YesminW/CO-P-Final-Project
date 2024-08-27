@@ -183,6 +183,30 @@ export async function getAllChild() {
   }
 }
 
+export async function getAllTeacher() {
+  try {
+    const response = await fetch(`${SERVER_URL}/GetAllTeacher`);
+    const data = await response.json();
+    console.log(data);
+    return data;
+  } catch (error) {
+    console.error(error);
+    throw new Error(error);
+  }
+}
+
+export async function getAllAssistants() {
+  try {
+    const response = await fetch(`${SERVER_URL}/GetAllAssistants`);
+    const data = await response.json();
+    console.log(data);
+    return data;
+  } catch (error) {
+    console.error(error);
+    throw new Error(error);
+  }
+}
+
 export async function managerRegisterion(details) {
   try {
     const response = await fetch(`${SERVER_URL}/ManagerRegisterion`, {

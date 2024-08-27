@@ -2,11 +2,15 @@ import React, { useEffect, useState } from "react";
 import { useParams, useNavigate, useLocation } from "react-router-dom";
 import { Button, Typography, FormControl } from "@mui/material";
 import CloudUploadIcon from "@mui/icons-material/CloudUpload";
-import { uploadParentsExcel } from "../../utils/apiCalls";
+import {
+  getAllAssistants,
+  getAllTeacher,
+  uploadParentsExcel,
+} from "../../utils/apiCalls";
 
 export default function KindergartenDetails() {
   const navigate = useNavigate();
-  const [sharingType, setSharingType] = useState("");
+  const [Teachers, setTeachers] = useState("");
   const [assistant1, setAssistant1] = useState("");
   const [assistant2, setAssistant2] = useState("");
   const [file, setFile] = useState(null);
@@ -16,12 +20,28 @@ export default function KindergartenDetails() {
 
   useEffect(() => {
     try {
+      async function getTeachers() {
+        try {
+          const Teacher = await getAllTeacher();
+          setTeachers(Teacher);
+        } catch (error) {
+          console.error(error);
+        }
+      }
+      getTeachers();
+    } catch (error) {}
+    try {
+      async function getAssistants() {
+        try {
+          const Assistants = await getAllAssistants();
+          setTeachers(Assistants);
+        } catch (error) {
+          console.error(error);
+        }
+      }
+      getAssistants();
     } catch (error) {}
   }, []);
-
-  const handleSharingTypeChange = (event) => {
-    setSharingType(event.target.value);
-  };
 
   const handleAssistant1Change = (event) => {
     setAssistant1(event.target.value);
@@ -74,13 +94,7 @@ export default function KindergartenDetails() {
         </h2>
       </div>
       <FormControl fullWidth margin="normal" style={{ width: "120%" }}>
-        <select
-          id="gender"
-          name="UserGender"
-          className="register-input"
-          onChange={handleSharingTypeChange}
-          value={sharingType}
-        >
+        <select id="gender" name="UserGender" className="register-input">
           <option value=" "> שיוך גננת</option>
           <option value="ליאת">ליאת</option>
           <option value="אור">אור</option>
@@ -93,7 +107,6 @@ export default function KindergartenDetails() {
             name="UserGender"
             className="register-input"
             onChange={handleAssistant1Change}
-            value={sharingType}
           >
             <option value=" "> שיוך סייעת</option>
             <option value="ליאת">ליאת</option>
@@ -106,7 +119,6 @@ export default function KindergartenDetails() {
             name="UserGender"
             className="register-input"
             onChange={handleAssistant2Change}
-            value={sharingType}
           >
             <option value=" "> שיוך סייעת</option>
             <option value="ליאת">ליאת</option>
