@@ -10,9 +10,12 @@ namespace CO_P_library.Models
     {
         public DateTime StartDate { get; set; }
         public string? KindergartenNumber { get; set; }
-
         public int CurrentAcademicYear { get; set; }
         public string? UserID { get; set; }
 
+        public virtual User User { get; set; }
+        public virtual Kindergarten Kindergarten { get; set; }
     }
+
 }
+

@@ -76,6 +76,10 @@ public partial class CoPFinalProjectContext : DbContext
             entity.Property(e => e.ActivityName).HasMaxLength(20);
         });
 
+        modelBuilder.Entity<UserInKindergarten>()
+        .HasKey(u => new { u.UserID, u.KindergartenNumber }); // מפתח ראשי מורכב
+
+
         modelBuilder.Entity<ActualActivity>(entity =>
         {
             entity.HasKey(e => e.ActuaActivityNumber).HasName("PK__Actual A__0A3025C91B064C46");
