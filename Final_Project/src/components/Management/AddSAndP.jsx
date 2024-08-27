@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import { Button, FormControl } from "@mui/material";
 import CloudUploadIcon from "@mui/icons-material/CloudUpload";
 import { Link, useNavigate } from "react-router-dom";
-import { addUserByExcel } from "../../utils/apiCalls";
+import { uploadStaffExcel } from "../../utils/apiCalls";
 
 export default function AddsAndP() {
   const [errors, setErrors] = useState({});
@@ -31,7 +31,7 @@ export default function AddsAndP() {
     e.preventDefault();
 
     try {
-      await addUserByExcel(file);
+      await uploadStaffExcel(file);
       navigate("/KindergartenManagement");
     } catch (error) {
       console.error(error);
@@ -68,7 +68,7 @@ export default function AddsAndP() {
               },
             }}
           >
-            העלאת קובץ משתמשים
+            העלאת קובץ צוות
             <CloudUploadIcon style={{ margin: "10px" }} />
           </Button>
         </label>

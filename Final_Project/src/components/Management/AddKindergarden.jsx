@@ -156,6 +156,27 @@ export default function AddKindergarden() {
               },
             }}
           >
+            העלאת קובץ פרטי הורים
+            {<CloudUploadIcon style={{ margin: "10px" }} />}
+          </Button>
+        </label>
+        {errors.file && <p>{errors.file}</p>}
+        <label htmlFor="profileFile">
+          <Button
+            variant="contained"
+            component="span"
+            style={{ marginBottom: 20 }}
+            sx={{
+              fontFamily: "Karantina",
+              fontSize: "20px",
+              margin: "20px",
+              color: "white",
+              backgroundColor: "#076871",
+              "&:hover": {
+                backgroundColor: "#6196A6",
+              },
+            }}
+          >
             העלאת קובץ פרטי ילדים
             {<CloudUploadIcon style={{ margin: "10px" }} />}
           </Button>
