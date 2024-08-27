@@ -161,6 +161,13 @@ export default function AddKindergarden() {
           </Button>
         </label>
         {errors.file && <p>{errors.file}</p>}
+        <input
+          accept=".xls,.xlsx"
+          type="file"
+          onChange={handleFileChange}
+          style={{ display: "none" }}
+          id="profileFile"
+        />
         <label htmlFor="profileFile">
           <Button
             variant="contained"

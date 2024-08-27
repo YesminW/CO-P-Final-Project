@@ -1,24 +1,23 @@
-import React, { useState } from "react";
-import { useParams, useNavigate } from "react-router-dom";
-import {
-  Box,
-  Button,
-  Typography,
-  MenuItem,
-  FormControl,
-  Select,
-  InputLabel,
-} from "@mui/material";
+import React, { useEffect, useState } from "react";
+import { useParams, useNavigate, useLocation } from "react-router-dom";
+import { Button, Typography, FormControl } from "@mui/material";
 import CloudUploadIcon from "@mui/icons-material/CloudUpload";
+import { uploadParentsExcel } from "../../utils/apiCalls";
 
 export default function KindergartenDetails() {
-  const { gardenName } = useParams();
   const navigate = useNavigate();
   const [sharingType, setSharingType] = useState("");
   const [assistant1, setAssistant1] = useState("");
   const [assistant2, setAssistant2] = useState("");
   const [file, setFile] = useState(null);
   const [fileError, setFileError] = useState("");
+  const location = useLocation();
+  const [kindergarten, setkindergarten] = useState(location.state);
+
+  useEffect(() => {
+    try {
+    } catch (error) {}
+  }, []);
 
   const handleSharingTypeChange = (event) => {
     setSharingType(event.target.value);
@@ -49,8 +48,11 @@ export default function KindergartenDetails() {
     }
   };
 
-  const handleSubmit = () => {
-    navigate("/KindergartenManagement");
+  const handleSubmit = async (a) => {
+    try {
+      await uploadParentsExcel(file, kindergarten.kindergartenNumber);
+      navigate("/KindergartenManagement");
+    } catch (error) {}
   };
 
   const handleDelete = () => {
@@ -68,7 +70,7 @@ export default function KindergartenDetails() {
       <div className="registerdiv">
         <h2 style={{ textAlign: "center", margin: 0 }}>
           {" "}
-          {decodeURIComponent(gardenName)}
+          {decodeURIComponent(kindergarten.kindergartenName)}
         </h2>
       </div>
       <FormControl fullWidth margin="normal" style={{ width: "120%" }}>
@@ -84,7 +86,6 @@ export default function KindergartenDetails() {
           <option value="אור">אור</option>
           <option value="יסמין">יסמין</option>
         </select>
-        {/* {errors.UserGender && <p className="perrors">{errors.UserGender}</p>} */}
         <br />
         <div className="two-column-grid">
           <select
@@ -99,7 +100,6 @@ export default function KindergartenDetails() {
             <option value="אור">אור</option>
             <option value="יסמין">יסמין</option>
           </select>
-          {/* {errors.UserGender && <p className="perrors">{errors.UserGender}</p>} */}
 
           <select
             id="gender"
@@ -113,7 +113,6 @@ export default function KindergartenDetails() {
             <option value="אור">אור</option>
             <option value="יסמין">יסמין</option>
           </select>
-          {/* {errors.UserGender && <p className="perrors">{errors.UserGender}</p>} */}
         </div>
       </FormControl>
       <FormControl fullWidth margin="normal">
@@ -123,7 +122,33 @@ export default function KindergartenDetails() {
           onChange={handleFileChange}
           style={{ display: "none" }}
           id="profileFile"
-          name="file"
+        />
+        <label htmlFor="profileFile">
+          <Button
+            variant="contained"
+            component="span"
+            style={{ marginBottom: 20 }}
+            sx={{
+              fontFamily: "Karantina",
+              fontSize: "20px",
+              margin: "20px",
+              color: "white",
+              backgroundColor: "#076871",
+              "&:hover": {
+                backgroundColor: "#6196A6",
+              },
+            }}
+          >
+            העלאת קובץ פרטי הורים
+            {<CloudUploadIcon style={{ margin: "10px" }} />}
+          </Button>
+        </label>
+        {/* <input
+          accept=".xls,.xlsx"
+          type="file"
+          onChange={handleFileChange}
+          style={{ display: "none" }}
+          id="profileFile"
         />
         <label htmlFor="profileFile">
           <Button
@@ -144,7 +169,7 @@ export default function KindergartenDetails() {
             העלאת קובץ פרטי ילדים
             {<CloudUploadIcon style={{ margin: "10px" }} />}
           </Button>
-        </label>
+        </label> */}
         {file && (
           <Typography variant="body2" style={{ color: "white" }}>
             {file.name}

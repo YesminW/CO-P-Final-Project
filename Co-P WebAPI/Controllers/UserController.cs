@@ -184,7 +184,7 @@ namespace Co_P_WebAPI.Controllers
         }
 
         [HttpPost]
-        [Route("UploadParentsExcel")]
+        [Route("UploadParentsExcel/{kindergartenNumber}/{currentAcademicYear}")]
         public async Task<IActionResult> UploadParentsExcel(IFormFile file, string kindergartenNumber, int currentAcademicYear)
         {
             if (file == null || file.Length == 0)

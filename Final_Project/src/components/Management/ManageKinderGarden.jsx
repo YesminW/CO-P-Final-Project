@@ -31,9 +31,8 @@ export default function KindergartenManagement() {
       {kindergartens.map((kindergarten, index) => (
         <Link
           key={index}
-          to={`/KindergartenDetails/${encodeURIComponent(
-            kindergarten.kindergartenName
-          )}`}
+          to={`/KindergartenDetails`}
+          state={kindergarten}
           style={{ textDecoration: "none", width: "100%" }}
         >
           <Button
@@ -42,9 +41,9 @@ export default function KindergartenManagement() {
               backgroundColor: "#B9DCD1",
               color: "white",
               margin: "10px 0",
-              width: "250px", // Increase width
-              height: "60px", // Increase height
-              fontSize: "28px", // Increase font size
+              width: "250px",
+              height: "60px",
+              fontSize: "28px",
               fontFamily: "Karantina",
               borderRadius: "10px",
             }}

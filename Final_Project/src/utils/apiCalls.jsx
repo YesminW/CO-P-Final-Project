@@ -110,7 +110,7 @@ export async function uploadStaffExcel(file) {
   try {
     const formData = new FormData();
     formData.append("file", file);
-    const files = await await fetch(`${SERVER_URL}/UploadStaffExcel`, {
+    const files = await fetch(`${SERVER_URL}/UploadStaffExcel`, {
       method: "POST",
       body: formData,
     });
@@ -122,14 +122,17 @@ export async function uploadStaffExcel(file) {
   }
 }
 
-export async function uploadParentsExcel(file) {
+export async function uploadParentsExcel(file, kindergartenNumber) {
   try {
     const formData = new FormData();
     formData.append("file", file);
-    const files = await await fetch(`${SERVER_URL}/UploadParentsExcel`, {
-      method: "POST",
-      body: formData,
-    });
+    const files = await fetch(
+      `${SERVER_URL}/UploadParentsExcel/${kindergartenNumber}/2024`,
+      {
+        method: "POST",
+        body: formData,
+      }
+    );
     const filesData = await files.json();
     return filesData;
   } catch (error) {
@@ -142,7 +145,7 @@ export async function addChildrenByExcel(file) {
   try {
     const formData = new FormData();
     formData.append("file", file);
-    const files = await await fetch(`${SERVER_URL}/AddChildrenByExcel`, {
+    const files = await fetch(`${SERVER_URL}/AddChildrenByExcel`, {
       method: "POST",
       body: formData,
     });
@@ -212,6 +215,7 @@ export async function getAllKindergartens() {
   try {
     const response = await fetch(`${SERVER_URL}/ShowKindergarten`);
     const data = await response.json();
+    console.log(data);
     return data;
   } catch (error) {
     console.error(error);

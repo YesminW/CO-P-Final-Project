@@ -59,7 +59,7 @@ function App() {
         element={<KindergartenManagement />}
       />
       <Route
-        path="/KindergartenDetails/:gardenName"
+        path="/KindergartenDetails"
         element={<KindergartenDetails />}
       />
       <Route path="/AddKindergarden" element={<AddKindergarden />} />
