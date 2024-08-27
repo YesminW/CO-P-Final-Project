@@ -168,20 +168,14 @@ public partial class CoPFinalProjectContext : DbContext
                 .HasColumnName("ChildID");
             entity.Property(e => e.Date).HasColumnType("datetime");
 
-            //entity.HasOne(d => d.AfternoonPresenceNavigation).WithMany(p => p.DailyAttendanceAfternoonPresenceNavigations)
-            //    .HasForeignKey(d => d.AfternoonPresence)
-            //    .OnDelete(DeleteBehavior.ClientSetNull)
-            //    .HasConstraintName("FK__DailyAtte__After__5070F446");
+            entity.Property(e => e.AttendanceStatus)
+            .HasMaxLength(1); 
 
             entity.HasOne(d => d.Child).WithMany(p => p.DailyAttendances)
                 .HasForeignKey(d => d.ChildId)
                 .OnDelete(DeleteBehavior.ClientSetNull)
                 .HasConstraintName("FK__DailyAtte__Child__5165187F");
 
-            //entity.HasOne(d => d.MorningPresenceNavigation).WithMany(p => p.DailyAttendanceMorningPresenceNavigations)
-            //    .HasForeignKey(d => d.MorningPresence)
-            //    .OnDelete(DeleteBehavior.ClientSetNull)
-            //    .HasConstraintName("FK__DailyAtte__Morni__52593CB8");
         });
 
         modelBuilder.Entity<DaySummary>(entity =>
