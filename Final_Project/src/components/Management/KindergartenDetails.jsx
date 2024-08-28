@@ -10,45 +10,39 @@ import {
 
 export default function KindergartenDetails() {
   const navigate = useNavigate();
-  const [Teachers, setTeachers] = useState("");
-  const [assistant1, setAssistant1] = useState("");
-  const [assistant2, setAssistant2] = useState("");
+  const [teachers, setTeachers] = useState([]);
+  const [assistants, setAssistants] = useState([]);
+  const [teacher, setTeacher] = useState({});
+  const [assistant1, setAssistant1] = useState({});
+  const [assistant2, setAssistant2] = useState({});
   const [file, setFile] = useState(null);
   const [fileError, setFileError] = useState("");
   const location = useLocation();
   const [kindergarten, setkindergarten] = useState(location.state);
 
   useEffect(() => {
-    try {
-      async function getTeachers() {
-        try {
-          const Teacher = await getAllTeacher();
-          setTeachers(Teacher);
-        } catch (error) {
-          console.error(error);
-        }
+    async function getData() {
+      try {
+        const [teacher, assistants] = await Promise.all([
+          getAllTeacher(),
+          getAllAssistants(),
+        ]);
+        setTeachers(teacher);
+        setAssistants(assistants);
+      } catch (error) {
+        console.error(error);
       }
-      getTeachers();
-    } catch (error) {}
-    try {
-      async function getAssistants() {
-        try {
-          const Assistants = await getAllAssistants();
-          setTeachers(Assistants);
-        } catch (error) {
-          console.error(error);
-        }
-      }
-      getAssistants();
-    } catch (error) {}
+    }
+
+    getData();
   }, []);
 
   const handleAssistant1Change = (event) => {
-    setAssistant1(event.target.value);
+    setAssistant1(JSON.parse(event.target.value));
   };
 
   const handleAssistant2Change = (event) => {
-    setAssistant2(event.target.value);
+    setAssistant2(JSON.parse(event.target.value));
   };
 
   const handleFileChange = (event) => {
@@ -96,9 +90,11 @@ export default function KindergartenDetails() {
       <FormControl fullWidth margin="normal" style={{ width: "120%" }}>
         <select id="gender" name="UserGender" className="register-input">
           <option value=" "> שיוך גננת</option>
-          <option value="ליאת">ליאת</option>
-          <option value="אור">אור</option>
-          <option value="יסמין">יסמין</option>
+          {teachers.map((t) => (
+            <option value={t} key={t.userPrivetName}>
+              {t.userPrivetName} {t.userSurname}
+            </option>
+          ))}
         </select>
         <br />
         <div className="two-column-grid">
@@ -108,10 +104,17 @@ export default function KindergartenDetails() {
             className="register-input"
             onChange={handleAssistant1Change}
           >
-            <option value=" "> שיוך סייעת</option>
-            <option value="ליאת">ליאת</option>
-            <option value="אור">אור</option>
-            <option value="יסמין">יסמין</option>
+            <option value={JSON.stringify({})}> שיוך סייעת</option>
+            {assistants
+              .filter(
+                (a) =>
+                  !Object.keys(a).every((key) => a[key] === assistant2[key])
+              )
+              .map((a) => (
+                <option value={JSON.stringify(a)} key={a.userPrivetName}>
+                  {a.userPrivetName} {a.userSurname}
+                </option>
+              ))}
           </select>
 
           <select
@@ -120,10 +123,17 @@ export default function KindergartenDetails() {
             className="register-input"
             onChange={handleAssistant2Change}
           >
-            <option value=" "> שיוך סייעת</option>
-            <option value="ליאת">ליאת</option>
-            <option value="אור">אור</option>
-            <option value="יסמין">יסמין</option>
+            <option value={JSON.stringify({})}> שיוך סייעת</option>
+            {assistants
+              .filter(
+                (a) =>
+                  !Object.keys(a).every((key) => a[key] === assistant1[key])
+              )
+              .map((a) => (
+                <option value={JSON.stringify(a)} key={a.userPrivetName}>
+                  {a.userPrivetName} {a.userSurname}
+                </option>
+              ))}
           </select>
         </div>
       </FormControl>
