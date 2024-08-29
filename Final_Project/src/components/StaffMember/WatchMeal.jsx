@@ -23,7 +23,6 @@ const WatchMeal = () => {
           date,
           kindergartenNumber
         );
-        console.log(data);
         const meals = { בוקר: "", צהריים: "", ארבע: "", פינוק: "" };
         for (const meal of data) {
           meals[meal.maelName] = meal.mealDetails;
@@ -47,7 +46,6 @@ const WatchMeal = () => {
     e.preventDefault();
     const formData = new FormData(e.target);
     const data = Object.fromEntries(formData);
-    console.log(data);
   }
 
   return (

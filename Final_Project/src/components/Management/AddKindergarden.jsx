@@ -1,7 +1,7 @@
 import React, { useState } from "react";
-import { TextField, Button, FormControl } from "@mui/material";
-import CloudUploadIcon from "@mui/icons-material/CloudUpload";
+import { FormControl } from "@mui/material";
 import { Link, useNavigate } from "react-router-dom";
+import { addKindergarten } from "../../utils/apiCalls";
 
 export default function AddKindergarden() {
   const [errors, setErrors] = useState({});
@@ -10,8 +10,6 @@ export default function AddKindergarden() {
     KindergartenName: "",
     KindergartenAddress: "",
   });
-
-  const [file, setFile] = useState("");
 
   const validateForm = () => {
     const newErrors = {};
@@ -37,67 +35,18 @@ export default function AddKindergarden() {
     }));
   };
 
-  const handleFileChange = (e) => {
-    const selectedFile = e.target.files[0];
-    if (selectedFile) {
-      const fileExtension = selectedFile.name.split(".").pop().toLowerCase();
-      if (fileExtension === "xls" || fileExtension === "xlsx") {
-        setFile(selectedFile);
-        setErrors((prevErrors) => ({ ...prevErrors, file: "" }));
-      } else {
-        setFile(null);
-        setErrors((prevErrors) => ({
-          ...prevErrors,
-          file: "Invalid file type. Only .xls and .xlsx are allowed.",
-        }));
-      }
-    }
-  };
-
   const handleSubmit = async (e) => {
     e.preventDefault();
-
-    if (validateForm()) {
-      const apiurl = "http://localhost:5108/AddKindergarten";
-      const urlExcelC = "http://localhost:5108/AddChildrenByExcel";
-
-      const formData = new FormData();
-      formData.append("file", file);
-
+    if (validateForm) {
       try {
-        const [addKindergartenResponse, addUserByExcelResponse] =
-          await Promise.all([
-            fetch(
-              apiurl +
-                "/" +
-                formValues.KindergartenName +
-                "/" +
-                formValues.KindergartenAddress,
-              {
-                method: "POST",
-                headers: {
-                  "Content-Type": "application/json",
-                },
-              }
-            ).then((res) => {
-              if (!res.ok) throw new Error("Failed to add kindergarten");
-              return res.json();
-            }),
-            fetch(urlExcelC, {
-              method: "POST",
-              body: formData,
-            }).then((res) => {
-              if (!res.ok) throw new Error("Failed to add Childs by excel");
-              return res.json();
-            }),
-          ]);
-
+        addKindergarten(
+          formValues.KindergartenName,
+          formValues.KindergartenAddress
+        );
         navigate("/KindergartenManagement");
       } catch (error) {
-        console.error("Error:", error);
+        console.error(error);
       }
-    } else {
-      console.log("Form has validation errors. Cannot submit.");
     }
   };
 
@@ -131,59 +80,6 @@ export default function AddKindergarden() {
           <p className="perrors">{errors.KindergartenAddress}</p>
         )}
       </FormControl>
-
-      <FormControl fullWidth margin="normal">
-        <input
-          accept=".xls,.xlsx"
-          type="file"
-          onChange={handleFileChange}
-          style={{ display: "none" }}
-          id="profileFile"
-        />
-        <label htmlFor="profileFile">
-          <Button
-            variant="contained"
-            component="span"
-            style={{ marginBottom: 20 }}
-            sx={{
-              fontFamily: "Karantina",
-              fontSize: "20px",
-              margin: "20px",
-              color: "white",
-              backgroundColor: "#076871",
-              "&:hover": {
-                backgroundColor: "#6196A6",
-              },
-            }}
-          >
-            העלאת קובץ פרטי הורים
-            {<CloudUploadIcon style={{ margin: "10px" }} />}
-          </Button>
-        </label>
-        {errors.file && <p>{errors.file}</p>}
-        <label htmlFor="profileFile">
-          <Button
-            variant="contained"
-            component="span"
-            style={{ marginBottom: 20 }}
-            sx={{
-              fontFamily: "Karantina",
-              fontSize: "20px",
-              margin: "20px",
-              color: "white",
-              backgroundColor: "#076871",
-              "&:hover": {
-                backgroundColor: "#6196A6",
-              },
-            }}
-          >
-            העלאת קובץ פרטי ילדים
-            {<CloudUploadIcon style={{ margin: "10px" }} />}
-          </Button>
-        </label>
-        {errors.file && <p>{errors.file}</p>}
-      </FormControl>
-
       <div
         style={{
           display: "flex",

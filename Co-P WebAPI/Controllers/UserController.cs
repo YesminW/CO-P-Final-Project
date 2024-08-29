@@ -182,7 +182,7 @@ namespace Co_P_WebAPI.Controllers
         }
 
         [HttpPost]
-        [Route("UploadParentsExcel")]
+        [Route("UploadParentsExcel/{kindergartenNumber}/{currentAcademicYear}")]
         public async Task<IActionResult> UploadParentsExcel(IFormFile file, string kindergartenNumber, int currentAcademicYear)
         {
             if (file == null || file.Length == 0)
@@ -300,7 +300,7 @@ namespace Co_P_WebAPI.Controllers
         //PUT - עדכונים //
 
         [HttpPut]
-        [Route("AssignStaffToKindergarten")]
+        [Route("AssignStaffToKindergarten/{kindergartenNumber}/{currentAcademicYear}/{firstName}/{lastName}")]
         public IActionResult AssignStaffToKindergarten(string kindergartenNumber, int currentAcademicYear, string firstName, string lastName)
         {
             var user = db.Users.FirstOrDefault(u => u.UserPrivetName == firstName && u.UserSurname == lastName);

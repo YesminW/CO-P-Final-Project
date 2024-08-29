@@ -13,7 +13,6 @@ export async function login(data) {
       }),
     });
     const user_Data = await user.json();
-    console.log(user_Data);
 
     return user_Data;
   } catch (error) {
@@ -110,7 +109,7 @@ export async function uploadStaffExcel(file) {
   try {
     const formData = new FormData();
     formData.append("file", file);
-    const files = await await fetch(`${SERVER_URL}/UploadStaffExcel`, {
+    const files = await fetch(`${SERVER_URL}/UploadStaffExcel`, {
       method: "POST",
       body: formData,
     });
@@ -122,14 +121,21 @@ export async function uploadStaffExcel(file) {
   }
 }
 
-export async function uploadParentsExcel(file) {
+export async function uploadParentsExcel(
+  file,
+  kindergartenNumber,
+  currentYear
+) {
   try {
     const formData = new FormData();
     formData.append("file", file);
-    const files = await await fetch(`${SERVER_URL}/UploadParentsExcel`, {
-      method: "POST",
-      body: formData,
-    });
+    const files = await fetch(
+      `${SERVER_URL}/UploadParentsExcel/${kindergartenNumber}/${currentYear}`,
+      {
+        method: "POST",
+        body: formData,
+      }
+    );
     const filesData = await files.json();
     return filesData;
   } catch (error) {
@@ -142,7 +148,7 @@ export async function addChildrenByExcel(file) {
   try {
     const formData = new FormData();
     formData.append("file", file);
-    const files = await await fetch(`${SERVER_URL}/AddChildrenByExcel`, {
+    const files = await fetch(`${SERVER_URL}/AddChildrenByExcel`, {
       method: "POST",
       body: formData,
     });
@@ -180,6 +186,28 @@ export async function getAllChild() {
   }
 }
 
+export async function getAllTeacher() {
+  try {
+    const response = await fetch(`${SERVER_URL}/GetAllTeacher`);
+    const data = await response.json();
+    return data;
+  } catch (error) {
+    console.error(error);
+    throw new Error(error);
+  }
+}
+
+export async function getAllAssistants() {
+  try {
+    const response = await fetch(`${SERVER_URL}/GetAllAssistants`);
+    const data = await response.json();
+    return data;
+  } catch (error) {
+    console.error(error);
+    throw new Error(error);
+  }
+}
+
 export async function managerRegisterion(details) {
   try {
     const response = await fetch(`${SERVER_URL}/ManagerRegisterion`, {
@@ -189,6 +217,25 @@ export async function managerRegisterion(details) {
         "Content-Type": "application/json; charset=UTF-8",
       }),
     });
+    const data = await response.json();
+    return data;
+  } catch (error) {
+    console.error(error);
+    throw new Error(error);
+  }
+}
+
+export async function addKindergarten(KindergartenName, KindergartenAddress) {
+  try {
+    const response = await fetch(
+      `${SERVER_URL}/AddKindergarten/${KindergartenName}/${KindergartenAddress}`,
+      {
+        method: "POST",
+        headers: new Headers({
+          "Content-Type": "application/json; charset=UTF-8",
+        }),
+      }
+    );
     const data = await response.json();
     return data;
   } catch (error) {
@@ -222,6 +269,60 @@ export async function getAllKindergartens() {
 export async function getAllChildDuty() {
   try {
     const response = await fetch(`${SERVER_URL}/allDuties`);
+    const data = await response.json();
+    return data;
+  } catch (error) {
+    console.error(error);
+    throw new Error(error);
+  }
+}
+
+export async function assignStaffToKindergarten(
+  kindergartenNumber,
+  currentAcademicYear,
+  firstName,
+  lastName
+) {
+  try {
+    const data = await fetch(
+      `${SERVER_URL}/AssignStaffToKindergarten/${kindergartenNumber}/${currentAcademicYear}/${firstName}/${lastName}`,
+      {
+        method: "PUT",
+        headers: new Headers({
+          "Content-Type": "application/json; charset=UTF-8",
+        }),
+      }
+    );
+    const Data = await data.json();
+    return Data;
+  } catch (error) {
+    console.error(error);
+    throw new Error(error);
+  }
+}
+
+export async function getDailyAttendance(date) {
+  try {
+    const response = await fetch(`${SERVER_URL}/GetDailyAttendance/${date}`);
+    const data = await response.json();
+    return data;
+  } catch (error) {
+    console.error(error);
+    throw new Error(error);
+  }
+}
+
+export async function updateChildAttendence(childID, date) {
+  try {
+    const response = await fetch(
+      `${SERVER_URL}/UpdateAttendanceStatus/${childID}/${date}`,
+      {
+        method: "POST",
+        headers: new Headers({
+          "Content-Type": "application/json; charset=UTF-8",
+        }),
+      }
+    );
     const data = await response.json();
     return data;
   } catch (error) {
