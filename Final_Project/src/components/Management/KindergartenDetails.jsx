@@ -89,21 +89,21 @@ export default function KindergartenDetails() {
 
   const handleSubmit = async (a) => {
     try {
-      teacher &&
+      Object.keys(teacher).length > 0 &&
         (await assignStaffToKindergarten(
           kindergarten.kindergartenNumber,
           currentYear,
           teacher.userPrivetName,
           teacher.userSurname
         ));
-      assistant1 &&
+      Object.keys(assistant1).length > 0 &&
         (await assignStaffToKindergarten(
           kindergarten.kindergartenNumber,
           currentYear,
           assistant1.userPrivetName,
           assistant1.userSurname
         ));
-      assistant2 &&
+      Object.keys(assistant2).length > 0 &&
         (await assignStaffToKindergarten(
           kindergarten.kindergartenNumber,
           currentYear,

@@ -300,3 +300,33 @@ export async function assignStaffToKindergarten(
     throw new Error(error);
   }
 }
+
+export async function getDailyAttendance(date) {
+  try {
+    const response = await fetch(`${SERVER_URL}/GetDailyAttendance/${date}`);
+    const data = await response.json();
+    return data;
+  } catch (error) {
+    console.error(error);
+    throw new Error(error);
+  }
+}
+
+export async function updateChildAttendence(childID, date) {
+  try {
+    const response = await fetch(
+      `${SERVER_URL}/UpdateAttendanceStatus/${childID}/${date}`,
+      {
+        method: "POST",
+        headers: new Headers({
+          "Content-Type": "application/json; charset=UTF-8",
+        }),
+      }
+    );
+    const data = await response.json();
+    return data;
+  } catch (error) {
+    console.error(error);
+    throw new Error(error);
+  }
+}

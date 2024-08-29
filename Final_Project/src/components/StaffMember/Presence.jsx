@@ -12,27 +12,55 @@ import EfooterS from "../../Elements/EfooterS";
 import defaultimg from "/Images/default.png";
 
 import "../../assets/StyleSheets/Presence.css";
-import { getAllChild } from "../../utils/apiCalls";
+import {
+  getAllChild,
+  getDailyAttendance,
+  updateChildAttendence,
+} from "../../utils/apiCalls";
+import { formatForCSharp } from "../../utils/functions";
 
 export default function Presence() {
   const [childrenData, setChildrenData] = useState([]); // Use a descriptive name
-  const [selectedStudentId, setSelectedStudentId] = useState(null); // Track selected student
+  const [attendanceData, setAttendance] = useState([]); // Track selected student
 
   useEffect(() => {
-    const fetchStudents = async () => {
+    const fetchData = async () => {
       try {
-        const children = await getAllChild();
+        const [children, attendance] = await Promise.all([
+          getAllChild(),
+          getDailyAttendance(formatForCSharp(new Date())),
+        ]);
+
+        console.log(attendance);
+
         setChildrenData(children);
+        setAttendance(attendance);
       } catch (error) {
         console.error("Error fetching students:", error);
       }
     };
 
-    fetchStudents();
+    fetchData();
   }, []);
 
-  const handleStudentClick = (childId) => {
-    setSelectedStudentId(childId); // Toggle selection
+  const handleStudentClick = async (childId) => {
+    try {
+      const attendence = await updateChildAttendence(
+        childId,
+        formatForCSharp(new Date())
+      );
+      console.log(attendence);
+      setAttendance((prev) => {
+        if (prev.includes(attendence)) {
+        }
+        prev.find(
+          (p) => p.dailyAttendanceId === attendence.dailyAttendanceId
+        ).attendanceStatus = attendence.attendanceStatus;
+        return prev;
+      });
+    } catch (error) {
+      console.error(error);
+    }
   };
 
   return (
@@ -64,12 +92,23 @@ export default function Presence() {
           <Box className="students-grid">
             {childrenData.map((student) => (
               <Box
-                key={student.childId} // שימוש ב-ID ייחודי
+                key={student.childId}
                 className={`student-circle ${
-                  selectedStudentId === student.childId &&
-                  "student-circle-present"
-                }`} // Use a clear class for selection
-                onClick={() => handleStudentClick(student.childId)} // Handle click event
+                  // children
+                  // atte
+                  // atten has child.id
+                  attendanceData.find((a) => a.childId === student.childId) &&
+                  (attendanceData.find((a) => a.childId === student.childId)[
+                    "attendanceStatus"
+                  ] === "1"
+                    ? "student-circle-present"
+                    : attendanceData.find((a) => a.childId === student.childId)[
+                        "attendanceStatus"
+                      ] === "2"
+                    ? "student-circle-went-home"
+                    : "")
+                }`}
+                onClick={() => handleStudentClick(student.childId)}
               >
                 <Avatar
                   src={student.imgSrc || defaultimg}
