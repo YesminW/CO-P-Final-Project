@@ -47,7 +47,7 @@ public partial class CoPFinalProjectContext : DbContext
     public virtual DbSet<ServedIn> ServedIns { get; set; }
 
     public virtual DbSet<User> Users { get; set; }
-    public virtual DbSet<UserInKindergarten> UserInKindergartens { get; set; }
+    public DbSet<UserInKindergarten> UserInKindergartens { get; set; }
 
     protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
     {
@@ -78,9 +78,10 @@ public partial class CoPFinalProjectContext : DbContext
 
         modelBuilder.Entity<UserInKindergarten>()
         .HasKey(u => new { u.UserID, u.KindergartenNumber }); // מפתח ראשי מורכב
+        modelBuilder.Entity<UserInKindergarten>()
+         .ToTable("UserInKindergarten"); // בלי "s" בסוף
 
-
-        modelBuilder.Entity<ActualActivity>(entity =>
+                modelBuilder.Entity<ActualActivity>(entity =>
         {
             entity.HasKey(e => e.ActuaActivityNumber).HasName("PK__Actual A__0A3025C91B064C46");
 

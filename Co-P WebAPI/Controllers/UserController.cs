@@ -29,10 +29,8 @@ namespace Co_P_WebAPI.Controllers
                 UserEmail = x.UserEmail,
                 UserpPassword = x.UserpPassword,
                 UserCode = x.UserCode,
-
             });
             return users;
-
         }
 
         [HttpGet]
@@ -58,6 +56,7 @@ namespace Co_P_WebAPI.Controllers
 
             return Ok(usersWithCode111);
         }
+
         [HttpGet]
         [Route("GetAllAssistants")]
         public IActionResult GetAllAssistants()
@@ -104,7 +103,6 @@ namespace Co_P_WebAPI.Controllers
             {
                 return BadRequest("Please upload a valid Excel file.");
             }
-
             ExcelPackage.LicenseContext = OfficeOpenXml.LicenseContext.NonCommercial;
 
             var users = new List<User>();
@@ -311,16 +309,6 @@ namespace Co_P_WebAPI.Controllers
             {
                 return NotFound(new { Message = "User not found with the given first name and last name." });
             }
-
-            var userInKindergarten = new UserInKindergarten
-            {
-                StartDate = DateTime.Now,
-                CurrentAcademicYear = currentAcademicYear,
-                KindergartenNumber = kindergartenNumber,
-                UserID = user.UserId
-            };
-
-            db.UserInKindergartens.Add(userInKindergarten);
 
             user.KindergartenNumber = kindergartenNumber;
             user.CurrentAcademicYear = currentAcademicYear;
