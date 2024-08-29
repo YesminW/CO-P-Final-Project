@@ -122,12 +122,16 @@ export async function uploadStaffExcel(file) {
   }
 }
 
-export async function uploadParentsExcel(file, kindergartenNumber) {
+export async function uploadParentsExcel(
+  file,
+  kindergartenNumber,
+  currentYear
+) {
   try {
     const formData = new FormData();
     formData.append("file", file);
     const files = await fetch(
-      `${SERVER_URL}/UploadParentsExcel/${kindergartenNumber}/2024`,
+      `${SERVER_URL}/UploadParentsExcel/${kindergartenNumber}/${currentYear}`,
       {
         method: "POST",
         body: formData,
@@ -222,6 +226,25 @@ export async function managerRegisterion(details) {
   }
 }
 
+export async function addKindergarten(KindergartenName, KindergartenAddress) {
+  try {
+    const response = await fetch(
+      `${SERVER_URL}/AddKindergarten/${KindergartenName}/${KindergartenAddress}`,
+      {
+        method: "POST",
+        headers: new Headers({
+          "Content-Type": "application/json; charset=UTF-8",
+        }),
+      }
+    );
+    const data = await response.json();
+    return data;
+  } catch (error) {
+    console.error(error);
+    throw new Error(error);
+  }
+}
+
 export async function fetchBirthdays() {
   try {
     const birthdays = await fetch(`${SERVER_URL}/current-month-birthdays`);
@@ -237,7 +260,6 @@ export async function getAllKindergartens() {
   try {
     const response = await fetch(`${SERVER_URL}/ShowKindergarten`);
     const data = await response.json();
-    console.log(data);
     return data;
   } catch (error) {
     console.error(error);
@@ -250,6 +272,30 @@ export async function getAllChildDuty() {
     const response = await fetch(`${SERVER_URL}/allDuties`);
     const data = await response.json();
     return data;
+  } catch (error) {
+    console.error(error);
+    throw new Error(error);
+  }
+}
+
+export async function assignStaffToKindergarten(
+  kindergartenNumber,
+  currentAcademicYear,
+  firstName,
+  lastName
+) {
+  try {
+    const data = await fetch(
+      `${SERVER_URL}/AssignStaffToKindergarten/${kindergartenNumber}/${currentAcademicYear}/${firstName}/${lastName}`,
+      {
+        method: "PUT",
+        headers: new Headers({
+          "Content-Type": "application/json; charset=UTF-8",
+        }),
+      }
+    );
+    const Data = await data.json();
+    return Data;
   } catch (error) {
     console.error(error);
     throw new Error(error);

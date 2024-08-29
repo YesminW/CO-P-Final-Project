@@ -302,7 +302,7 @@ namespace Co_P_WebAPI.Controllers
         //PUT - עדכונים //
 
         [HttpPut]
-        [Route("AssignStaffToKindergarten")]
+        [Route("AssignStaffToKindergarten/{kindergartenNumber}/{currentAcademicYear}/{firstName}/{lastName}")]
         public IActionResult AssignStaffToKindergarten(string kindergartenNumber, int currentAcademicYear, string firstName, string lastName)
         {
             var user = db.Users.FirstOrDefault(u => u.UserPrivetName == firstName && u.UserSurname == lastName);

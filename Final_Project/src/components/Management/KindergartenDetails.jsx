@@ -3,6 +3,8 @@ import { useParams, useNavigate, useLocation } from "react-router-dom";
 import { Button, Typography, FormControl } from "@mui/material";
 import CloudUploadIcon from "@mui/icons-material/CloudUpload";
 import {
+  addChildrenByExcel,
+  assignStaffToKindergarten,
   getAllAssistants,
   getAllTeacher,
   uploadParentsExcel,
@@ -16,9 +18,12 @@ export default function KindergartenDetails() {
   const [assistant1, setAssistant1] = useState({});
   const [assistant2, setAssistant2] = useState({});
   const [file, setFile] = useState(null);
+  const [file2, setFile2] = useState(null);
   const [fileError, setFileError] = useState("");
+  const [file2Error, setFile2Error] = useState("");
   const location = useLocation();
   const [kindergarten, setkindergarten] = useState(location.state);
+  const currentYear = new Date().getFullYear();
 
   useEffect(() => {
     async function getData() {
@@ -36,6 +41,10 @@ export default function KindergartenDetails() {
 
     getData();
   }, []);
+
+  const handleTeacher = (event) => {
+    setTeacher(JSON.parse(event.target.value));
+  };
 
   const handleAssistant1Change = (event) => {
     setAssistant1(JSON.parse(event.target.value));
@@ -61,12 +70,57 @@ export default function KindergartenDetails() {
       setFileError("יש להעלות קובץ מסוג Excel בלבד (.xls, .xlsx)");
     }
   };
+  const handleFile2Change = (event) => {
+    const selectedFile = event.target.files[0];
+    const fileType = selectedFile.type;
+    const allowedTypes = [
+      "application/vnd.ms-excel",
+      "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet",
+    ];
+
+    if (allowedTypes.includes(fileType)) {
+      setFile2(selectedFile);
+      setFile2Error("");
+    } else {
+      setFile2(null);
+      setFile2Error("יש להעלות קובץ מסוג Excel בלבד (.xls, .xlsx)");
+    }
+  };
 
   const handleSubmit = async (a) => {
     try {
-      await uploadParentsExcel(file, kindergarten.kindergartenNumber);
+      teacher &&
+        (await assignStaffToKindergarten(
+          kindergarten.kindergartenNumber,
+          currentYear,
+          teacher.userPrivetName,
+          teacher.userSurname
+        ));
+      assistant1 &&
+        (await assignStaffToKindergarten(
+          kindergarten.kindergartenNumber,
+          currentYear,
+          assistant1.userPrivetName,
+          assistant1.userSurname
+        ));
+      assistant2 &&
+        (await assignStaffToKindergarten(
+          kindergarten.kindergartenNumber,
+          currentYear,
+          assistant2.userPrivetName,
+          assistant2.userSurname
+        ));
+      file &&
+        (await uploadParentsExcel(
+          file,
+          kindergarten.kindergartenNumber,
+          currentYear
+        ));
+      file2 && (await addChildrenByExcel(file2));
       navigate("/KindergartenManagement");
-    } catch (error) {}
+    } catch (error) {
+      console.error(error);
+    }
   };
 
   const handleDelete = () => {
@@ -88,10 +142,15 @@ export default function KindergartenDetails() {
         </h2>
       </div>
       <FormControl fullWidth margin="normal" style={{ width: "120%" }}>
-        <select id="gender" name="UserGender" className="register-input">
-          <option value=" "> שיוך גננת</option>
+        <select
+          id="gender"
+          name="UserGender"
+          className="register-input"
+          onChange={handleTeacher}
+        >
+          <option value={JSON.stringify({})}> שיוך גננת</option>
           {teachers.map((t) => (
-            <option value={t} key={t.userPrivetName}>
+            <option value={JSON.stringify(t)} key={t.userPrivetName}>
               {t.userPrivetName} {t.userSurname}
             </option>
           ))}
@@ -164,18 +223,28 @@ export default function KindergartenDetails() {
             העלאת קובץ פרטי הורים
             {<CloudUploadIcon style={{ margin: "10px" }} />}
           </Button>
+          {file && (
+            <Typography variant="body2" style={{ color: "white" }}>
+              {file.name}
+            </Typography>
+          )}
+          {fileError && (
+            <Typography variant="body2" style={{ color: "red" }}>
+              {fileError}
+            </Typography>
+          )}
         </label>
-        {/* <input
+        <input
           accept=".xls,.xlsx"
           type="file"
-          onChange={handleFileChange}
+          onChange={handleFile2Change}
           style={{ display: "none" }}
-          id="profileFile"
+          id="profileFile2"
         />
-        <label htmlFor="profileFile">
+        <label htmlFor="profileFile2">
           <Button
             variant="contained"
-            component="label"
+            component="span"
             style={{ marginBottom: 20 }}
             sx={{
               fontFamily: "Karantina",
@@ -191,17 +260,17 @@ export default function KindergartenDetails() {
             העלאת קובץ פרטי ילדים
             {<CloudUploadIcon style={{ margin: "10px" }} />}
           </Button>
-        </label> */}
-        {file && (
-          <Typography variant="body2" style={{ color: "white" }}>
-            {file.name}
-          </Typography>
-        )}
-        {fileError && (
-          <Typography variant="body2" style={{ color: "red" }}>
-            {fileError}
-          </Typography>
-        )}
+          {file2 && (
+            <Typography variant="body2" style={{ color: "white" }}>
+              {file2.name}
+            </Typography>
+          )}
+          {file2Error && (
+            <Typography variant="body2" style={{ color: "red" }}>
+              {file2Error}
+            </Typography>
+          )}
+        </label>
       </FormControl>
 
       <Button
