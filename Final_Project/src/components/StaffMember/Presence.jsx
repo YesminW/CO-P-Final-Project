@@ -17,7 +17,6 @@ import { getAllChild } from "../../utils/apiCalls";
 export default function Presence() {
   const [childrenData, setChildrenData] = useState([]); // Use a descriptive name
   const [selectedStudentId, setSelectedStudentId] = useState(null); // Track selected student
-  console.log(childrenData);
 
   useEffect(() => {
     const fetchStudents = async () => {

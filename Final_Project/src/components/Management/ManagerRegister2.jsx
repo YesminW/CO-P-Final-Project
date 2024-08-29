@@ -59,7 +59,6 @@ export default function AdditionalRegistrationForm(props) {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    console.log(formValues);
 
     if (validateForm()) {
       try {

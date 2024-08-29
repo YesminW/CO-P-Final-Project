@@ -129,7 +129,6 @@ export default function KindergartenDetails() {
     setAssistant2("");
     setFile(null);
     setFileError("");
-    console.log("Form reset");
   };
 
   return (

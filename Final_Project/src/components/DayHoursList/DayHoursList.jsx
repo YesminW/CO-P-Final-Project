@@ -15,7 +15,6 @@ export default function DayHoursList() {
     const dateToSend = new Date(date);
     dateToSend.setHours(hours);
     dateToSend.setMinutes(minutes);
-    console.log(dateToSend);
     navigate("/ActivitiesList", { state: dateToSend });
   };
 
