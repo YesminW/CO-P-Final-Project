@@ -23,7 +23,7 @@ public partial class User
 
     public string? UserpPassword { get; set; } 
 
-    public string? KindergartenNumber { get; set; } 
+    public int KindergartenNumber { get; set; } 
 
     public int CurrentAcademicYear { get; set; }
 

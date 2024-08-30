@@ -134,7 +134,7 @@ public partial class CoPFinalProjectContext : DbContext
                 .IsFixedLength();
             entity.Property(e => e.ChildPhotoName).HasMaxLength(50);
             entity.Property(e => e.ChildSurname).HasMaxLength(10);
-            entity.Property(e => e.KindergartenName).HasMaxLength(20);
+            entity.Property(e => e.kindergartenNumber).HasMaxLength(20);
             entity.Property(e => e.Parent1)
                 .HasMaxLength(9)
                 .IsUnicode(false)

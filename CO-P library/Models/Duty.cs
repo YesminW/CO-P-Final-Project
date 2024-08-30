@@ -22,4 +22,6 @@ public partial class Duty
     public virtual AcademicYear CurrentAcademicYearNavigation { get; set; } = null!;
 
     public virtual Kindergarten KindergartenNumberNavigation { get; set; } = null!;
+
+   
 }

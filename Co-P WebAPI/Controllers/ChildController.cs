@@ -47,9 +47,9 @@ namespace Co_P_WebAPI.Controllers
 
         [HttpGet]
         [Route("GetChildByKindergarten")]
-        public dynamic GetChildByKindergarten(string kindergartenName)
+        public dynamic GetChildByKindergarten(int kindergartenNumber)
         {
-            IEnumerable<Child> children = db.Children.Where(c=> c.KindergartenName == kindergartenName).Select(x => new Child()
+            IEnumerable<Child> children = db.Children.Where(c=> c.kindergartenNumber == kindergartenNumber).Select(x => new Child()
             { 
                 ChildFirstName = x.ChildFirstName,
                 ChildSurname = x.ChildSurname,
@@ -60,7 +60,7 @@ namespace Co_P_WebAPI.Controllers
 
         [HttpPost]
         [Route("AddChildrenByExcel")]
-        public async Task<IActionResult> UploadExcel(IFormFile file)
+        public async Task<IActionResult> UploadExcel(IFormFile file, int kindergartenNumber, int currentAcademicYear)
         {
             if (file == null || file.Length == 0)
             {
@@ -95,8 +95,7 @@ namespace Co_P_WebAPI.Controllers
                         var parent1 = worksheet.Cells[row, 6].Text;
                         var parent2 = worksheet.Cells[row, 7].Text;
                         var childPhotoName = worksheet.Cells[row, 8].Text;
-                        var CurrentAcademicYear = int.Parse(worksheet.Cells[row, 9].Text);
-                        var KindergartenNumber = int.Parse(worksheet.Cells[row, 10].Text);
+                        
 
 
                         // Retrieve or create related entities as needed
@@ -112,7 +111,9 @@ namespace Co_P_WebAPI.Controllers
                                 ChildGender = childGender,
                                 Parent1 = parent1,
                                 Parent2 = parent2,
-                                ChildPhotoName = childPhotoName
+                                ChildPhotoName = childPhotoName,
+                                CurrentAcademicYear = currentAcademicYear,
+                                kindergartenNumber = kindergartenNumber
                             };
                            
                             children.Add(newChild);
@@ -124,8 +125,15 @@ namespace Co_P_WebAPI.Controllers
                 db.Children.AddRange(children);
                 db.SaveChanges();
 
+                var allChild = db.Children.Select(x => new Child()
+                {
+                    ChildId = x.ChildId,
+                    Parent1 = x.Parent1,
+                    Parent2 = x.Parent2
+                });
 
-                return Ok(new { Message = "Data imported successfully." });
+
+                return Ok(allChild);
             }
 
 
@@ -135,7 +143,7 @@ namespace Co_P_WebAPI.Controllers
 
         [HttpPost]
         [Route("AddChildren")]
-        public dynamic addChild(string ID, string childFMame, string chilsSName, DateTime chilsBdate, string gender, string parent1, string parent2, int year, string kinderName)
+        public dynamic addChild(string ID, string childFMame, string chilsSName, DateTime chilsBdate, string gender, string parent1, string parent2, int year, int kindergartenNumber)
         {
             Child c = new Child
             {
@@ -148,10 +156,10 @@ namespace Co_P_WebAPI.Controllers
                 Parent2 = parent2,
                 ChildPhotoName = " ",
                 CurrentAcademicYear = year,
-                KindergartenName = kinderName
+                kindergartenNumber = kindergartenNumber
 
 
-        };
+            };
 
             db.Children.Add(c);
             db.SaveChanges();
