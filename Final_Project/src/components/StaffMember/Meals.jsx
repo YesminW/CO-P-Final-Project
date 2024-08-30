@@ -53,20 +53,19 @@ export default function Meals() {
           ))}
         </select>
       </div>
-      <div className="day-grid">
-        {getWeekDates(weeks[selectedWeek].start).map((day, index) => (
-          <button
-            key={nanoid()}
-            className="day-button"
-            onClick={() => handleDayClick(day)}
-          >
-            {hebrewWeekDays[index]} <br /> {formatDate(day)}
-          </button>
-        ))}
+      <div className="sizem">
+        <div className="day-grid">
+          {getWeekDates(weeks[selectedWeek].start).map((day, index) => (
+            <button
+              key={nanoid()}
+              className="day-button"
+              onClick={() => handleDayClick(day)}
+            >
+              {hebrewWeekDays[index]} <br /> {formatDate(day)}
+            </button>
+          ))}
+        </div>
       </div>
-      <button className="bottom-nav" onClick={handleAddMealClick}>
-        הוספת תפריט ארוחות עתידי
-      </button>
       {EfooterS}
     </div>
   );

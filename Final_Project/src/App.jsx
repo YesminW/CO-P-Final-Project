@@ -17,7 +17,6 @@ import EditProfileS2 from "./components/StaffMember/EditProfileS2";
 import Presence from "./components/StaffMember/Presence";
 import Meals from "./components/StaffMember/Meals";
 import WatchMeal from "./components/StaffMember/WatchMeal";
-import AddMeal from "./components/StaffMember/AddMeal";
 import ChildDuty from "./components/StaffMember/ChildDuty";
 import TeamStaff from "./components/StaffMember/TeamStaff";
 import BirthDayChild from "./components/StaffMember/BirthDayChild";
@@ -72,7 +71,6 @@ function App() {
       <Route path="/Presence" element={<Presence />} />
       <Route path="/Meals" element={<Meals />} />
       <Route path="/WatchMeal" element={<WatchMeal />} />
-      <Route path="/AddMeal" element={<AddMeal />} />
       <Route path="/ChildDuty" element={<ChildDuty />} />
       <Route path="/TeamStaff" element={<TeamStaff />} />
       <Route path="/BirthDayChild" element={<BirthDayChild />} />
