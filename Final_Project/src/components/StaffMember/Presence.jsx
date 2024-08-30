@@ -20,8 +20,9 @@ import {
 import { formatForCSharp } from "../../utils/functions";
 
 export default function Presence() {
-  const [childrenData, setChildrenData] = useState([]); // Use a descriptive name
-  const [attendanceData, setAttendance] = useState([]); // Track selected student
+  const [childrenData, setChildrenData] = useState([]);
+  const [attendanceData, setAttendance] = useState([]);
+  const kindergartenNumber = localStorage.getItem("kindergartenNumber");
 
   useEffect(() => {
     const fetchData = async () => {
@@ -30,8 +31,6 @@ export default function Presence() {
           getAllChild(),
           getDailyAttendance(formatForCSharp(new Date())),
         ]);
-
-        console.log(attendance);
 
         setChildrenData(children);
         setAttendance(attendance);

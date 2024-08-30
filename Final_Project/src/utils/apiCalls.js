@@ -355,3 +355,22 @@ export async function getDaySummaryByDate(date, kindergartenNumber) {
     throw new Error(error);
   }
 }
+
+export async function uploaspictures(file) {
+  try {
+    const formData = new FormData();
+    formData.append("file", file);
+    const files = await fetch(
+      `${SERVER_URL}/api/FaceRecognition/ProcessImage`,
+      {
+        method: "POST",
+        body: formData,
+      }
+    );
+    const filesData = await files.json();
+    return filesData;
+  } catch (error) {
+    console.error(error);
+    throw new Error(error);
+  }
+}
