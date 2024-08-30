@@ -47,7 +47,7 @@ namespace Co_P_WebAPI.Controllers
 
         [HttpGet]
         [Route("GetChildByKindergarten")]
-        public dynamic GetChildByKindergarten(string kindergartenNumber)
+        public dynamic GetChildByKindergarten(int kindergartenNumber)
         {
             IEnumerable<Child> children = db.Children.Where(c=> c.kindergartenNumber == kindergartenNumber).Select(x => new Child()
             { 
@@ -60,7 +60,7 @@ namespace Co_P_WebAPI.Controllers
 
         [HttpPost]
         [Route("AddChildrenByExcel")]
-        public async Task<IActionResult> UploadExcel(IFormFile file, string kindergartenNumber, int currentAcademicYear)
+        public async Task<IActionResult> UploadExcel(IFormFile file, int kindergartenNumber, int currentAcademicYear)
         {
             if (file == null || file.Length == 0)
             {
@@ -143,7 +143,7 @@ namespace Co_P_WebAPI.Controllers
 
         [HttpPost]
         [Route("AddChildren")]
-        public dynamic addChild(string ID, string childFMame, string chilsSName, DateTime chilsBdate, string gender, string parent1, string parent2, int year, string kinderName)
+        public dynamic addChild(string ID, string childFMame, string chilsSName, DateTime chilsBdate, string gender, string parent1, string parent2, int year, int kindergartenNumber)
         {
             Child c = new Child
             {
@@ -156,10 +156,10 @@ namespace Co_P_WebAPI.Controllers
                 Parent2 = parent2,
                 ChildPhotoName = " ",
                 CurrentAcademicYear = year,
-                KindergartenName = kinderName
+                kindergartenNumber = kindergartenNumber
 
 
-        };
+            };
 
             db.Children.Add(c);
             db.SaveChanges();

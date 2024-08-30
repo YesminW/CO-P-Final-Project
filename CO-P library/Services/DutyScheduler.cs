@@ -33,7 +33,7 @@ namespace CO_P_library.Services
                     Child1 = child1.ChildId,
                     Child2 = child2.ChildId,
                     CurrentAcademicYear = child1.CurrentAcademicYear,
-                    KindergartenNumber = _context.Kindergartens.First(k => k.KindergartenName == child1.KindergartenName).KindergartenNumber
+                    KindergartenNumber = child1.kindergartenNumber
                 };
 
                 _context.Duties.Add(duty);
@@ -59,7 +59,7 @@ namespace CO_P_library.Services
                     Child1 = child1.ChildId,
                     Child2 = child2.ChildId,
                     CurrentAcademicYear = child1.CurrentAcademicYear,
-                    KindergartenNumber = _context.Kindergartens.First(k => k.KindergartenName == child1.KindergartenName).KindergartenNumber
+                    KindergartenNumber = child1.kindergartenNumber
                 };
 
                 _context.Duties.Add(duty);
@@ -76,7 +76,7 @@ namespace CO_P_library.Services
             int daysInMonth = DateTime.DaysInMonth(year, month);
 
             // Group children by Kindergarten
-            var childrenByKindergarten = children.GroupBy(c => c.KindergartenName);
+            var childrenByKindergarten = children.GroupBy(c => c.kindergartenNumber);
 
             foreach (var group in childrenByKindergarten)
             {
@@ -117,7 +117,7 @@ namespace CO_P_library.Services
             Random random = new Random();
 
             // Group children by Kindergarten
-            var childrenByKindergarten = children.GroupBy(c => c.KindergartenName);
+            var childrenByKindergarten = children.GroupBy(c => c.kindergartenNumber);
 
             foreach (var group in childrenByKindergarten)
             {

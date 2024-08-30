@@ -11,23 +11,23 @@ namespace Co_P_WebAPI.Controllers
 
         [HttpGet]
         [Route("LogIn/{ID}/{password}")]
-        public dynamic LogIn(string ID, string password)
+        public IActionResult LogIn(string ID, string password)
         {
-            List<User> users = db.Users.ToList();
-            if (users == null)
-            {
-                return ("login faild");
-            }
-            for (int i = 0; i < users.Count(); i++)
-            {
-                if (users[i].UserId == ID && users[i].UserpPassword == password)
-                {
-                    return new { user_id = users[i].UserId ,user_code = users[i].UserCode, kindergarten_number = users[i].KindergartenNumber };
-                }
+            // חיפוש המשתמש על בסיס ID והסיסמה
+            var user = db.Users.FirstOrDefault(u => u.UserId == ID && u.UserpPassword == password);
 
+            if (user == null)
+            {
+                return BadRequest("Login failed");
             }
-            return BadRequest("login faild");
+
+            // החזרת פרטי המשתמש, וודא שאת מטפלת בערכים שעשויים להיות null
+            return Ok(new
+            {
+                user_id = user.UserId,
+                user_code = user.UserCode,
+                kindergarten_number = user.KindergartenNumber
+            });
         }
-
     }
 }

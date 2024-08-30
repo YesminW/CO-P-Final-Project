@@ -19,7 +19,7 @@ namespace Co_P_WebAPI.Controllers
                 {
                     ChildId = dw.ChildId,
                     ChildName = dw.Child.ChildFirstName + " " + dw.Child.ChildSurname,
-                    KindergartenName = dw.Child.KindergartenName,
+                    kindergartenNumber = dw.Child.kindergartenNumber,
                     HealthProblemName = dw.HealthProblemsNumberNavigation.HealthProblemName,
                     Severity = dw.Severity,
                     Care = dw.Care
