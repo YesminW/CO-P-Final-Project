@@ -13,6 +13,7 @@ export async function login(data) {
       }),
     });
     const user_Data = await user.json();
+    console.log(user_Data);
 
     return user_Data;
   } catch (error) {
@@ -144,14 +145,21 @@ export async function uploadParentsExcel(
   }
 }
 
-export async function addChildrenByExcel(file) {
+export async function addChildrenByExcel(
+  file,
+  kindergartenNumber,
+  currentYear
+) {
   try {
     const formData = new FormData();
     formData.append("file", file);
-    const files = await fetch(`${SERVER_URL}/AddChildrenByExcel`, {
-      method: "POST",
-      body: formData,
-    });
+    const files = await fetch(
+      `${SERVER_URL}/AddChildrenByExcel/${kindergartenNumber}/${currentYear}`,
+      {
+        method: "POST",
+        body: formData,
+      }
+    );
     const filesData = await files.json();
     return filesData;
   } catch (error) {

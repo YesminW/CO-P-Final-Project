@@ -116,7 +116,12 @@ export default function KindergartenDetails() {
           kindergarten.kindergartenNumber,
           currentYear
         ));
-      file2 && (await addChildrenByExcel(file2));
+      file2 &&
+        (await addChildrenByExcel(
+          file2,
+          kindergarten.kindergartenNumber,
+          currentYear
+        ));
       navigate("/KindergartenManagement");
     } catch (error) {
       console.error(error);

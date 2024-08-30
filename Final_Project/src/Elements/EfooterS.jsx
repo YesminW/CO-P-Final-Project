@@ -34,7 +34,7 @@ const EfooterS = (
         />
       </IconButton>
     </Link>
-    <Link>
+    <Link to="/EndOfTheDayMenu">
       <IconButton>
         <Notifications sx={{ fontSize: 30 }} className="footer-icon" />
       </IconButton>
