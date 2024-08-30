@@ -49,38 +49,32 @@ export default function MainParent() {
   return loading ? (
     <CircularProgress />
   ) : (
-    <div className="centered-text">
+    <div className="home-container flex-column center">
       {Elogo1}
       <br />
       <div className="info-card">
-        <h2>
+        <h2 className="h2main">
           {greeting} {userData.userPrivetName}
         </h2>
       </div>
-      <div className="grid-container">
-        <div className="grid-item">
-          <h3>
-            {currentDay} <br /> {currentDate}
-          </h3>
-        </div>
-        <Link to={"/chatlist"}>
-          <div className="grid-item">
-            <h3>שליחת הודעה לגננת</h3>
-          </div>
+      <div className="grid-container flex-row">
+        <Link to="/CalendarStaff" className="grid-item">
+          {currentDay} <br /> {currentDate}
+        </Link>
+        <Link to="/chatlist" className="grid-item h3main">
+          שליחת הודעה לגננת
         </Link>
       </div>
-      <div>
-        <div className="grid-item">
-          <h3>האירוע הבא ביום</h3>
-        </div>
-        <div className="grid-item">
-          <h3>מה אוכלים היום?</h3>
-        </div>
-        <div className="grid-item">
-          <Link to="/EditProfile">
-            <h3>עריכת פרטים</h3>
-          </Link>
-        </div>
+      <div className="flex-column">
+        <Link to="/CalendarStaff" className="grid-item-full">
+          האירוע הבא ביום
+        </Link>
+        <Link to="/BirthDayChild" className="grid-item-full">
+          מה אוכלים היום?
+        </Link>
+        <Link to="/EditProfile" className="grid-item-full">
+          עריכת פרטים אישיים
+        </Link>
       </div>
       {Efooter}
     </div>
