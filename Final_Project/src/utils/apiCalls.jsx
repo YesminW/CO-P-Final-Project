@@ -330,3 +330,16 @@ export async function updateChildAttendence(childID, date) {
     throw new Error(error);
   }
 }
+
+export async function getDaySummaryByDate(date, kindergartenNumber) {
+  try {
+    const response = await fetch(
+      `${SERVER_URL}/GetDaySummaryByDate/${date}/${kindergartenNumber}`
+    );
+    const data = await response.json();
+    return data;
+  } catch (error) {
+    console.error(error);
+    throw new Error(error);
+  }
+}
