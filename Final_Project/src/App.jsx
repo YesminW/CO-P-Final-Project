@@ -12,8 +12,6 @@ import KindergartenDetails from "./components/Management/KindergartenDetails";
 import LoginSP from "./components/StaffMember/LoginSP";
 
 import MainStaffMember from "./components/StaffMember/MainStaffMember";
-import ActivitiesStaffMember from "./components/StaffMember/ActivitiesStaffMember";
-import BonusStaffMember from "./components/StaffMember/BonusStaffMember";
 import EditProfileS from "./components/StaffMember/EditProfileS";
 import EditProfileS2 from "./components/StaffMember/EditProfileS2";
 import Presence from "./components/StaffMember/Presence";
@@ -68,11 +66,7 @@ function App() {
 
       <Route path="/LoginSP" element={<LoginSP />} />
       <Route path="/MainStaffMember" element={<MainStaffMember />} />
-      <Route
-        path="/ActivitiesStaffMember"
-        element={<ActivitiesStaffMember />}
-      />
-      <Route path="/BonusStaffMember" element={<BonusStaffMember />} />
+
       <Route path="/EditProfileS" element={<EditProfileS />} />
       <Route path="/EditProfileS2" element={<EditProfileS2 />} />
       <Route path="/Presence" element={<Presence />} />

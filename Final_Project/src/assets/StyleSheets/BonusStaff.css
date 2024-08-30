@@ -1,8 +1,4 @@
-.home-container {
-  height: calc(100vh - var(--footer-height));
-  padding: 20px;
-  background-color: #e0e7e9;
-}
+
 
 .Bonusheader {
   text-align: center;
@@ -11,13 +7,6 @@
   width: 100%;
   border-radius: 10px;
   font-size: 48px;
-}
-
-.grid-container {
-  display: grid;
-  grid-template-columns: repeat(2, 1fr);
-  gap: 10px;
-  margin: 20px 0;
 }
 
 .Bonus-item {
