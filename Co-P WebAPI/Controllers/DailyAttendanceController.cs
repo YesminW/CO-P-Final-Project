@@ -29,8 +29,8 @@ namespace Co_P_WebAPI.Controllers
 
 
         [HttpPost]
-        [Route("UpdateAttendanceStatus")]
-        public dynamic UpdateAttendanceStatus([FromBody]string childID, [FromBody] DateTime date)
+        [Route("UpdateAttendanceStatus/{childID}/{date}")]
+        public dynamic UpdateAttendanceStatus(string childID,  DateTime date)
         {
             var dailyAttendance = db.DailyAttendances
                 .Where(x => x.ChildId == childID && x.Date == date)
