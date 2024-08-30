@@ -1,0 +1,18 @@
+.menudiv {
+  background-color: #07676d;
+  height: 100vh;
+  gap: 20px;
+}
+
+.menulink {
+  background-color: #b9dcd199;
+  height: 130px;
+  width: 348px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  border-radius: 8px;
+  font-size: 48px;
+  color: white;
+  box-shadow: 0 4px 4px rgba(0, 0, 0, 0.25);
+}

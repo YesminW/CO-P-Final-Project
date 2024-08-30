@@ -23,6 +23,7 @@ import AddMeal from "./components/StaffMember/AddMeal";
 import ChildDuty from "./components/StaffMember/ChildDuty";
 import TeamStaff from "./components/StaffMember/TeamStaff";
 import BirthDayChild from "./components/StaffMember/BirthDayChild";
+import EndOfTheDayMenu from "./components/StaffMember/EndOfTheDayMenu";
 
 import MainParent from "./components/Parents/MainParent";
 import EditProfile from "./components/Parents/EditProfile";
@@ -50,6 +51,7 @@ function App() {
       <Route path="/WeekCalendar" element={<WeekCalendar />} />
       <Route path="/WatchDayHourList" element={<DayHoursList />} />
       <Route path="/ActivitiesList" element={<ActivitiesList />} />
+      <Route path="/EndOfTheDayMenu" element={<EndOfTheDayMenu />} />
 
       <Route path="/LoginManage" element={<LoginManage />} />
       <Route path="/ManagerRegister" element={<ManagerRegister />} />
@@ -58,10 +60,7 @@ function App() {
         path="/KindergartenManagement"
         element={<KindergartenManagement />}
       />
-      <Route
-        path="/KindergartenDetails"
-        element={<KindergartenDetails />}
-      />
+      <Route path="/KindergartenDetails" element={<KindergartenDetails />} />
       <Route path="/AddKindergarden" element={<AddKindergarden />} />
       <Route path="AddSAndP" element={<AddsAndP />} />
 
