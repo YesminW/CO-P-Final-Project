@@ -24,6 +24,7 @@ import ChildDuty from "./components/StaffMember/ChildDuty";
 import TeamStaff from "./components/StaffMember/TeamStaff";
 import BirthDayChild from "./components/StaffMember/BirthDayChild";
 import EndOfTheDayMenu from "./components/StaffMember/EndOfTheDayMenu";
+import EndOfTheDay from "./components/StaffMember/EndOfTheDay";
 
 import MainParent from "./components/Parents/MainParent";
 import EditProfile from "./components/Parents/EditProfile";
@@ -52,6 +53,7 @@ function App() {
       <Route path="/WatchDayHourList" element={<DayHoursList />} />
       <Route path="/ActivitiesList" element={<ActivitiesList />} />
       <Route path="/EndOfTheDayMenu" element={<EndOfTheDayMenu />} />
+      <Route path="/EndOfTheDay" element={<EndOfTheDay />} />
 
       <Route path="/LoginManage" element={<LoginManage />} />
       <Route path="/ManagerRegister" element={<ManagerRegister />} />

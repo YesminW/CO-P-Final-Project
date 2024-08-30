@@ -5,7 +5,9 @@ import EfooterS from "../../Elements/EfooterS";
 export default function EndOfTheDayMenu() {
   return (
     <div className="menudiv flex-column center">
-      <Link className="menulink">כתיבת סיכום יום</Link>
+      <Link className="menulink" to="/EndOfTheDay">
+        כתיבת סיכום יום
+      </Link>
       <Link className="menulink" to="/Presence">
         נוכחות
       </Link>

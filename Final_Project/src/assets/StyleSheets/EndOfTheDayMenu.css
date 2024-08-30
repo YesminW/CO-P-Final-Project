@@ -16,3 +16,56 @@
   color: white;
   box-shadow: 0 4px 4px rgba(0, 0, 0, 0.25);
 }
+
+.maindiv {
+  background-color: #ffffff47;
+  height: 415px;
+  width: 350px;
+  border-radius: 8px;
+  padding: 10px;
+}
+
+.datesdiv {
+  background-color: #b9dcd199;
+  width: 160px;
+  height: 25px;
+  box-shadow: 0 4px 4px rgba(0, 0, 0, 0.25);
+  border-radius: 10px;
+  padding: 4px 8px;
+}
+
+.datesbtn {
+  background: none;
+  border: none;
+  color: white;
+  font-size: 30px;
+  height: 100%;
+}
+
+.datep {
+  color: white;
+  font-size: 24px;
+  height: 100%;
+}
+
+.sendbtn {
+  background-color: #dae9e4;
+  border-radius: 10px;
+  box-shadow: 0 4px 4px rgba(0, 0, 0, 0.25);
+  width: 115px;
+  height: 26px;
+  font-size: 20px;
+  border: none;
+  align-self: flex-start;
+}
+
+.summaryt {
+  background: none;
+  border: none;
+  flex-grow: 1;
+  width: 100%;
+  margin: 16px;
+  outline: none;
+  font-size: 24px;
+  color: white;
+}
