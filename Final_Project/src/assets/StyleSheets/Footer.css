@@ -9,6 +9,7 @@
   bottom: 0;
   right: 0;
   height: var(--footer-height);
+  border-radius: 10px 10px 0 0;
 }
 
 .footer-icon {

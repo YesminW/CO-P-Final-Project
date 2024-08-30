@@ -1,28 +1,30 @@
 .container {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: space-between;
+  background-color: #07676d;
   height: 100vh;
-  padding: 20px;
+  gap: 20px;
 }
 
 .headermeals {
-  margin-bottom: 20px;
+  background-color: #b9dcd199;
+  height: 130px;
+  width: 348px;
+  display: flex;
   justify-content: center;
-  background-color: #ABD1C6;
-  width: 100%;
-  border-radius: 10px;
+  align-items: center;
+  border-radius: 8px;
+  font-size: 48px;
+  color: white;
+  box-shadow: 0 4px 4px rgba(0, 0, 0, 0.25);
 }
 
 .date-selector select {
   padding: 10px;
-  font-size: 25px;
-  margin-bottom: 20px;
-  width: 100%;
-  background-color: #ABD1C6;
+  font-size: 24px;
+  width: 170px;
+  background-color: #b9dcd199;
   border-radius: 10px;
   border: none;
+  color: white;
 }
 
 .day-grid {
@@ -34,10 +36,10 @@
   padding: 20px;
 }
 
-
 .day-button {
-  padding: 30px;
-  background-color: #1a4b57;
+  height: 88px;
+  width: 161px;
+  background-color: #b9dcd199;
   border: none;
   border-radius: 5px;
   cursor: pointer;
@@ -46,25 +48,14 @@
   color: white;
 }
 
-.day-button:hover {
-  background-color: #dcdcdc;
-}
-
-
 .bottom-nav {
-  display: flex;
-  justify-content: space-around;
-  width: 100%;
-  position: fixed;
-  bottom: 0;
-  background-color: #eeeeee;
-  padding: 10px 0;
-}
-
-.bottom-nav button {
-  background: none;
-  border: none;
-  color: #1a4b57;
+  width: 233px;
+  height: 46px;
   font-size: 24px;
-  cursor: pointer;
+  bottom: 0;
+  background-color: #b9dcd199;
+  border: none;
+  color: white;
+  border-radius: 10px;
+  box-shadow: 0 4px 4px rgba(0, 0, 0, 0.25);
 }
