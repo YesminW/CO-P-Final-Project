@@ -274,10 +274,14 @@ export async function getAllKindergartens() {
   }
 }
 
-export async function getAllChildDuty() {
+export async function getAllChildDuty(kindergartenNumber) {
   try {
-    const response = await fetch(`${SERVER_URL}/allDuties`);
+    const response = await fetch(
+      `${SERVER_URL}/getdutyList/${kindergartenNumber}`
+    );
     const data = await response.json();
+    console.log(data);
+
     return data;
   } catch (error) {
     console.error(error);

@@ -94,9 +94,6 @@ export default function Presence() {
               <Box
                 key={student.childId}
                 className={`student-circle ${
-                  // children
-                  // atte
-                  // atten has child.id
                   attendanceData.find((a) => a.childId === student.childId) &&
                   (attendanceData.find((a) => a.childId === student.childId)[
                     "attendanceStatus"

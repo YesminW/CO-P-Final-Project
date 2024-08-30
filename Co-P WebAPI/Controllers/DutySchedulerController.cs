@@ -23,7 +23,9 @@ namespace Co_P_WebAPI.Controllers
             _dutyScheduler = dutyScheduler;
         }
 
-        [HttpGet("dutyList")]
+        [HttpGet]
+        [Route("getdutyList/{kinderNumber}")]
+
         public async Task<ActionResult<IEnumerable<Duty>>> GetDutyList(int kinderNumber)
         {
             try

@@ -5,10 +5,12 @@ import { nanoid } from "nanoid";
 
 export default function ChildDuty() {
   const [duties, setDuties] = useState([]);
+  const kindergartenNumber = localStorage.getItem("kindergartenNumber");
+
   useEffect(() => {
     async function getChildDuties() {
       try {
-        const d = await getAllChildDuty();
+        const d = await getAllChildDuty(kindergartenNumber);
         setDuties(d);
       } catch (error) {
         console.error(error);
@@ -16,6 +18,7 @@ export default function ChildDuty() {
     }
     getChildDuties();
   }, []);
+
   return (
     <div className="page-container flex-column">
       <div className="padded-container flex-column radius-25">
