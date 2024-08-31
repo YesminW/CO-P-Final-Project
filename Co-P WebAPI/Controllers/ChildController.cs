@@ -126,7 +126,7 @@ namespace Co_P_WebAPI.Controllers
                 db.Children.AddRange(children);
                 db.SaveChanges();
 
-                var allChild = db.Children.Select(x => new Child()
+                var allChild = db.Children.Where(ac => ac.kindergartenNumber == kindergartenNumber).Select(x => new Child()
                 {
                     ChildId = x.ChildId,
                     Parent1 = x.Parent1,
