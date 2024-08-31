@@ -79,31 +79,21 @@ export default function Presence() {
         <div className="presencetitle">
           <h2 className="presencetitleText">נוכחות</h2>
         </div>
-        <Container className="presence-container">
-          <Box className="header">
-            <Box className="search-box">
-              <input
-                type="text"
-                placeholder="חיפוש"
-                className="search-input"
-                onChange={(e) => setFilter(e.target.value)}
-              />
-              <IconButton style={{ color: "#07676D" }}>
-                <SearchIcon />
-              </IconButton>
-            </Box>
-            <Button
-              style={{
-                backgroundColor: "white",
-                color: "#07676D",
-                fontFamily: "Karantina",
-                fontSize: "18px",
-                borderRadius: "5px",
-              }}
-            >
-              צ'אט עם הורה
-            </Button>
+        <Box className="header">
+          <button className="btnchat">צ'אט עם הורה</button>
+          <Box className="search-box">
+            <input
+              type="text"
+              placeholder="חיפוש"
+              className="search-input"
+              onChange={(e) => setFilter(e.target.value)}
+            />
+            <IconButton style={{ color: "#07676D" }}>
+              <SearchIcon />
+            </IconButton>
           </Box>
+        </Box>
+        <div className="presence-container">
           <Box className="students-grid">
             {filteredChildren.length === 0 ? (
               <h2>אין ילדים התואמים את החיפוש</h2>
@@ -140,7 +130,7 @@ export default function Presence() {
               ))
             )}
           </Box>
-        </Container>
+        </div>
         {EfooterS}
       </div>
     </>

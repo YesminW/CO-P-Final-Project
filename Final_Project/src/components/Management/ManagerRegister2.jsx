@@ -19,6 +19,7 @@ export default function AdditionalRegistrationForm(props) {
     KindergartenName: "",
     ...data,
   });
+  const [errorpas, setErrorpas] = useState("");
 
   const validateForm = () => {
     const newErrors = {};
@@ -48,6 +49,11 @@ export default function AdditionalRegistrationForm(props) {
     return Object.keys(newErrors).length === 0;
   };
 
+  const passworchange = (e) => {
+    if (e.target.value !== formValues.UserpPassword) {
+      setErrorpas("הסיסמא לא תואמת");
+    }
+  };
   const handleChange = (e) => {
     const { name, value, files } = e.target;
 
@@ -68,7 +74,7 @@ export default function AdditionalRegistrationForm(props) {
         console.error(error);
       }
     } else {
-      console.log("Form has validation errors. Cannot submit.");
+      console.error("Form has validation errors. Cannot submit.");
     }
   };
 
@@ -128,16 +134,13 @@ export default function AdditionalRegistrationForm(props) {
             type={showPassword ? "text" : "password"}
             placeholder="אימות סיסמא"
             name="password"
-            onChange={(e) => {
-              if (e.target.value !== formValues.UserpPassword) {
-                console.log("Not matching");
-              }
-            }}
+            onChange={passworchange}
           />
           <i onClick={handleClickShowPassword}>
             {showPassword ? <BsEyeSlash /> : <BsEye />}
           </i>
         </div>
+        {errorpas && <p>{errorpas}</p>}
       </FormControl>
       <Button type="submit" variant="contained" color="primary">
         המשך

@@ -79,7 +79,7 @@ export default function ManagerRegister() {
     if (validateForm()) {
       navigate("/ManagerRegister2", { state: formValues });
     } else {
-      console.log("Form has validation errors. Cannot submit.");
+      console.error("Form has validation errors. Cannot submit.");
     }
   };
 

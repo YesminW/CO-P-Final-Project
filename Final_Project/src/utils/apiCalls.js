@@ -13,8 +13,6 @@ export async function login(data) {
       }),
     });
     const user_Data = await user.json();
-    console.log(user_Data);
-
     return user_Data;
   } catch (error) {
     console.error(error);
@@ -128,8 +126,6 @@ export async function uploadParentsExcel(
   currentYear
 ) {
   try {
-    console.log(file, kindergartenNumber, currentYear);
-
     const formData = new FormData();
     formData.append("file", file);
     const files = await fetch(
@@ -153,8 +149,6 @@ export async function addChildrenByExcel(
   currentYear
 ) {
   try {
-    console.log(file, kindergartenNumber, currentYear);
-
     const formData = new FormData();
     formData.append("file", file);
     const files = await fetch(

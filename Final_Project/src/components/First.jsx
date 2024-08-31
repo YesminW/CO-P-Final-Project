@@ -6,7 +6,7 @@ import "../assets/StyleSheets/Main.css";
 
 export default function First() {
   return (
-    <div>
+    <div className="firstdiv">
       {Elogo}
       <br />
       <h1 className="loginh1">מי אתה/את?</h1>
@@ -18,9 +18,11 @@ export default function First() {
           איש צוות
         </Link>
       </div>
-      <Link to="/LoginManage">
-        <button className="btn">מנהל/ת חינוך</button>
-      </Link>
+      <div className="login-buttons">
+        <Link to="/LoginManage" className="btn">
+          מנהל/ת חינוך
+        </Link>
+      </div>
     </div>
   );
 }

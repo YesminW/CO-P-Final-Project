@@ -30,7 +30,7 @@ export default function EditProfileS2() {
       updateUserById(details);
       navigate("/MainStaffMember");
     } catch (error) {
-      console.log("err post=", error);
+      console.error("err post=", error);
     }
   };
 

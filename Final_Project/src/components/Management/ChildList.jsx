@@ -19,8 +19,6 @@ export default function ChildList() {
         const child = await getChildByKindergarten(
           kindergarten.kindergartenNumber
         );
-        console.log(child);
-
         setChildren(child);
       } catch (error) {
         console.error(error);
@@ -55,8 +53,6 @@ export default function ChildList() {
 export function ChildRow({ child }) {
   const handleDelete = async (e) => {
     try {
-      console.log(child.childId);
-
       const response = await deleteChild(child.childId);
     } catch (error) {
       console.error(error);
