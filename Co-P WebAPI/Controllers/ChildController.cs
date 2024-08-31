@@ -163,7 +163,7 @@ namespace Co_P_WebAPI.Controllers
         }
 
         [HttpDelete]
-        [Route("DeleteChild")]
+        [Route("DeleteChild/{childId}")]
         public dynamic DeleteChild(string ID)
         {
             Child? c = db.Children.Where(x => x.ChildId == ID).FirstOrDefault();

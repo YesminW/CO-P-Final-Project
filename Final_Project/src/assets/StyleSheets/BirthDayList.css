@@ -8,3 +8,27 @@
   justify-content: space-between;
   align-items: center;
 }
+
+.deletebtn {
+  border: none;
+  background-color: red;
+  font-size: 24px;
+  border-radius: 8px;
+  width: 60px;
+}
+
+.backbtn {
+  border: none;
+  color: white;
+  text-align: start;
+  background: none;
+  font-size: 40px;
+  align-items: start;
+}
+
+.h1child {
+  display: flex;
+  align-items: center;
+  color: white;
+  justify-content: center;
+}
