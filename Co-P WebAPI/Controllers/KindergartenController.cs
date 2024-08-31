@@ -30,7 +30,7 @@ namespace Co_P_WebAPI.Controllers
             var nextkinder = number += 1;
 
             Kindergarten newk = new Kindergarten();
-            newk.KindergartenNumber = nextkinder.ToString();
+            newk.KindergartenNumber = nextkinder;
             newk.KindergartenName = KindergartenName;
             newk.KindergartenAddress = KindergartenAddress;
             if (newk == null)

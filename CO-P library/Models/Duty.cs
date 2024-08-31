@@ -13,7 +13,7 @@ public partial class Duty
 
     public int CurrentAcademicYear { get; set; }
 
-    public string KindergartenNumber { get; set; } = null!;
+    public int KindergartenNumber { get; set; } 
 
     public virtual Child Child1Navigation { get; set; } = null!;
 

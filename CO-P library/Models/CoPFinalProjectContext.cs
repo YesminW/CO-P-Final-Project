@@ -62,9 +62,9 @@ public partial class CoPFinalProjectContext : DbContext
         });
 
         modelBuilder.Entity<UserInKindergarten>()
-            .HasKey(u => new { u.UserID, u.KindergartenNumber }); // מפתח ראשי מורכב
+            .HasKey(u => new { u.UserID, u.KindergartenNumber });
         modelBuilder.Entity<UserInKindergarten>()
-            .ToTable("UserInKindergarten"); // בלי "s" בסוף
+            .ToTable("UserInKindergarten");
 
         modelBuilder.Entity<ActualActivity>(entity =>
         {
@@ -120,9 +120,8 @@ public partial class CoPFinalProjectContext : DbContext
             entity.Property(e => e.ChildPhotoName).HasMaxLength(50);
             entity.Property(e => e.ChildSurname).HasMaxLength(10);
             entity.Property(e => e.kindergartenNumber)
-                .HasMaxLength(20)
-                .IsUnicode(false)
-                .IsFixedLength();
+                .HasColumnName("KindergartenNumber")
+                .HasColumnType("int");
             entity.Property(e => e.Parent1)
                 .HasMaxLength(9)
                 .IsUnicode(false)
@@ -280,10 +279,8 @@ public partial class CoPFinalProjectContext : DbContext
             entity.ToTable("Kindergarten");
 
             entity.Property(e => e.KindergartenNumber)
-                .HasMaxLength(20)
-                .IsUnicode(false)
-                .IsFixedLength()
-                .HasColumnName("KindergartenNumber");
+                .HasColumnName("KindergartenNumber")
+                .HasColumnType("int");
 
             entity.Property(e => e.KindergartenAddress).HasMaxLength(30);
             entity.Property(e => e.KindergartenName).HasMaxLength(20);
@@ -323,7 +320,6 @@ public partial class CoPFinalProjectContext : DbContext
             entity.Property(e => e.MealType).HasMaxLength(20);
             entity.Property(e => e.ActivityDate).HasColumnType("date");
             entity.Property(e => e.KindergartenName).HasMaxLength(20);
-            entity.Property(e => e.MealDetails).HasMaxLength(100);
 
             entity.HasOne(d => d.KindergartenNumberNavigation).WithMany(p => p.ServedIns)
                 .HasForeignKey(d => d.KindergartenNumber)
@@ -343,9 +339,8 @@ public partial class CoPFinalProjectContext : DbContext
                 .IsFixedLength()
                 .HasColumnName("UserID");
             entity.Property(e => e.KindergartenNumber)
-                .HasMaxLength(20)
-                .IsUnicode(false)
-                .IsFixedLength();
+                .HasColumnName("KindergartenNumber")
+                .HasColumnType("int");
             entity.Property(e => e.UserAddress).HasMaxLength(30);
             entity.Property(e => e.UserBirthDate).HasColumnType("datetime");
             entity.Property(e => e.UserEmail)
@@ -393,4 +388,3 @@ public partial class CoPFinalProjectContext : DbContext
 
     partial void OnModelCreatingPartial(ModelBuilder modelBuilder);
 }
-

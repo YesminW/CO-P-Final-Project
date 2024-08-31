@@ -80,7 +80,7 @@ namespace Co_P_WebAPI.Controllers
 
         [HttpPost]
         [Route("AddUser")]
-        public dynamic AddUser(string ID, string privetName, string surName, DateTime Bdate, string phoneNumber, string password, int code, int year, string kinderNumber)
+        public dynamic AddUser(string ID, string privetName, string surName, DateTime Bdate, string phoneNumber, string password, int code, int year, int kinderNumber)
         {
             User u = new User();
             u.UserId = ID;
@@ -162,7 +162,7 @@ namespace Co_P_WebAPI.Controllers
                                     UserEmail = userEmail,
                                     UserpPassword = userpPassword,
                                     UserCode = userCode,
-                                    KindergartenNumber = null,  
+                                    KindergartenNumber = 0,  
                                     CurrentAcademicYear = 0,   
                                     UserPhotoName = null       
                                 };
@@ -186,7 +186,7 @@ namespace Co_P_WebAPI.Controllers
 
         [HttpPost]
         [Route("UploadParentsExcel/{kindergartenNumber}/{currentAcademicYear}")]
-        public async Task<IActionResult> UploadParentsExcel(IFormFile file, string kindergartenNumber, int currentAcademicYear)
+        public async Task<IActionResult> UploadParentsExcel(IFormFile file, int kindergartenNumber, int currentAcademicYear)
         {
             if (file == null || file.Length == 0)
             {
@@ -304,7 +304,7 @@ namespace Co_P_WebAPI.Controllers
 
         [HttpPut]
         [Route("AssignStaffToKindergarten/{kindergartenNumber}/{currentAcademicYear}/{firstName}/{lastName}")]
-        public IActionResult AssignStaffToKindergarten(string kindergartenNumber, int currentAcademicYear, string firstName, string lastName)
+        public IActionResult AssignStaffToKindergarten(int kindergartenNumber, int currentAcademicYear, string firstName, string lastName)
         {
             var user = db.Users.FirstOrDefault(u => u.UserPrivetName == firstName && u.UserSurname == lastName);
 

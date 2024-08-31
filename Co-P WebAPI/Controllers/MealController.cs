@@ -68,7 +68,7 @@ namespace Co_P_WebAPI.Controllers
 
         [HttpGet]
         [Route("getbydateandkindergarten/{kindergartenNumner}/{today}")]
-        public dynamic Getbydateandkindergarten(string kindergartenNumner, DateTime today)
+        public dynamic Getbydateandkindergarten(int kindergartenNumner, DateTime today)
         {
             var ActualActivities = db.ActualActivities.Where(a => a.ActivityDate == today && a.KindergartenNumber == kindergartenNumner && a.ActivityNumber == 10).Select(m => new MealsInKindergartenDTO()
             {
@@ -84,7 +84,7 @@ namespace Co_P_WebAPI.Controllers
 
         [HttpPut]
         [Route("Editbydateandkindergarten")]
-        public dynamic Editbydateandkindergarten(string kindergartenNumner, DateTime date, string mealName, string mealDetail)
+        public dynamic Editbydateandkindergarten(int kindergartenNumner, DateTime date, string mealName, string mealDetail)
         {
             var a = db.ActualActivities.Where(a => a.ActivityDate == date && a.KindergartenNumber == kindergartenNumner && a.MealNumberNavigation.MealType == mealName).FirstOrDefault();
             a.MealNumberNavigation.MealDetails = mealDetail;

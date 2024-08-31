@@ -5,7 +5,7 @@ namespace CO_P_library.Models;
 
 public partial class User
 {
-    public string? UserId { get; set; } 
+    public string? UserId { get; set; } = null!;
 
     public string? UserPrivetName { get; set; } 
 
@@ -21,9 +21,9 @@ public partial class User
 
     public string? UserEmail { get; set; }
 
-    public string? UserpPassword { get; set; } 
+    public string? UserpPassword { get; set; } = null!;
 
-    public string KindergartenNumber { get; set; } = null!;
+    public int KindergartenNumber { get; set; } 
 
     public int CurrentAcademicYear { get; set; }
 

@@ -10,26 +10,26 @@ namespace Co_P_WebAPI.Controllers
 
         [HttpGet]
         [Route("GetDaySummaryByDate")]
-        public dynamic GetDaySummaryByDate(DateTime today, string kindernumber)
+        public dynamic GetDaySummaryByDate(DateTime today, int kindernumber)
         {
             var summary = db.DaySummaries.Where(s => s.DaySummaryDate == today && s.KindergartenNumber == kindernumber).FirstOrDefault();
             return summary.SummaryDetails;
         }
 
-        [HttpPut]
-        [Route("UpdateSummary")]
-        public dynamic UpdateSummary(string kindernumber, DateTime today, string summaryupdates)
-        {
-            var summaryToUpdate = db.DaySummaries.Where(s => s.DaySummaryDate == today && s.KindergartenNumber == kindernumber).FirstOrDefault();
-            if (summaryToUpdate == null)
-            {
-                return "Summary Details not found";
-            }
-            summaryToUpdate.SummaryDetails = summaryupdates;
-            db.DaySummaries.Update(summaryToUpdate);
-            db.SaveChanges();
-            return summaryToUpdate;
-        }
+        //[HttpPut]
+        //[Route("UpdateSummary")]
+        //public dynamic UpdateSummary(int kindernumber, DateTime today, string summaryupdates)
+        //{
+        //    var summaryToUpdate = db.DaySummaries.Where(s => s.DaySummaryDate == today && s.KindergartenNumber = kindernumber).FirstOrDefault();
+        //    if (summaryToUpdate == null)
+        //    {
+        //        return "Summary Details not found";
+        //    }
+        //    summaryToUpdate.SummaryDetails = summaryupdates;
+        //    db.DaySummaries.Update(summaryToUpdate);
+        //    db.SaveChanges();
+        //    return summaryToUpdate;
+        //}
 
         //[HttpPost]
         //[Route("createSummary")]

@@ -5,7 +5,7 @@ namespace CO_P_library.Models;
 
 public partial class ServedIn
 {
-    public string KindergartenNumber { get; set; } = null!;
+    public int KindergartenNumber { get; set; } 
 
     public string KindergartenName { get; set; } = null!;
 

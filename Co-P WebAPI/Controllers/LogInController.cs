@@ -8,26 +8,23 @@ namespace Co_P_WebAPI.Controllers
     public class LogInController : Controller
     {
         CoPFinalProjectContext db = new CoPFinalProjectContext();
-
         [HttpGet]
-        [Route("LogIn/{ID}/{password}")]
-        public IActionResult LogIn(string ID, string password)
+        [Route("Login")]
+        public dynamic Login(string userid, string password)
         {
-            // חיפוש המשתמש על בסיס ID והסיסמה
-            var user = db.Users.FirstOrDefault(u => u.UserId == ID && u.UserpPassword == password);
-
-            if (user == null)
+            var thisuser = db.Users.Where(u => u.UserId == userid && u.UserpPassword == password).FirstOrDefault();
+            if (thisuser == null)
             {
-                return BadRequest("Login failed");
+                return "User not found";
             }
-
-            // החזרת פרטי המשתמש, וודא שאת מטפלת בערכים שעשויים להיות null
-            return Ok(new
+            return (new
             {
-                user_id = user.UserId,
-                user_code = user.UserCode,
-                kindergarten_number = user.KindergartenNumber
+                thisuser.UserId,
+                thisuser.UserCode,
+                thisuser.KindergartenNumber
+
             });
         }
+
     }
 }
