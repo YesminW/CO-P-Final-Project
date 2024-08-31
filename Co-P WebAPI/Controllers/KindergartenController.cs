@@ -73,15 +73,15 @@ namespace Co_P_WebAPI.Controllers
 
         [HttpDelete]
         [Route("DeleteKindergarten")]
-        public dynamic DeletKindergarten(string name)
+        public dynamic DeletKindergarten(int kindergartenNumber)
         {
-            Kindergarten? k = db.Kindergartens.Where(x => x.KindergartenName == name).SingleOrDefault();
+            Kindergarten? k = db.Kindergartens.Where(x => x.KindergartenNumber == kindergartenNumber).SingleOrDefault();
 
             if (k != null)
             {
                 db.Kindergartens.Remove(k);
                 db.SaveChanges();
-                return Ok($"{name} deleted successfuly ");
+                return Ok($"{k.KindergartenName} deleted successfuly ");
             }
             else
             {
