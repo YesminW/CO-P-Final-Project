@@ -8,10 +8,12 @@ namespace CO_P_library.Models
 {
     public partial class UserInKindergarten
     {
-        public DateTime StartDate { get; set; }
+        public DateTime ActivityDate { get; set; }
         public int KindergartenNumber { get; set; }
         public int CurrentAcademicYear { get; set; }
         public string? UserID { get; set; }
+
+        public int Number { get; set; }
 
         public virtual User User { get; set; }
         public virtual Kindergarten Kindergarten { get; set; }
