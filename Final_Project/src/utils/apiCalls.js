@@ -128,6 +128,8 @@ export async function uploadParentsExcel(
   currentYear
 ) {
   try {
+    console.log(file, kindergartenNumber, currentYear);
+
     const formData = new FormData();
     formData.append("file", file);
     const files = await fetch(
@@ -151,6 +153,8 @@ export async function addChildrenByExcel(
   currentYear
 ) {
   try {
+    console.log(file, kindergartenNumber, currentYear);
+
     const formData = new FormData();
     formData.append("file", file);
     const files = await fetch(

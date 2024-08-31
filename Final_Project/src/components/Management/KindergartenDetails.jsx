@@ -9,6 +9,8 @@ import {
   getAllTeacher,
   uploadParentsExcel,
 } from "../../utils/apiCalls";
+import { addDoc, collection } from "firebase/firestore";
+import { db } from "../../utils/firebase";
 
 export default function KindergartenDetails() {
   const navigate = useNavigate();
@@ -110,18 +112,32 @@ export default function KindergartenDetails() {
           assistant2.userPrivetName,
           assistant2.userSurname
         ));
-      file &&
-        (await uploadParentsExcel(
-          file,
-          kindergarten.kindergartenNumber,
-          currentYear
-        ));
-      file2 &&
-        (await addChildrenByExcel(
-          file2,
-          kindergarten.kindergartenNumber,
-          currentYear
-        ));
+      if (file && file2) {
+        const [parents, children] = await Promise.all([
+          uploadParentsExcel(
+            file,
+            kindergarten.kindergartenNumber,
+            currentYear
+          ),
+          addChildrenByExcel(
+            file2,
+            kindergarten.kindergartenNumber,
+            currentYear
+          ),
+        ]);
+        await Promise.all(
+          children.map((c) =>
+            addDoc(collection(db, "chats"), {
+              admin: "101010101",
+              participants: [c.parent1, c.parent2],
+              childId: c.childId,
+            })
+          )
+        );
+      } else {
+        console.error("Add files");
+      }
+
       navigate("/KindergartenManagement");
     } catch (error) {
       console.error(error);
