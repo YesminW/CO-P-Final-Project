@@ -18,9 +18,11 @@ export default function First() {
           איש צוות
         </Link>
       </div>
-      <Link to="/LoginManage">
-        <button className="btn">מנהל/ת חינוך</button>
-      </Link>
+      <div className="login-buttons">
+        <Link to="/LoginManage" className="btn">
+          מנהל/ת חינוך
+        </Link>
+      </div>
     </div>
   );
 }
