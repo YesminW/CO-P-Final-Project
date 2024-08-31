@@ -6,7 +6,7 @@ import "../assets/StyleSheets/Main.css";
 
 export default function First() {
   return (
-    <div>
+    <div className="firstdiv">
       {Elogo}
       <br />
       <h1 className="loginh1">מי אתה/את?</h1>

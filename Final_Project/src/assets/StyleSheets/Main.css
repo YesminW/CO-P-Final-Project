@@ -122,6 +122,9 @@
   border-color: white;
 }
 
-h3 {
-  color: #ffffff;
+.firstdiv {
+  display: flex;
+  justify-content: center;
+  height: 100vh;
+  flex-direction: column;
 }
