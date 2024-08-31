@@ -14,10 +14,11 @@ namespace Co_P_WebAPI.Controllers
 {
     public class DutySchedulerController : Controller
     {
-        CoPFinalProjectContext db = new CoPFinalProjectContext();
+       
 
         private readonly DutyScheduler _dutyScheduler;
 
+        CoPFinalProjectContext db = new CoPFinalProjectContext();
         public DutySchedulerController(DutyScheduler dutyScheduler)
         {
             _dutyScheduler = dutyScheduler;
@@ -38,6 +39,14 @@ namespace Co_P_WebAPI.Controllers
             {
                 return StatusCode(500, $"Internal server error: {ex.Message}");
             }
+        }
+        [HttpGet]
+        [Route("Whosondutytoday/{kindergartenNumber}/{today}")]
+        public async Task<ActionResult<IEnumerable<Duty>>> Whosondutytoday(int kindergartenNumber, DateTime today)
+        {
+            var dutyChildren = await db.Duties.Where(d => d.KindergartenNumber == kindergartenNumber && d.DutyDate == today).ToListAsync();
+            return Ok(dutyChildren);
+
         }
 
         [HttpGet]
