@@ -129,7 +129,7 @@ export default function KindergartenDetails() {
         await Promise.all(
           children.map((c) =>
             addDoc(collection(db, "chats"), {
-              admin: "101010101",
+              admin: teacher.userId,
               participants: [c.parent1, c.parent2],
               childId: c.childId,
             })
@@ -292,11 +292,7 @@ export default function KindergartenDetails() {
         </label>
       </FormControl>
 
-      <Link
-        className="childlistbtn"
-        to="/ChildList"
-        state={kindergarten}
-      >
+      <Link className="childlistbtn" to="/ChildList" state={kindergarten}>
         רשימת ילדים
       </Link>
 
