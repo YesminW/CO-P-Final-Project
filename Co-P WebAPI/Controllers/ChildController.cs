@@ -163,9 +163,12 @@ namespace Co_P_WebAPI.Controllers
         }
 
         [HttpDelete]
-        [Route("DeleteChild/{childId}")]
+        [Route("DeleteChild/{ID}")]
         public dynamic DeleteChild(string ID)
         {
+            var relatedAttendances = db.DailyAttendances.Where(a => a.ChildId == ID);
+            db.DailyAttendances.RemoveRange(relatedAttendances);
+
             Child? c = db.Children.Where(x => x.ChildId == ID).FirstOrDefault();
             if (c == null)
             {
@@ -173,7 +176,8 @@ namespace Co_P_WebAPI.Controllers
             }
             db.Children.Remove(c);
             db.SaveChanges();
-            return (c.ChildFirstName + " " + c.ChildSurname + "deleted");
+            return (c.ChildFirstName + " " + c.ChildSurname + " deleted");
         }
+
     }
 }
