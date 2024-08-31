@@ -15,7 +15,7 @@ public partial class Child
 
     public string? ChildGender { get; set; }
 
-    public int kindergartenNumber { get; set; }
+    public string kindergartenNumber { get; set; } = null!;
 
     public int CurrentAcademicYear { get; set; }
 

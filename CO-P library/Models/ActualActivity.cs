@@ -17,7 +17,7 @@ public partial class ActualActivity
 
     public int? MealNumber { get; set; }
 
-    public int KindergartenNumber { get; set; }
+    public string KindergartenNumber { get; set; } = null!;
 
     public virtual ActivityType ActivityNumberNavigation { get; set; } = null!;
 

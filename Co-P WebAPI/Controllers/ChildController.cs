@@ -34,20 +34,18 @@ namespace Co_P_WebAPI.Controllers
         [Route("GetChildByParent/{ParentID}")]
         public dynamic GetChildByParent(string ParentID)
         {
-            var child = db.Children
-               .Where(c => c.Parent1 == ParentID || c.Parent2 == ParentID)
-               .FirstOrDefault();
-            if (child == null)
+            var thisChild = db.Children.Where(tc => tc.Parent1 == ParentID || tc.Parent2 == ParentID).FirstOrDefault();
+            if (thisChild == null)
             {
                 return new { error = "Child not found" };
             }
-            return child;
+            return thisChild;
 
         }
 
         [HttpGet]
         [Route("GetChildByKindergarten")]
-        public dynamic GetChildByKindergarten(int kindergartenNumber)
+        public dynamic GetChildByKindergarten(string kindergartenNumber)
         {
             IEnumerable<Child> children = db.Children.Where(c=> c.kindergartenNumber == kindergartenNumber).Select(x => new Child()
             { 
@@ -61,7 +59,7 @@ namespace Co_P_WebAPI.Controllers
 
         [HttpPost]
         [Route("AddChildrenByExcel/{kindergartenNumber}/{currentAcademicYear}")]
-        public async Task<IActionResult> UploadExcel(IFormFile file, int kindergartenNumber, int currentAcademicYear)
+        public async Task<IActionResult> UploadExcel(IFormFile file, string kindergartenNumber, int currentAcademicYear)
         {
             if (file == null || file.Length == 0)
             {
@@ -141,7 +139,7 @@ namespace Co_P_WebAPI.Controllers
         }
         [HttpPost]
         [Route("AddChildren")]
-        public dynamic addChild(string ID, string childFMame, string chilsSName, DateTime chilsBdate, string gender, string parent1, string parent2, int year, int kindergartenNumber)
+        public dynamic addChild(string ID, string childFMame, string chilsSName, DateTime chilsBdate, string gender, string parent1, string parent2, int year, string kindergartenNumber)
         {
             Child c = new Child
             {
