@@ -139,9 +139,6 @@ namespace Co_P_WebAPI.Controllers
 
 
         }
-
-
-
         [HttpPost]
         [Route("AddChildren")]
         public dynamic addChild(string ID, string childFMame, string chilsSName, DateTime chilsBdate, string gender, string parent1, string parent2, int year, int kindergartenNumber)
@@ -180,6 +177,5 @@ namespace Co_P_WebAPI.Controllers
             db.SaveChanges();
             return (c.ChildFirstName + " " + c.ChildSurname + "deleted");
         }
-
     }
 }

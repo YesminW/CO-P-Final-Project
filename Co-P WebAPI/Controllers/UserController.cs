@@ -50,7 +50,8 @@ namespace Co_P_WebAPI.Controllers
                                      .Select(u => new
                                      {
                                          u.UserPrivetName,
-                                         u.UserSurname
+                                         u.UserSurname,
+                                         u.UserId
                                      })
                                      .ToList();
 
@@ -66,7 +67,9 @@ namespace Co_P_WebAPI.Controllers
                                .Select(u => new
                                {
                                    u.UserPrivetName,
-                                   u.UserSurname
+                                   u.UserSurname,
+                                   u.UserId
+                                  
                                })
                                .ToList();
 
