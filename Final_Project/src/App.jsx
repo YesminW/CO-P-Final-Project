@@ -29,6 +29,7 @@ import EditProfile from "./components/Parents/EditProfile";
 import EditProfileChild from "./components/Parents/EditProfileChild";
 import EditProfileP from "./components/Parents/EditProfileP";
 import Allergies from "./components/Parents/Allergies";
+import WatchMealP from "./components/Parents/WatchMealP";
 
 import "./assets/StyleSheets/Register.css";
 import "./assets/StyleSheets/Main.css";
