@@ -46,7 +46,7 @@ namespace Co_P_WebAPI.Controllers
         }
 
         [HttpGet]
-        [Route("GetChildByKindergarten")]
+        [Route("GetChildByKindergarten/{kindergartenNumber}")]
         public dynamic GetChildByKindergarten(int kindergartenNumber)
         {
             IEnumerable<Child> children = db.Children.Where(c=> c.kindergartenNumber == kindergartenNumber).Select(x => new Child()

@@ -1,10 +1,11 @@
 import React, { useEffect, useState } from "react";
-import { useParams, useNavigate, useLocation } from "react-router-dom";
+import { useNavigate, useLocation, Link } from "react-router-dom";
 import { Button, Typography, FormControl } from "@mui/material";
 import CloudUploadIcon from "@mui/icons-material/CloudUpload";
 import {
   addChildrenByExcel,
   assignStaffToKindergarten,
+  deleteKindergarten,
   getAllAssistants,
   getAllTeacher,
   uploadParentsExcel,
@@ -144,12 +145,13 @@ export default function KindergartenDetails() {
     }
   };
 
-  const handleDelete = () => {
-    setSharingType("");
-    setAssistant1("");
-    setAssistant2("");
-    setFile(null);
-    setFileError("");
+  const handleDelete = async (e) => {
+    try {
+      await deleteKindergarten(kindergarten.kindergartenNumber);
+      navigate("/KindergartenManagement");
+    } catch (error) {
+      console.error(error);
+    }
   };
 
   return (
@@ -157,7 +159,6 @@ export default function KindergartenDetails() {
       <h2 className="registerh2">ניהול גנים</h2>
       <div className="registerdiv">
         <h2 style={{ textAlign: "center", margin: 0 }}>
-          {" "}
           {decodeURIComponent(kindergarten.kindergartenName)}
         </h2>
       </div>
@@ -232,7 +233,6 @@ export default function KindergartenDetails() {
             sx={{
               fontFamily: "Karantina",
               fontSize: "20px",
-              margin: "20px",
               color: "white",
               backgroundColor: "#076871",
               "&:hover": {
@@ -269,7 +269,6 @@ export default function KindergartenDetails() {
             sx={{
               fontFamily: "Karantina",
               fontSize: "20px",
-              margin: "20px",
               color: "white",
               backgroundColor: "#076871",
               "&:hover": {
@@ -292,6 +291,14 @@ export default function KindergartenDetails() {
           )}
         </label>
       </FormControl>
+
+      <Link
+        className="childlistbtn"
+        to="/ChildList"
+        state={kindergarten.kindergartenNumber}
+      >
+        רשימת ילדים
+      </Link>
 
       <Button
         variant="contained"

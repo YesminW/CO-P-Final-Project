@@ -378,3 +378,19 @@ export async function uploaspictures(file) {
     throw new Error(error);
   }
 }
+
+export async function deleteKindergarten(kindergartenNumber) {
+  try {
+    const response = await fetch(
+      `${SERVER_URL}/DeleteKindergarten/${kindergartenNumber}`,
+      {
+        method: "DELETE",
+      }
+    );
+    const resp = await response.json();
+    return resp;
+  } catch (error) {
+    console.error(error);
+    throw new Error(error);
+  }
+}

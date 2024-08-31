@@ -8,6 +8,7 @@ import AddKindergarden from "./components/Management/AddKindergarden";
 import AddsAndP from "./components/Management/AddSAndP";
 import KindergartenManagement from "./components/Management/ManageKinderGarden";
 import KindergartenDetails from "./components/Management/KindergartenDetails";
+import ChildList from "./components/Management/ChildList";
 
 import LoginSP from "./components/StaffMember/LoginSP";
 
@@ -62,6 +63,7 @@ function App() {
       <Route path="/KindergartenDetails" element={<KindergartenDetails />} />
       <Route path="/AddKindergarden" element={<AddKindergarden />} />
       <Route path="AddSAndP" element={<AddsAndP />} />
+      <Route path="ChildList" element={<ChildList />} />
 
       <Route path="/LoginSP" element={<LoginSP />} />
       <Route path="/MainStaffMember" element={<MainStaffMember />} />
