@@ -53,6 +53,7 @@ namespace Co_P_WebAPI.Controllers
             { 
                 ChildFirstName = x.ChildFirstName,
                 ChildSurname = x.ChildSurname,
+                ChildId = x.ChildId
             });
             return children;
 
