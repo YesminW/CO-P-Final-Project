@@ -176,7 +176,6 @@ public partial class CoPFinalProjectContext : DbContext
             entity.ToTable("DaySummary");
 
             entity.Property(e => e.DaySummaryDate).HasColumnType("datetime");
-            entity.Property(e => e.DaySummaryHour).HasColumnType("datetime");
             entity.Property(e => e.SummaryDetails).HasMaxLength(500);
 
             entity.HasOne(d => d.CurrentAcademicYearNavigation).WithMany(p => p.DaySummaries)

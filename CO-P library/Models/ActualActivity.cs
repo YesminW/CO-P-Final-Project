@@ -9,8 +9,6 @@ public partial class ActualActivity
 
     public DateTime ActivityDate { get; set; }
 
-    public TimeSpan ActivityHour { get; set; }
-
     public string? Equipment { get; set; }
 
     public int ActivityNumber { get; set; }

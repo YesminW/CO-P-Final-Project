@@ -7,8 +7,6 @@ public partial class DaySummary
 {
     public DateTime DaySummaryDate { get; set; }
 
-    public DateTime? DaySummaryHour { get; set; }
-
     public string SummaryDetails { get; set; } = null!;
 
     public int CurrentAcademicYear { get; set; }
