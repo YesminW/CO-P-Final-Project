@@ -284,8 +284,19 @@ export async function getAllChildDuty(kindergartenNumber) {
       `${SERVER_URL}/getdutyList/${kindergartenNumber}`
     );
     const data = await response.json();
-    console.log(data);
+    return data;
+  } catch (error) {
+    console.error(error);
+    throw new Error(error);
+  }
+}
 
+export async function getChildByKindergarten(kindergartenNumber) {
+  try {
+    const response = await fetch(
+      `${SERVER_URL}/GetChildByKindergarten/${kindergartenNumber}`
+    );
+    const data = await response.json();
     return data;
   } catch (error) {
     console.error(error);
@@ -385,8 +396,27 @@ export async function deleteKindergarten(kindergartenNumber) {
       `${SERVER_URL}/DeleteKindergarten/${kindergartenNumber}`,
       {
         method: "DELETE",
+        headers: new Headers({
+          "Content-Type": "application/json; charset=UTF-8",
+        }),
       }
     );
+    const resp = await response.json();
+    return resp;
+  } catch (error) {
+    console.error(error);
+    throw new Error(error);
+  }
+}
+
+export async function deleteChild(childId) {
+  try {
+    const response = await fetch(`${SERVER_URL}/DeleteChild/${childId}`, {
+      method: "DELETE",
+      headers: new Headers({
+        "Content-Type": "application/json; charset=UTF-8",
+      }),
+    });
     const resp = await response.json();
     return resp;
   } catch (error) {

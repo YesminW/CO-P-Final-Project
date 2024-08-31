@@ -295,7 +295,7 @@ export default function KindergartenDetails() {
       <Link
         className="childlistbtn"
         to="/ChildList"
-        state={kindergarten.kindergartenNumber}
+        state={kindergarten}
       >
         רשימת ילדים
       </Link>
