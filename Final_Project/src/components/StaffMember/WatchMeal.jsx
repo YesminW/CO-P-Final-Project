@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { useLocation, useNavigate } from "react-router-dom";
-import "../../assets/StyleSheets/WatchMeal.css";
+import "../../assets/StyleSheets/Meals.css";
 import EfooterS from "../../Elements/EfooterS";
 import { hebrewWeekDays } from "../../utils/constants";
 import { formatDate } from "../../utils/functions";
@@ -11,8 +11,8 @@ const WatchMeal = () => {
   const location = useLocation();
   const navigate = useNavigate();
   const date = location.state;
-  const kindergartenNumber = 2; // Assuming kindergarten number is always 2
-  
+  const kindergartenNumber = localStorage.getItem("kindergartenNumber");
+
   const [mealData, setMealData] = useState([]);
   const [isDataLoaded, setIsDataLoaded] = useState(false);
 
@@ -38,23 +38,17 @@ const WatchMeal = () => {
     fetchMealData();
   }, [date, kindergartenNumber]);
 
-  const handleConfirmClick = () => {
-    navigate("/Meals");
-  };
-
   function handleSubmit(e) {
     e.preventDefault();
-    const formData = new FormData(e.target);
-    const data = Object.fromEntries(formData);
+    navigate("/Meals");
   }
 
   return (
-    <div className="container">
-      <header className="header">
-        <h1>מה אוכלים היום</h1>
-      </header>
+    <div className="container flex-column center">
+      <header className="headermeals">מה אוכלים היום</header>
       <form className="meal-info" onSubmit={handleSubmit}>
-        <h2>{`${hebrewWeekDays[date.getDay()]} ${formatDate(date)}`}</h2>
+        <h2 className="h2meals">{`${hebrewWeekDays[date.getDay()]} `}</h2>
+        <h3 className="h3meals">{formatDate(date)}</h3>
         {isDataLoaded ? (
           <table className="meal-table">
             <tbody>
@@ -72,15 +66,9 @@ const WatchMeal = () => {
             </tbody>
           </table>
         ) : (
-          <p>טוען נתונים...</p>
+          <p className="h3meals">טוען נתונים...</p>
         )}
-        <button
-          type="submit"
-          className="confirm-btn"
-          //   onClick={handleConfirmClick}
-        >
-          אישור
-        </button>
+        <button className="confirm-btn">אישור</button>
       </form>
       {EfooterS}
     </div>

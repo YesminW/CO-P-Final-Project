@@ -42,16 +42,10 @@ export default function Meals() {
   };
 
   return (
-    <div className="container">
-      <header className="headermeals">
-        <h1 style={{ fontSize: "48px" }}>מה אוכלים היום</h1>
-      </header>
+    <div className="container flex-column center">
+      <header className="headermeals">מה אוכלים היום</header>
       <div className="date-selector">
-        <select
-          onChange={handleWeekChange}
-          value={selectedWeek}
-          style={{ width: "100%", padding: "10px", fontSize: "30px" }}
-        >
+        <select onChange={handleWeekChange} value={selectedWeek}>
           {weeks.map((week, index) => (
             <option key={nanoid()} value={index}>
               {formatDate(week.start)} - {formatDate(week.end)}
@@ -59,29 +53,18 @@ export default function Meals() {
           ))}
         </select>
       </div>
-      <div className="day-grid">
-        {getWeekDates(weeks[selectedWeek].start).map((day, index) => (
-          <button
-            key={nanoid()}
-            className="day-button"
-            onClick={() => handleDayClick(day)}
-          >
-            {hebrewWeekDays[index]} <br /> {formatDate(day)}
-          </button>
-        ))}
-      </div>
-      <div className="add-meal-button">
-        <button
-          onClick={handleAddMealClick}
-          style={{
-            width: "100%",
-            padding: "10px",
-            fontSize: "25px",
-            marginTop: "10px",
-          }}
-        >
-          הוספת תפריט ארוחות עתידי
-        </button>
+      <div className="sizem">
+        <div className="day-grid">
+          {getWeekDates(weeks[selectedWeek].start).map((day, index) => (
+            <button
+              key={nanoid()}
+              className="day-button"
+              onClick={() => handleDayClick(day)}
+            >
+              {hebrewWeekDays[index]} <br /> {formatDate(day)}
+            </button>
+          ))}
+        </div>
       </div>
       {EfooterS}
     </div>

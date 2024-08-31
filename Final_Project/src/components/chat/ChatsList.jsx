@@ -5,6 +5,7 @@ import { useEffect, useState } from "react";
 import { db } from "../../utils/firebase";
 import { collection, getDocs, query, where } from "firebase/firestore";
 import { CircularProgress } from "@mui/material";
+import { getChildByParent } from "../../utils/apiCalls";
 
 export default function ChatsList() {
   const [chats, setChats] = useState([]);
@@ -13,11 +14,11 @@ export default function ChatsList() {
     async function getAllChats() {
       try {
         let chats;
-        if (localStorage.getItem("role") === "111") {
+        if (localStorage.getItem("role_code") === "111") {
           chats = await getDocs(
             query(
               collection(db, "chats"),
-              where("owner", "==", localStorage.getItem("user_id"))
+              where("admin", "==", localStorage.getItem("user_id"))
             )
           );
         } else {
@@ -32,11 +33,23 @@ export default function ChatsList() {
             )
           );
         }
-        setChats(
-          chats.docs.map((doc) => {
-            return { id: doc.id, ...doc.data() };
-          })
-        );
+        for (const doc of chats.docs) {
+          const data = doc.data();
+          console.log(data);
+          const child = await getChildByParent(doc.get("participants")[0]);
+          // console.log(child);
+        }
+        // setChats(
+        //   chats.docs.map(async (doc) => {
+
+        //     return {
+        //       id: doc.id,
+        //       ...doc.data(),
+        //       childFirstName: child.childFirstName,
+        //       childImage: "",
+        //     };
+        //   })
+        // );
       } catch (e) {
         console.error(e);
       } finally {
@@ -64,10 +77,10 @@ export default function ChatsList() {
               >
                 <img
                   className="chat-img"
-                  src={chat.parentImage}
-                  alt={chat.name}
+                  src={chat.childImage}
+                  alt={chat.childFirstName}
                 />
-                <h3 className="chat-text-container">{chat.childName}</h3>
+                <h3 className="chat-text-container">{chat.childFirstName}</h3>
               </Link>
             ))
           )}

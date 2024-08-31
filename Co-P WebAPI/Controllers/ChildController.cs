@@ -60,7 +60,7 @@ namespace Co_P_WebAPI.Controllers
         }
 
         [HttpPost]
-        [Route("AddChildrenByExcel")]
+        [Route("AddChildrenByExcel/{kindergartenNumber}/{currentAcademicYear}")]
         public async Task<IActionResult> UploadExcel(IFormFile file, int kindergartenNumber, int currentAcademicYear)
         {
             if (file == null || file.Length == 0)

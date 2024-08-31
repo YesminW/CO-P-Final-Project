@@ -20,8 +20,10 @@ import {
 import { formatForCSharp } from "../../utils/functions";
 
 export default function Presence() {
-  const [childrenData, setChildrenData] = useState([]); // Use a descriptive name
-  const [attendanceData, setAttendance] = useState([]); // Track selected student
+  const [childrenData, setChildrenData] = useState([]);
+  const [attendanceData, setAttendance] = useState([]);
+  const [filter, setFilter] = useState("");
+  const kindergartenNumber = localStorage.getItem("kindergartenNumber");
 
   useEffect(() => {
     const fetchData = async () => {
@@ -30,8 +32,6 @@ export default function Presence() {
           getAllChild(),
           getDailyAttendance(formatForCSharp(new Date())),
         ]);
-
-        console.log(attendance);
 
         setChildrenData(children);
         setAttendance(attendance);
@@ -49,19 +49,29 @@ export default function Presence() {
         childId,
         formatForCSharp(new Date())
       );
-      console.log(attendence);
       setAttendance((prev) => {
-        if (prev.includes(attendence)) {
-        }
-        prev.find(
+        const a = prev.find(
           (p) => p.dailyAttendanceId === attendence.dailyAttendanceId
-        ).attendanceStatus = attendence.attendanceStatus;
-        return prev;
+        );
+        if (a) {
+          return prev.map((p) => {
+            if (p.dailyAttendanceId === a.dailyAttendanceId) {
+              p.attendanceStatus = attendence.attendanceStatus;
+            }
+            return p;
+          });
+        } else {
+          return [...prev, attendence];
+        }
       });
     } catch (error) {
       console.error(error);
     }
   };
+
+  const filteredChildren = childrenData.filter(
+    (c) => c.childFirstName.includes(filter) || c.childSurname.includes(filter)
+  );
 
   return (
     <>
@@ -72,7 +82,12 @@ export default function Presence() {
         <Container className="presence-container">
           <Box className="header">
             <Box className="search-box">
-              <input type="text" placeholder="חיפוש" className="search-input" />
+              <input
+                type="text"
+                placeholder="חיפוש"
+                className="search-input"
+                onChange={(e) => setFilter(e.target.value)}
+              />
               <IconButton style={{ color: "#07676D" }}>
                 <SearchIcon />
               </IconButton>
@@ -90,39 +105,40 @@ export default function Presence() {
             </Button>
           </Box>
           <Box className="students-grid">
-            {childrenData.map((student) => (
-              <Box
-                key={student.childId}
-                className={`student-circle ${
-                  // children
-                  // atte
-                  // atten has child.id
-                  attendanceData.find((a) => a.childId === student.childId) &&
-                  (attendanceData.find((a) => a.childId === student.childId)[
-                    "attendanceStatus"
-                  ] === "1"
-                    ? "student-circle-present"
-                    : attendanceData.find((a) => a.childId === student.childId)[
-                        "attendanceStatus"
-                      ] === "2"
-                    ? "student-circle-went-home"
-                    : "")
-                }`}
-                onClick={() => handleStudentClick(student.childId)}
-              >
-                <Avatar
-                  src={student.imgSrc || defaultimg}
-                  alt={`${student.childFirstName} ${student.childSurname}`}
-                  className="student-avatar"
-                />
-                <Typography
-                  style={{ fontFamily: "Karantina", fontSize: "15px" }}
-                  className="student-name"
+            {filteredChildren.length === 0 ? (
+              <h2>אין ילדים התואמים את החיפוש</h2>
+            ) : (
+              filteredChildren.map((student) => (
+                <Box
+                  key={student.childId}
+                  className={`student-circle ${
+                    attendanceData.find((a) => a.childId === student.childId) &&
+                    (attendanceData.find((a) => a.childId === student.childId)[
+                      "attendanceStatus"
+                    ] === "1"
+                      ? "student-circle-present"
+                      : attendanceData.find(
+                          (a) => a.childId === student.childId
+                        )["attendanceStatus"] === "2"
+                      ? "student-circle-went-home"
+                      : "")
+                  }`}
+                  onClick={() => handleStudentClick(student.childId)}
                 >
-                  {student.childFirstName} {student.childSurname}
-                </Typography>
-              </Box>
-            ))}
+                  <Avatar
+                    src={student.imgSrc || defaultimg}
+                    alt={`${student.childFirstName} ${student.childSurname}`}
+                    className="student-avatar"
+                  />
+                  <Typography
+                    style={{ fontFamily: "Karantina", fontSize: "15px" }}
+                    className="student-name"
+                  >
+                    {student.childFirstName} {student.childSurname}
+                  </Typography>
+                </Box>
+              ))
+            )}
           </Box>
         </Container>
         {EfooterS}

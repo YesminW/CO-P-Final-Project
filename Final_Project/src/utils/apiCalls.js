@@ -13,6 +13,7 @@ export async function login(data) {
       }),
     });
     const user_Data = await user.json();
+    console.log(user_Data);
 
     return user_Data;
   } catch (error) {
@@ -127,6 +128,8 @@ export async function uploadParentsExcel(
   currentYear
 ) {
   try {
+    console.log(file, kindergartenNumber, currentYear);
+
     const formData = new FormData();
     formData.append("file", file);
     const files = await fetch(
@@ -144,14 +147,23 @@ export async function uploadParentsExcel(
   }
 }
 
-export async function addChildrenByExcel(file) {
+export async function addChildrenByExcel(
+  file,
+  kindergartenNumber,
+  currentYear
+) {
   try {
+    console.log(file, kindergartenNumber, currentYear);
+
     const formData = new FormData();
     formData.append("file", file);
-    const files = await fetch(`${SERVER_URL}/AddChildrenByExcel`, {
-      method: "POST",
-      body: formData,
-    });
+    const files = await fetch(
+      `${SERVER_URL}/AddChildrenByExcel/${kindergartenNumber}/${currentYear}`,
+      {
+        method: "POST",
+        body: formData,
+      }
+    );
     const filesData = await files.json();
     return filesData;
   } catch (error) {
@@ -266,10 +278,14 @@ export async function getAllKindergartens() {
   }
 }
 
-export async function getAllChildDuty() {
+export async function getAllChildDuty(kindergartenNumber) {
   try {
-    const response = await fetch(`${SERVER_URL}/allDuties`);
+    const response = await fetch(
+      `${SERVER_URL}/getdutyList/${kindergartenNumber}`
+    );
     const data = await response.json();
+    console.log(data);
+
     return data;
   } catch (error) {
     console.error(error);
@@ -325,6 +341,38 @@ export async function updateChildAttendence(childID, date) {
     );
     const data = await response.json();
     return data;
+  } catch (error) {
+    console.error(error);
+    throw new Error(error);
+  }
+}
+
+export async function getDaySummaryByDate(date, kindergartenNumber) {
+  try {
+    const response = await fetch(
+      `${SERVER_URL}/GetDaySummaryByDate/${date}/${kindergartenNumber}`
+    );
+    const data = await response.json();
+    return data;
+  } catch (error) {
+    console.error(error);
+    throw new Error(error);
+  }
+}
+
+export async function uploaspictures(file) {
+  try {
+    const formData = new FormData();
+    formData.append("file", file);
+    const files = await fetch(
+      `${SERVER_URL}/api/FaceRecognition/ProcessImage`,
+      {
+        method: "POST",
+        body: formData,
+      }
+    );
+    const filesData = await files.json();
+    return filesData;
   } catch (error) {
     console.error(error);
     throw new Error(error);
