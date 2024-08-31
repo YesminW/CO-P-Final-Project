@@ -67,31 +67,43 @@ namespace Co_P_WebAPI.Controllers
         }
 
         [HttpGet]
-        [Route("getbydateandkindergarten/{kindergartenNumner}/{today}")]
-        public dynamic Getbydateandkindergarten(int kindergartenNumner, DateTime today)
+        [Route("getbydateandkindergarten/{kindergartenNumber}/{date}")]
+        public dynamic Getbydateandkindergarten(int kindergartenNumber, DateTime date)
         {
-            var ActualActivities = db.ActualActivities.Where(a => a.ActivityDate == today && a.KindergartenNumber == kindergartenNumner && a.ActivityNumber == 10).Select(m => new MealsInKindergartenDTO()
-            {
-                ActivityDate = m.ActivityDate,
-                KindergartenName = m.KindergartenNumberNavigation.KindergartenName,
-                MaelName = m.MealNumberNavigation.MealType,
-                MealDetails = m.MealNumberNavigation.MealDetails
+            var actualActivities = db.ActualActivities
+                .Where(a => a.ActivityDate.Date == date.Date && a.KindergartenNumber == kindergartenNumber)
+                .Select(m => new MealsInKindergartenDTO()
+                {
+                    ActivityDate = m.ActivityDate,
+                    KindergartenName = m.KindergartenNumberNavigation.KindergartenName,
+                    MaelName = m.MealNumberNavigation.MealType,
+                    MealDetails = m.MealNumberNavigation.MealDetails
+                })
+                .ToList();
 
-
-            });
-            return ActualActivities;
+            return actualActivities;
         }
+
 
         [HttpPut]
         [Route("Editbydateandkindergarten")]
-        public dynamic Editbydateandkindergarten(int kindergartenNumner, DateTime date, string mealName, string mealDetail)
+        public dynamic Editbydateandkindergarten(int kindergartenNumber, DateTime date, string mealName, string mealDetail)
         {
-            var a = db.ActualActivities.Where(a => a.ActivityDate == date && a.KindergartenNumber == kindergartenNumner && a.MealNumberNavigation.MealType == mealName).FirstOrDefault();
-            a.MealNumberNavigation.MealDetails = mealDetail;
+            var activity = db.ActualActivities
+                .Where(a => a.ActivityDate.Date == date.Date
+                            && a.KindergartenNumber == kindergartenNumber
+                            && a.MealNumberNavigation.MealType == mealName)
+                .FirstOrDefault();
 
-            db.SaveChanges();
+            if (activity != null)
+            {
+                activity.MealNumberNavigation.MealDetails = mealDetail;
+                db.SaveChanges();
+            }
 
-            return ("UpDate ");
+            return "Update";
         }
+
+
     }
 }
