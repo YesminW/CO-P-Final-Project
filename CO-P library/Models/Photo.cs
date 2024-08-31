@@ -11,7 +11,7 @@ public partial class Photo
 
     public DateTime? PhotoHour { get; set; }
 
-    public int KindergartenNumber { get; set; }
+    public string KindergartenNumber { get; set; } = null!;
 
     public virtual Kindergarten KindergartenNumberNavigation { get; set; } = null!;
 }

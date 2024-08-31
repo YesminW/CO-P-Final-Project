@@ -9,7 +9,7 @@ namespace CO_P_library.Models
     public partial class UserInKindergarten
     {
         public DateTime StartDate { get; set; }
-        public string? KindergartenNumber { get; set; }
+        public string KindergartenNumber { get; set; } = null!;
         public int CurrentAcademicYear { get; set; }
         public string? UserID { get; set; }
 

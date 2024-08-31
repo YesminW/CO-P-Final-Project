@@ -13,7 +13,7 @@ public partial class DaySummary
 
     public int CurrentAcademicYear { get; set; }
 
-    public int KindergartenNumber { get; set; }
+    public string KindergartenNumber { get; set; } = null!;
 
     public virtual AcademicYear CurrentAcademicYearNavigation { get; set; } = null!;
 

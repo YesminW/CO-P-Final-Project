@@ -10,7 +10,7 @@ namespace Co_P_WebAPI.Controllers
 
         [HttpGet]
         [Route("GetDaySummaryByDate")]
-        public dynamic GetDaySummaryByDate(DateTime today, int kindernumber)
+        public dynamic GetDaySummaryByDate(DateTime today, string kindernumber)
         {
             var summary = db.DaySummaries.Where(s => s.DaySummaryDate == today && s.KindergartenNumber == kindernumber).FirstOrDefault();
             return summary.SummaryDetails;
@@ -18,7 +18,7 @@ namespace Co_P_WebAPI.Controllers
 
         [HttpPut]
         [Route("UpdateSummary")]
-        public dynamic UpdateSummary(int kindernumber, DateTime today, string summaryupdates)
+        public dynamic UpdateSummary(string kindernumber, DateTime today, string summaryupdates)
         {
             var summaryToUpdate = db.DaySummaries.Where(s => s.DaySummaryDate == today && s.KindergartenNumber == kindernumber).FirstOrDefault();
             if (summaryToUpdate == null)
