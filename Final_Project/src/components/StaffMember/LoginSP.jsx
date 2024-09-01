@@ -20,7 +20,7 @@ export default function LoginStaffMember() {
       localStorage.setItem("user_id", user_Data.userId);
       localStorage.setItem("role_code", user_Data.userCode);
       localStorage.setItem("kindergartenNumber", user_Data.kindergartenNumber);
-      if (user_Data.user_code == "222") {
+      if (user_Data.userCode == "222") {
         navigate("/MainParent");
       } else {
         navigate("/MainStaffMember");

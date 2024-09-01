@@ -43,7 +43,7 @@ namespace Co_P_WebAPI.Controllers
 
 
         [HttpGet]
-        [Route("GetChildimage")]
+        [Route("GetChildimage/{primaryKey}")]
         public IActionResult GetChildimage(string primaryKey)
         {
             var imagesPath = Path.Combine(Directory.GetCurrentDirectory(), "ChildPhotos");

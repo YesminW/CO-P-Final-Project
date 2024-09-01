@@ -423,3 +423,16 @@ export async function deleteChild(childId) {
     throw new Error(error);
   }
 }
+
+export async function getChildPhoto(childId) {
+  try {
+    const response = await fetch(`${SERVER_URL}/getChildPhoto/${childId}`);
+    console.log(response);
+
+    const resp = await response.json();
+    return resp;
+  } catch (error) {
+    console.error(error);
+    throw new Error(error);
+  }
+}

@@ -5,7 +5,7 @@ import { useEffect, useState } from "react";
 import { db } from "../../utils/firebase";
 import { collection, getDocs, query, where } from "firebase/firestore";
 import { CircularProgress } from "@mui/material";
-import { getChildByParent } from "../../utils/apiCalls";
+import { getChildByParent, getChildPhoto } from "../../utils/apiCalls";
 
 export default function ChatsList() {
   const [chats, setChats] = useState([]);
@@ -33,23 +33,21 @@ export default function ChatsList() {
             )
           );
         }
+        const chatsToShow = [];
         for (const doc of chats.docs) {
           const data = doc.data();
-          console.log(data);
-          const child = await getChildByParent(doc.get("participants")[0]);
-          // console.log(child);
-        }
-        // setChats(
-        //   chats.docs.map(async (doc) => {
 
-        //     return {
-        //       id: doc.id,
-        //       ...doc.data(),
-        //       childFirstName: child.childFirstName,
-        //       childImage: "",
-        //     };
-        //   })
-        // );
+          const child = await getChildByParent(doc.get("participants")[0]);
+          // const photo = await getChildPhoto(doc.get("childId"));
+
+          chatsToShow.push({
+            id: doc.id,
+            ...data,
+            childFirstName: child.childFirstName,
+            childImage: "",
+          });
+        }
+        setChats(chatsToShow);
       } catch (e) {
         console.error(e);
       } finally {
@@ -80,7 +78,9 @@ export default function ChatsList() {
                   src={chat.childImage}
                   alt={chat.childFirstName}
                 />
-                <h3 className="chat-text-container">{chat.childFirstName}</h3>
+                <h3 className="chat-text-container">
+                  ההורים של {chat.childFirstName}
+                </h3>
               </Link>
             ))
           )}

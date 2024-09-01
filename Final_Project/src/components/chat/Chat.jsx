@@ -12,6 +12,7 @@ import {
 } from "firebase/firestore";
 import { CircularProgress } from "@mui/material";
 import { db } from "../../utils/firebase";
+import { getChildByParent } from "../../utils/apiCalls";
 
 export default function Chat() {
   const { id } = useParams();
@@ -41,6 +42,8 @@ export default function Chat() {
     async function getChatById() {
       try {
         const chat = await getDoc(doc(db, "chats", id));
+        const child = await getChildByParent(chat.get("participants")[0]);
+
         if (chat.data().messages?.length > 0) {
           setMessages(
             await Promise.all(
@@ -51,7 +54,13 @@ export default function Chat() {
             )
           );
         }
-        setChat({ id, ...chat.data() });
+
+        setChat({
+          id: doc.id,
+          ...chat.data(),
+          childFirstName: child.childFirstName,
+          childImage: "",
+        });
       } catch (e) {
         console.error(e);
       } finally {
@@ -66,8 +75,10 @@ export default function Chat() {
   ) : (
     <div className="flex-column page-container space-between">
       <div className="chat-title">
-        <img className="chat-img" src={chat.parentImage} />
-        <h1 className="chat-message">צ’אט עם ההורים של {chat.childName}</h1>
+        <img className="chat-img" src={chat.childImage} />
+        <h1 className="chat-message">
+          צ’אט עם ההורים של {chat.childFirstName}
+        </h1>
       </div>
       <div className="chat-content-container week-calendar-container">
         <div className="chat-messages-container">
