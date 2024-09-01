@@ -30,7 +30,7 @@ export default function AddsAndP() {
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
-      fill && (await uploadStaffExcel(file));
+      file && (await uploadStaffExcel(file));
       navigate("/KindergartenManagement");
     } catch (error) {
       console.error(error);

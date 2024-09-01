@@ -11,6 +11,8 @@ export default function AdditionalRegistrationForm(props) {
   const location = useLocation();
   const data = location.state;
   const [showPassword, setShowPassword] = useState(false);
+  const [showpPassword, setShowpPassword] = useState(false);
+
   const [formValues, setFormValues] = useState({
     UserPhoneNumber: "",
     UserAddress: "",
@@ -52,6 +54,8 @@ export default function AdditionalRegistrationForm(props) {
   const passworchange = (e) => {
     if (e.target.value !== formValues.UserpPassword) {
       setErrorpas("הסיסמא לא תואמת");
+    } else {
+      setErrorpas("");
     }
   };
   const handleChange = (e) => {
@@ -79,6 +83,7 @@ export default function AdditionalRegistrationForm(props) {
   };
 
   const handleClickShowPassword = () => setShowPassword((show) => !show);
+  const handleClickShowpPassword = () => setShowpPassword((show) => !show);
 
   return (
     <form onSubmit={handleSubmit} noValidate>
@@ -136,8 +141,8 @@ export default function AdditionalRegistrationForm(props) {
             name="password"
             onChange={passworchange}
           />
-          <i onClick={handleClickShowPassword}>
-            {showPassword ? <BsEyeSlash /> : <BsEye />}
+          <i onClick={handleClickShowpPassword}>
+            {showpPassword ? <BsEyeSlash /> : <BsEye />}
           </i>
         </div>
         {errorpas && <p>{errorpas}</p>}

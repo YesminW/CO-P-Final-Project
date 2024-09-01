@@ -397,7 +397,10 @@ export async function deleteKindergarten(kindergartenNumber) {
         }),
       }
     );
+    console.log(response);
+
     const resp = await response.json();
+    console.log(resp);
     return resp;
   } catch (error) {
     console.error(error);
