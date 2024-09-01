@@ -13,6 +13,8 @@ export async function login(data) {
       }),
     });
     const user_Data = await user.json();
+    console.log(user_Data);
+
     return user_Data;
   } catch (error) {
     console.error(error);

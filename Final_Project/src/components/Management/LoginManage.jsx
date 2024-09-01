@@ -16,8 +16,8 @@ export default function LoginManage() {
     try {
       const formData = new FormData(e.target);
       const data = Object.fromEntries(formData);
-      const { user_id } = await login(data);
-      localStorage.setItem("user_id", user_id);
+      const { userId } = await login(data);
+      localStorage.setItem("user_id", userId);
       navigate("/AddsAndP");
     } catch (error) {
       console.error(error);

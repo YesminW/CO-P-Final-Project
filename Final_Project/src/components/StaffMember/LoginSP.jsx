@@ -17,9 +17,9 @@ export default function LoginStaffMember() {
       const formData = new FormData(e.target);
       const data = Object.fromEntries(formData);
       const user_Data = await login(data);
-      localStorage.setItem("user_id", user_Data.user_id);
-      localStorage.setItem("role_code", user_Data.user_code);
-      localStorage.setItem("kindergartenNumber", user_Data.kindergarten_number);
+      localStorage.setItem("user_id", user_Data.userId);
+      localStorage.setItem("role_code", user_Data.userCode);
+      localStorage.setItem("kindergartenNumber", user_Data.kindergartenNumber);
       if (user_Data.user_code == "222") {
         navigate("/MainParent");
       } else {
