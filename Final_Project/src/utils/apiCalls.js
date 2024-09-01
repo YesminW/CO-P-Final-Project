@@ -13,8 +13,6 @@ export async function login(data) {
       }),
     });
     const user_Data = await user.json();
-    console.log(user_Data);
-
     return user_Data;
   } catch (error) {
     console.error(error);
@@ -427,8 +425,32 @@ export async function deleteChild(childId) {
 export async function getChildPhoto(childId) {
   try {
     const response = await fetch(`${SERVER_URL}/getChildPhoto/${childId}`);
-    console.log(response);
+    const resp = await response.json();
+    return resp;
+  } catch (error) {
+    console.error(error);
+    throw new Error(error);
+  }
+}
 
+export async function getTodayDuty(kindergartenNumber, date) {
+  try {
+    const response = await fetch(
+      `${SERVER_URL}/Whosondutytoday/${kindergartenNumber}/${date}`
+    );
+    const resp = await response.json();
+    return resp;
+  } catch (error) {
+    console.error(error);
+    throw new Error(error);
+  }
+}
+
+export async function getTodayBirthday(kindergartenNumber, date) {
+  try {
+    const response = await fetch(
+      `${SERVER_URL}/WhosCelebratingToday/${kindergartenNumber}/${date}`
+    );
     const resp = await response.json();
     return resp;
   } catch (error) {

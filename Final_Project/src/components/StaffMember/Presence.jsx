@@ -121,7 +121,7 @@ export default function Presence() {
                     className="student-avatar"
                   />
                   <Typography
-                    style={{ fontFamily: "Karantina", fontSize: "15px" }}
+                    style={{ fontFamily: "Karantina", fontSize: "20px" }}
                     className="student-name"
                   >
                     {student.childFirstName} {student.childSurname}
