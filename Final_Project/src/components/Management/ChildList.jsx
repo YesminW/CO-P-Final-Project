@@ -1,10 +1,6 @@
 import { useEffect, useState } from "react";
 import "../../assets/StyleSheets/BirthDayList.css";
-import {
-  deleteChild,
-  fetchBirthdays,
-  getChildByKindergarten,
-} from "../../utils/apiCalls";
+import { deleteChild, getChildByKindergarten } from "../../utils/apiCalls";
 import { nanoid } from "nanoid";
 import { Link, useLocation } from "react-router-dom";
 
@@ -30,7 +26,7 @@ export default function ChildList() {
   return (
     <div className="page-container flex-column">
       <div className="padded-container flex-column radius-25">
-        <div className="flex-row space-evenly">
+        <div className="flex-row space-between">
           <Link
             to="/KindergartenDetails"
             state={kindergarten}
@@ -39,6 +35,7 @@ export default function ChildList() {
             {"<"}
           </Link>
           <h1 className="h1child">רשימת ילדים </h1>
+          <div></div>
         </div>
         <div className="flex-column height-90-percent scroll gap-20">
           {children.map((b) => (
@@ -60,19 +57,17 @@ export function ChildRow({ child }) {
   };
 
   return (
-    <div className="birthday-row">
-      <div className="flex-row gap-8 center">
-        <img
-          className="avatar"
-          src="https://images.pexels.com/photos/35537/child-children-girl-happy.jpg?cs=srgb&dl=pexels-bess-hamiti-83687-35537.jpg&fm=jpg"
-        />
-        <h2>
-          {child.childFirstName} {child.childSurname}
-        </h2>
-        <button className="deletebtn" onClick={handleDelete}>
-          מחק
-        </button>
-      </div>
+    <div className="delete-row">
+      <img
+        className="avatar"
+        src="https://images.pexels.com/photos/35537/child-children-girl-happy.jpg?cs=srgb&dl=pexels-bess-hamiti-83687-35537.jpg&fm=jpg"
+      />
+      <h2 className="h2delete">
+        {child.childFirstName} {child.childSurname}
+      </h2>
+      <button className="deletebtn" onClick={handleDelete}>
+        מחק
+      </button>
     </div>
   );
 }

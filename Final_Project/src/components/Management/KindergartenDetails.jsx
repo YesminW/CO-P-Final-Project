@@ -148,6 +148,7 @@ export default function KindergartenDetails() {
   const handleDelete = async (e) => {
     try {
       await deleteKindergarten(kindergarten.kindergartenNumber);
+      
       navigate("/KindergartenManagement");
     } catch (error) {
       console.error(error);

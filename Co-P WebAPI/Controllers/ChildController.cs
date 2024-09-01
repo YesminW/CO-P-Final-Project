@@ -44,7 +44,7 @@ namespace Co_P_WebAPI.Controllers
         }
 
         [HttpGet]
-        [Route("GetChildByKindergarten")]
+        [Route("GetChildByKindergarten/{kindergartenNumber}")]
         public dynamic GetChildByKindergarten(int kindergartenNumber)
         {
             IEnumerable<Child> children = db.Children.Where(c=> c.kindergartenNumber == kindergartenNumber).Select(x => new Child()
@@ -176,7 +176,7 @@ namespace Co_P_WebAPI.Controllers
             }
             db.Children.Remove(c);
             db.SaveChanges();
-            return (c.ChildFirstName + " " + c.ChildSurname + " deleted");
+            return (new { message = c.ChildFirstName + " " + c.ChildSurname + " deleted" });
         }
 
     }
