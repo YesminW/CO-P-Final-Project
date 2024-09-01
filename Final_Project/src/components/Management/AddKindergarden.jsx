@@ -39,7 +39,7 @@ export default function AddKindergarden() {
     e.preventDefault();
     if (validateForm) {
       try {
-        addKindergarten(
+        await addKindergarten(
           formValues.KindergartenName,
           formValues.KindergartenAddress
         );
