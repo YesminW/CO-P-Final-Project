@@ -6,7 +6,7 @@ const SERVER_URL = "http://localhost:5068";
 export async function login(data) {
   try {
     const { ID, password } = data;
-    const user = await fetch(`${SERVER_URL}/LogIn/${ID}/${password}`, {
+    const user = await fetch(`${SERVER_URL}/Login/${ID}/${password}`, {
       method: "GET",
       headers: new Headers({
         "Content-Type": "application/json; charset=UTF-8",

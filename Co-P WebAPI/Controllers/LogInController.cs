@@ -9,7 +9,7 @@ namespace Co_P_WebAPI.Controllers
     {
         CoPFinalProjectContext db = new CoPFinalProjectContext();
         [HttpGet]
-        [Route("Login")]
+        [Route("Login/{userid}/{password}")]
         public dynamic Login(string userid, string password)
         {
             var thisuser = db.Users.Where(u => u.UserId == userid && u.UserpPassword == password).FirstOrDefault();
