@@ -86,6 +86,9 @@ export default function ChatsList() {
           )}
         </div>
       )}
+      <Link className="generalchat" to="/ChatGeneral">
+        לצ'אט הכללי
+      </Link>
       {EfooterS}
     </div>
   );

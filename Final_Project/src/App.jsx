@@ -44,6 +44,7 @@ import ActivitiesList from "./components/ActivitiesList/ActivitiesList";
 import CalendarStaff from "./components/CalendarStaff/CalendarStaff";
 import ChatsList from "./components/chat/ChatsList";
 import Chat from "./components/chat/Chat";
+import ChatGeneral from "./components/chat/ChatGeneral";
 const apiUtl = "";
 
 function App() {
@@ -52,6 +53,7 @@ function App() {
       <Route path="/" element={<First />} />
       <Route path="/chat/:id" element={<Chat />} />
       <Route path="/ChatList" element={<ChatsList />} />
+      <Route path="/ChatGeneral" element={<ChatGeneral />} />
       <Route path="/WeekCalendar" element={<WeekCalendar />} />
       <Route path="/WatchDayHourList" element={<DayHoursList />} />
       <Route path="/ActivitiesList" element={<ActivitiesList />} />

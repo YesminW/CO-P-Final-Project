@@ -125,3 +125,16 @@
   border-radius: 25px;
   height: calc(90vh - 100px - 20px);
 }
+
+.generalchat {
+  display: flex;
+  justify-content: center;
+  border: none;
+  border-radius: 10px;
+  background-color: rgba(7, 103, 109, 0.6);
+  font-size: 24px;
+  margin: 20px auto 0 auto;
+  width: 60%;
+  color: white;
+  box-shadow: 0 4px 4px rgba(0, 0, 0, 0.25);
+}

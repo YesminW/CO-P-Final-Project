@@ -114,7 +114,7 @@ export default function KindergartenDetails() {
           assistant2.userSurname
         ));
       if (file && file2) {
-        const [parents, children] = await Promise.all([
+        const [parentsRes, children] = await Promise.all([
           uploadParentsExcel(
             file,
             kindergarten.kindergartenNumber,
@@ -126,15 +126,25 @@ export default function KindergartenDetails() {
             currentYear
           ),
         ]);
-        await Promise.all(
-          children.map((c) =>
-            addDoc(collection(db, "chats"), {
-              admin: teacher.userId,
-              participants: [c.parent1, c.parent2],
-              childId: c.childId,
-            })
-          )
-        );
+
+        const parents = [];
+
+        const childrenPromise = children.map((c) => {
+          parents.push(...[c.parent1, c.parent2]);
+          return addDoc(collection(db, "chats"), {
+            admin: teacher.userId,
+            participants: [c.parent1, c.parent2],
+            childId: c.childId,
+          });
+        });
+
+        await Promise.all([
+          ...childrenPromise,
+          addDoc(collection(db, "chats"), {
+            admin: teacher.userId,
+            participants: parents,
+          }),
+        ]);
       } else {
         console.error("Add files");
       }
@@ -148,7 +158,7 @@ export default function KindergartenDetails() {
   const handleDelete = async (e) => {
     try {
       await deleteKindergarten(kindergarten.kindergartenNumber);
-      
+
       navigate("/KindergartenManagement");
     } catch (error) {
       console.error(error);
