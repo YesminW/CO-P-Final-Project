@@ -431,44 +431,6 @@ export async function getPhotosByKindergarten(kindergartenNumber) {
   if (response.status === 404) return null;
   console.log(response);
   const data = response.json();
-  // const arrayBuffer = await response.arrayBuffer();
-  // const dataView = new DataView(arrayBuffer);
-  // const filesList = [];
-  // let start = 0;
-
-  // while (start < dataView.byteLength) {
-  //   // Find the start of the JPEG file (0xFFD8)
-  //   while (
-  //     start < dataView.byteLength &&
-  //     !(
-  //       dataView.getUint8(start) === 0xff &&
-  //       dataView.getUint8(start + 1) === 0xd8
-  //     )
-  //   ) {
-  //     start++;
-  //   }
-
-  //   // Find the end of the JPEG file (0xFFD9)
-  //   let end = start;
-  //   while (
-  //     end < dataView.byteLength &&
-  //     !(dataView.getUint8(end) === 0xff && dataView.getUint8(end + 1) === 0xd9)
-  //   ) {
-  //     end++;
-  //   }
-  //   end += 2; // Include the 0xFFD9 marker
-
-  //   if (start < end) {
-  //     // Extract the file
-  //     const fileBytes = arrayBuffer.slice(start, end);
-  //     const blob = new Blob([fileBytes], { type: "image/jpeg" });
-  //     filesList.push(blob);
-
-  //     // Move to the next potential file
-  //     start = end;
-  //   }
-  // }
-
   return data;
 }
 
@@ -569,6 +531,25 @@ export async function getAllActivitiesByDate(kindergartenNumber, date) {
 export async function getMealList() {
   try {
     const response = await fetch(`${SERVER_URL}/getmeallist`);
+    const resp = await response.json();
+    return resp;
+  } catch (error) {
+    console.error(error);
+    throw new Error(error);
+  }
+}
+
+export async function AssignStaffDates(kindergartenNumber) {
+  try {
+    const response = await fetch(
+      `${SERVER_URL}/AssignStaffDates/${kindergartenNumber}/`,
+      {
+        method: "PUT",
+        headers: new Headers({
+          "Content-Type": "application/json; charset=UTF-8",
+        }),
+      }
+    );
     const resp = await response.json();
     return resp;
   } catch (error) {

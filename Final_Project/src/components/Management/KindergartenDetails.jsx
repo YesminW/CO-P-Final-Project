@@ -4,6 +4,7 @@ import { Button, Typography, FormControl } from "@mui/material";
 import CloudUploadIcon from "@mui/icons-material/CloudUpload";
 import {
   addChildrenByExcel,
+  AssignStaffDates,
   assignStaffToKindergarten,
   deleteKindergarten,
   getAllAssistants,
@@ -154,6 +155,14 @@ export default function KindergartenDetails() {
       console.error(error);
     }
   };
+
+  async function assignStaffToDates() {
+    try {
+      await AssignStaffDates(kindergarten.kindergartenNumber);
+    } catch (error) {
+      console.error(error);
+    }
+  }
 
   const handleDelete = async (e) => {
     try {
@@ -306,6 +315,10 @@ export default function KindergartenDetails() {
       <Link className="childlistbtn" to="/ChildList" state={kindergarten}>
         רשימת ילדים
       </Link>
+      <br />
+      <button className="childlistbtn" onClick={assignStaffToDates}>
+        שיבוץ גננות וסייעות לפי תאריכים
+      </button>
 
       <Button
         variant="contained"

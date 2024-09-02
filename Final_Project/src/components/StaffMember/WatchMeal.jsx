@@ -51,14 +51,6 @@ const WatchMeal = () => {
     fetchMealData();
   }, [date, kindergartenNumber]);
 
-  const handleInputChange = (e) => {
-    const { name, value } = e.target;
-    setMealData((prevMealData) => ({
-      ...prevMealData,
-      [name]: value,
-    }));
-  };
-
   async function handleSubmit(e) {
     e.preventDefault();
     const data = Object.fromEntries(new FormData(e.target));
