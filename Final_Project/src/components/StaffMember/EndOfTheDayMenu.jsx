@@ -5,18 +5,17 @@ import { useState } from "react";
 import { uploaspictures } from "../../utils/apiCalls";
 
 export default function EndOfTheDayMenu() {
-  const [file, setFile] = useState(null);
+  // const [file, setFile] = useState([]);
+  const kindergartenNumber = localStorage.getItem("kindergartenNumber");
   const handleFileChange = (e) => {
-    const selectedFile = e.target.files[0];
-    if (selectedFile) {
-      setFile(selectedFile);
-      UploadFile(selectedFile);
-    }
+    const selectedFiles = [...e.target.files];
+
+    selectedFiles && UploadFile(selectedFiles);
   };
 
-  async function UploadFile(file) {
+  async function UploadFile(files) {
     try {
-      const data = await uploaspictures(file);
+      const data = await uploaspictures(files, kindergartenNumber);
     } catch (error) {
       console.error(error);
     }
@@ -36,6 +35,7 @@ export default function EndOfTheDayMenu() {
         style={{ opacity: 0, position: "absolute", zIndex: -1 }}
         onChange={handleFileChange}
         id="upload-button"
+        multiple
       />
       <label htmlFor="upload-button" className="menulink">
         העלאת תמונות
