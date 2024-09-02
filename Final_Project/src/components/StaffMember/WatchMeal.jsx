@@ -1,11 +1,15 @@
 import React, { useEffect, useState } from "react";
-import { useLocation, useNavigate } from "react-router-dom";
+import { Await, useLocation, useNavigate } from "react-router-dom";
 import "../../assets/StyleSheets/Meals.css";
 import EfooterS from "../../Elements/EfooterS";
 import { hebrewWeekDays } from "../../utils/constants";
 import { formatDate, formatForCSharp } from "../../utils/functions";
 import { nanoid } from "nanoid";
-import { createMeal, getMealByKindergardenAndDate } from "../../utils/apiCalls";
+import {
+  createMeal,
+  getMealByKindergardenAndDate,
+  getMealList,
+} from "../../utils/apiCalls";
 
 const WatchMeal = () => {
   const location = useLocation();
@@ -13,11 +17,12 @@ const WatchMeal = () => {
   const date = location.state;
   const kindergartenNumber = localStorage.getItem("kindergartenNumber");
 
+  const [mealOptions, setMealOptions] = useState([]);
   const [mealData, setMealData] = useState({
     בוקר: "",
+    עשר: "",
     צהריים: "",
     ארבע: "",
-    פינוק: "",
   });
   const [isDataLoaded, setIsDataLoaded] = useState(false);
 
@@ -28,7 +33,9 @@ const WatchMeal = () => {
           date,
           kindergartenNumber
         );
-        const meals = { בוקר: "", צהריים: "", ארבע: "", פינוק: "" };
+        const options = await getMealList();
+        setMealOptions(options);
+        const meals = { בוקר: "", עשר: "", צהריים: "", ארבע: "" };
         for (const meal of data) {
           meals[meal.maelName] = meal.mealDetails;
         }

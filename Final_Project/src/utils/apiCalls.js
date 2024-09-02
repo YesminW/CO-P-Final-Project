@@ -515,3 +515,14 @@ export async function getAllActivitiesByDate(kindergartenNumber, date) {
     throw new Error(error);
   }
 }
+
+export async function getMealList() {
+  try {
+    const response = await fetch(`${SERVER_URL}/getmeallist`);
+    const resp = await response.json();
+    return resp;
+  } catch (error) {
+    console.error(error);
+    throw new Error(error);
+  }
+}
