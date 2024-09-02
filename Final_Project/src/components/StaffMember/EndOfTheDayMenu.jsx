@@ -37,8 +37,8 @@ export default function EndOfTheDayMenu() {
         onChange={handleFileChange}
         id="upload-button"
       />
-      <label htmlFor="upload-button">
-        <button className="menulink">העלאת תמונות</button>
+      <label htmlFor="upload-button" className="menulink">
+        העלאת תמונות
       </label>
       <Link className="menulink">התראות להורים</Link>
       {EfooterS}
