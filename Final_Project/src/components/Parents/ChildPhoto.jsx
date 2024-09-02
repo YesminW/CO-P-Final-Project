@@ -2,6 +2,7 @@ import { useEffect, useState } from "react";
 import "../../assets/StyleSheets/ChildrenPhotos.css";
 import { getPhotosByKindergarten } from "../../utils/apiCalls";
 import { nanoid } from "nanoid";
+import { Link } from "react-router-dom";
 
 export default function ChildPhoto() {
   const [images, setImages] = useState(null);
@@ -16,7 +17,13 @@ export default function ChildPhoto() {
   }, []);
   return (
     <div className="page-container menudiv">
-      <h1>תמונות</h1>
+      <div className="title-container">
+        <Link to="/EndOfTheDayMenuP" className="backbtn">
+          {"<"}
+        </Link>
+        <h1>תמונות</h1>
+        <div></div>
+      </div>
       <div className="photo-grid">
         {!images ? (
           <h2>אין תמונות</h2>
