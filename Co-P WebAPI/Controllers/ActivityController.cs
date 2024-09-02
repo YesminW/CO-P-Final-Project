@@ -10,13 +10,20 @@ namespace Co_P_WebAPI.Controllers
 
         [HttpGet]
         [Route("GetDaySummaryByDate/{today}/{kindernumber}")]
-        public dynamic GetDaySummaryByDate(DateTime today, int kindernumber)
+        public IActionResult GetDaySummaryByDate(DateTime today, int kindernumber)
         {
             var summary = db.DaySummaries
                 .Where(s => s.DaySummaryDate.Date == today && s.KindergartenNumber == kindernumber)
                 .FirstOrDefault();
-            return summary.SummaryDetails;
+
+            if (summary == null)
+            {
+                return NotFound("Day summary not found");
+            }
+
+            return Ok(summary.SummaryDetails);
         }
+
 
         [HttpPost]
         [Route("createSummary/{CurrentAcademicYear}/{kindernumber}/{Daysummary}/{today}")]
