@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react";
 import { getDaySummaryByDate } from "../../utils/apiCalls";
 import EfooterP from "../../Elements/EfooterP";
+import { formatForCSharp } from "../../utils/functions";
 
 export default function EndOfTheDayP() {
   const [date, setDate] = useState(new Date());
@@ -9,8 +10,11 @@ export default function EndOfTheDayP() {
 
   useEffect(() => {
     async function getSummary() {
-      const data = await getDaySummaryByDate(date, kindergartenNumber);
-      if (data == null) {
+      const data = await getDaySummaryByDate(
+        formatForCSharp(date),
+        kindergartenNumber
+      );
+      if (data == "Day summary not found") {
         setSummary("");
       } else {
         setSummary(data);
@@ -56,7 +60,7 @@ export default function EndOfTheDayP() {
             {">"}
           </button>
         </div>
-        <p className="summaryt"></p>
+        <p className="summaryt">{summary}</p>
       </form>
       {EfooterP}
     </div>
