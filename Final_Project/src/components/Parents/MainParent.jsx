@@ -69,7 +69,7 @@ export default function MainParent() {
         <Link to="/CalendarStaff" className="grid-item-full">
           האירוע הבא ביום
         </Link>
-        <Link to="/BirthDayChild" className="grid-item-full">
+        <Link to="/WatchMealP" className="grid-item-full" state={new Date()}>
           מה אוכלים היום?
         </Link>
         <Link to="/EditProfile" className="grid-item-full">
