@@ -8,6 +8,7 @@
   flex-direction: row;
   align-items: center;
   gap: 20px;
+  width: 100%;
 }
 
 .chats-list-container {
@@ -30,7 +31,7 @@
 }
 
 .chat-img {
-  height: 80%;
+  height: 60px;
   aspect-ratio: 1;
   border-radius: 50%;
   border: 5px solid rgba(249, 188, 96);
@@ -67,7 +68,6 @@
   display: flex;
   flex-direction: row;
   margin: 0;
-  width: 100%;
   gap: 20px;
 }
 
@@ -137,4 +137,9 @@
   width: 60%;
   color: white;
   box-shadow: 0 4px 4px rgba(0, 0, 0, 0.25);
+}
+
+.linkback {
+  font-size: 60px;
+  color: white;
 }

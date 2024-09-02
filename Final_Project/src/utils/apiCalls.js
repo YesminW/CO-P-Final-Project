@@ -423,14 +423,10 @@ export async function deleteChild(childId) {
 }
 
 export async function getChildPhoto(childId) {
-  try {
-    const response = await fetch(`${SERVER_URL}/getChildPhoto/${childId}`);
-    const resp = await response.json();
-    return resp;
-  } catch (error) {
-    console.error(error);
-    throw new Error(error);
-  }
+  const response = await fetch(`${SERVER_URL}/GetChildimage/${childId}`);
+  if (response.status === 404) return null;
+  const resp = await response.blob();
+  return resp;
 }
 
 export async function getTodayDuty(kindergartenNumber, date) {
