@@ -18,16 +18,16 @@ namespace Co_P_WebAPI.Controllers
             if (file == null || file.Length == 0)
                 return BadRequest("No file uploaded");
 
-            var ProfilePath = Path.Combine(Directory.GetCurrentDirectory(), "ChildPhotos"); // שם התקייה בC#
+            // יצירת נתיב לתיקיית הילד בתוך ChildPhotos
+            var childFolderPath = Path.Combine(Directory.GetCurrentDirectory(), "ChildPhotos", ID);
 
-            if (!Directory.Exists(ProfilePath))
+            if (!Directory.Exists(childFolderPath))
             {
-                Directory.CreateDirectory(ProfilePath);
+                Directory.CreateDirectory(childFolderPath);
             }
-            var fileName = string.IsNullOrEmpty(ID.ToString()) // שם התמונה יהיה תז הילד
-                ? file.FileName
-                : $"{ID}{Path.GetExtension(file.FileName)}";
-            var filePath = Path.Combine(ProfilePath, fileName);
+
+            var fileName = $"{ID}{Path.GetExtension(file.FileName)}"; // שם הקובץ הוא ת"ז הילד עם סיומת הקובץ
+            var filePath = Path.Combine(childFolderPath, fileName);
 
             using (var stream = new FileStream(filePath, FileMode.Create))
             {
@@ -35,7 +35,7 @@ namespace Co_P_WebAPI.Controllers
             }
 
             Child c = db.Children.Where(x => x.ChildId == ID).FirstOrDefault();
-            c.ChildPhotoName = fileName;
+            c.ChildPhotoName = ID; // שומר את שם התיקייה (ת"ז הילד) בעמודת ה-ChildPhotoName
             db.SaveChanges();
 
             return Ok(new { fileName = fileName, filePath = filePath });
@@ -46,8 +46,9 @@ namespace Co_P_WebAPI.Controllers
         [Route("GetChildimage/{primaryKey}")]
         public IActionResult GetChildimage(string primaryKey)
         {
-            var imagesPath = Path.Combine(Directory.GetCurrentDirectory(), "ChildPhotos");
-            var file = Directory.GetFiles(imagesPath, $"{primaryKey}.*").FirstOrDefault();
+            // יצירת נתיב לתיקיית הילד בתוך ChildPhotos
+            var childFolderPath = Path.Combine(Directory.GetCurrentDirectory(), "ChildPhotos", primaryKey);
+            var file = Directory.GetFiles(childFolderPath, $"{primaryKey}.*").FirstOrDefault();
 
             if (file == null)
             {
@@ -56,7 +57,6 @@ namespace Co_P_WebAPI.Controllers
 
             var fileType = Path.GetExtension(file).ToLower();
 
-            // Determine the content type based on the file extension.
             var contentType = fileType switch
             {
                 ".jpg" => "image/jpeg",
@@ -74,25 +74,26 @@ namespace Co_P_WebAPI.Controllers
             return File(image, contentType);
         }
 
+
         [HttpDelete]
-        [Route("DeleteChildPhoto")]
+        [Route("DeleteChildPhoto/{primaryKey}")]
         public dynamic DeleteChildPhoto(string primaryKey)
         {
-            var imagesPath = Path.Combine(Directory.GetCurrentDirectory(), "ChildPhotos");
-            var file = Directory.GetFiles(imagesPath, $"{primaryKey}.*").FirstOrDefault();
-            if (file == null)
+            // יצירת נתיב לתיקיית הילד בתוך ChildPhotos
+            var childFolderPath = Path.Combine(Directory.GetCurrentDirectory(), "ChildPhotos", primaryKey);
+            if (!Directory.Exists(childFolderPath))
             {
                 return NotFound();
             }
-            var fileType = Path.GetExtension(file).ToLower();
+
+            Directory.Delete(childFolderPath, true); // מחיקת התיקייה וכל התוכן שבה
 
             Child child = db.Children.Where(x => x.ChildId == primaryKey).First();
-            child.ChildPhotoName = "";
+            child.ChildPhotoName = ""; // ניקוי שם התיקייה מהדאטהבייס
             db.SaveChanges();
 
             return "Photo deleted";
         }
-
 
 
         [HttpPut]
@@ -102,16 +103,16 @@ namespace Co_P_WebAPI.Controllers
             if (file == null || file.Length == 0)
                 return BadRequest("No file uploaded");
 
-            var ProfilePath = Path.Combine(Directory.GetCurrentDirectory(), "UserPhoto"); //שם התקייה
+            // יצירת נתיב לתיקיית המשתמש בתוך UserPhotos
+            var userFolderPath = Path.Combine(Directory.GetCurrentDirectory(), "UserPhotos", ID);
 
-            if (!Directory.Exists(ProfilePath))
+            if (!Directory.Exists(userFolderPath))
             {
-                Directory.CreateDirectory(ProfilePath);
+                Directory.CreateDirectory(userFolderPath);
             }
-            var fileName = string.IsNullOrEmpty(ID.ToString()) // שם התמונה יהיה תז של המשתמש
-                ? file.FileName
-                : $"{ID}{Path.GetExtension(file.FileName)}";
-            var filePath = Path.Combine(ProfilePath, fileName);
+
+            var fileName = $"{ID}{Path.GetExtension(file.FileName)}"; // שם הקובץ הוא ת"ז המשתמש עם סיומת הקובץ
+            var filePath = Path.Combine(userFolderPath, fileName);
 
             using (var stream = new FileStream(filePath, FileMode.Create))
             {
@@ -119,19 +120,21 @@ namespace Co_P_WebAPI.Controllers
             }
 
             User user = db.Users.Where(x => x.UserId == ID).First();
-            user.UserPhotoName = fileName;
+            user.UserPhotoName = ID; // שומר את שם התיקייה (ת"ז המשתמש) בעמודת ה-UserPhotoName
             db.SaveChanges();
 
             return Ok(new { fileName = fileName, filePath = filePath });
         }
 
 
+
         [HttpGet]
         [Route("GetUserimage")]
         public IActionResult GetUserimage(string primaryKey)
         {
-            var imagesPath = Path.Combine(Directory.GetCurrentDirectory(), "UserPhoto");
-            var file = Directory.GetFiles(imagesPath, $"{primaryKey}.*").FirstOrDefault();
+            // יצירת נתיב לתיקיית המשתמש בתוך UserPhotos
+            var userFolderPath = Path.Combine(Directory.GetCurrentDirectory(), "UserPhotos", primaryKey);
+            var file = Directory.GetFiles(userFolderPath, $"{primaryKey}.*").FirstOrDefault();
 
             if (file == null)
             {
@@ -140,7 +143,6 @@ namespace Co_P_WebAPI.Controllers
 
             var fileType = Path.GetExtension(file).ToLower();
 
-            // Determine the content type based on the file extension.
             var contentType = fileType switch
             {
                 ".jpg" => "image/jpeg",
@@ -158,24 +160,27 @@ namespace Co_P_WebAPI.Controllers
             return File(image, contentType);
         }
 
+
         [HttpDelete]
         [Route("DeleteUserPhoto")]
         public dynamic DeleteUserPhoto(string primaryKey)
         {
-            var imagesPath = Path.Combine(Directory.GetCurrentDirectory(), "ChildPhotos");
-            var file = Directory.GetFiles(imagesPath, $"{primaryKey}.*").FirstOrDefault();
-            if (file == null)
+            // יצירת נתיב לתיקיית המשתמש בתוך UserPhotos
+            var userFolderPath = Path.Combine(Directory.GetCurrentDirectory(), "UserPhotos", primaryKey);
+            if (!Directory.Exists(userFolderPath))
             {
                 return NotFound();
             }
-            var fileType = Path.GetExtension(file).ToLower();
+
+            Directory.Delete(userFolderPath, true); // מחיקת התיקייה וכל התוכן שבה
 
             User user = db.Users.Where(x => x.UserId == primaryKey).First();
-            user.UserPhotoName = "";
+            user.UserPhotoName = ""; // ניקוי שם התיקייה מהדאטהבייס
             db.SaveChanges();
 
             return "Photo deleted";
         }
+
 
         [HttpPost]
         [Route("UploadChildrenPhotos/{kindergartenNumber}")]

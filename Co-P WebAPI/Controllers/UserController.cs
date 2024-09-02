@@ -43,7 +43,7 @@ namespace Co_P_WebAPI.Controllers
 
         [HttpGet]
         [Route("GetAllTeacher")]
-        public IActionResult GetAllUsersWithCode111()
+        public IActionResult GetAllTeacher()
         {
             var usersWithCode111 = db.Users.Where(u => u.UserCode == 111 && u.KindergartenNumber == null).Select(u => new
               {
