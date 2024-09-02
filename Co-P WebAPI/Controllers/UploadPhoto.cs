@@ -41,19 +41,25 @@ namespace Co_P_WebAPI.Controllers
             return Ok(new { fileName = fileName, filePath = filePath });
         }
 
-
         [HttpGet]
         [Route("GetChildimage/{primaryKey}")]
         public IActionResult GetChildimage(string primaryKey)
         {
             // יצירת נתיב לתיקיית הילד בתוך ChildPhotos
             var childFolderPath = Path.Combine(Directory.GetCurrentDirectory(), "ChildPhotos", primaryKey);
+
+            // בדיקת קיום התיקייה
+            if (!Directory.Exists(childFolderPath))
+            {
+                return Ok("תיקיית הילד לא נמצאה");
+            }
+
+            // חיפוש תמונה בתיקיית הילד
             var file = Directory.GetFiles(childFolderPath, $"{primaryKey}.*").FirstOrDefault();
 
             if (file == null)
             {
-                return Ok("אין תמונה");
-
+                return Ok("התמונה לא נמצאה");
             }
 
             var fileType = Path.GetExtension(file).ToLower();
@@ -72,8 +78,10 @@ namespace Co_P_WebAPI.Controllers
             };
 
             var image = System.IO.File.OpenRead(file);
+
             return File(image, contentType);
         }
+
 
 
         [HttpDelete]
@@ -128,13 +136,20 @@ namespace Co_P_WebAPI.Controllers
         }
 
 
-
         [HttpGet]
         [Route("GetUserimage")]
         public IActionResult GetUserimage(string primaryKey)
         {
-            // יצירת נתיב לתיקיית המשתמש בתוך UserPhotos
+            // יצירת נתיב לתיקיית המשתמש בתוך UsersPhoto
             var userFolderPath = Path.Combine(Directory.GetCurrentDirectory(), "UsersPhoto", primaryKey);
+
+            // בדיקת קיום התיקייה
+            if (!Directory.Exists(userFolderPath))
+            {
+                return Ok("תיקיית המשתמש לא נמצאה");
+            }
+
+            // חיפוש תמונה בתיקיית המשתמש
             var file = Directory.GetFiles(userFolderPath, $"{primaryKey}.*").FirstOrDefault();
 
             if (file == null)
@@ -160,6 +175,7 @@ namespace Co_P_WebAPI.Controllers
             var image = System.IO.File.OpenRead(file);
             return File(image, contentType);
         }
+
 
 
         [HttpDelete]
