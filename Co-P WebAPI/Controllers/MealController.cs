@@ -86,7 +86,7 @@ namespace Co_P_WebAPI.Controllers
 
 
         [HttpPut]
-        [Route("Editbydateandkindergarten")]
+        [Route("Editbydateandkindergarten/{kindergartenNumber}/{date}/{mealName}/{mealDetail}")]
         public dynamic Editbydateandkindergarten(int kindergartenNumber, DateTime date, string mealName, string mealDetail)
         {
             var activity = db.ActualActivities

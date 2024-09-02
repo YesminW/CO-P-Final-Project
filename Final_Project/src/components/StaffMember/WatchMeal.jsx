@@ -3,9 +3,9 @@ import { useLocation, useNavigate } from "react-router-dom";
 import "../../assets/StyleSheets/Meals.css";
 import EfooterS from "../../Elements/EfooterS";
 import { hebrewWeekDays } from "../../utils/constants";
-import { formatDate } from "../../utils/functions";
+import { formatDate, formatForCSharp } from "../../utils/functions";
 import { nanoid } from "nanoid";
-import { getMealByKindergardenAndDate } from "../../utils/apiCalls";
+import { createMeal, getMealByKindergardenAndDate } from "../../utils/apiCalls";
 
 const WatchMeal = () => {
   const location = useLocation();
@@ -13,7 +13,12 @@ const WatchMeal = () => {
   const date = location.state;
   const kindergartenNumber = localStorage.getItem("kindergartenNumber");
 
-  const [mealData, setMealData] = useState([]);
+  const [mealData, setMealData] = useState({
+    בוקר: "",
+    צהריים: "",
+    ארבע: "",
+    פינוק: "",
+  });
   const [isDataLoaded, setIsDataLoaded] = useState(false);
 
   useEffect(() => {
@@ -38,9 +43,30 @@ const WatchMeal = () => {
     fetchMealData();
   }, [date, kindergartenNumber]);
 
-  function handleSubmit(e) {
+  const handleInputChange = (e) => {
+    const { name, value } = e.target;
+    setMealData((prevMealData) => ({
+      ...prevMealData,
+      [name]: value,
+    }));
+  };
+
+  async function handleSubmit(e) {
     e.preventDefault();
-    navigate("/Meals");
+    try {
+      for (const mealName of Object.keys(mealData)) {
+        const mealDetails = mealData[mealName];
+        await createMeal(
+          kindergartenNumber,
+          formatForCSharp(date),
+          mealName,
+          mealDetails
+        );
+      }
+      navigate("/Meals");
+    } catch (error) {
+      console.error("Error submitting meal data:", error);
+    }
   }
 
   return (
@@ -59,7 +85,8 @@ const WatchMeal = () => {
                     <input
                       name={mealKey}
                       defaultValue={mealData[mealKey]}
-                    ></input>
+                      onChange={handleInputChange}
+                    />
                   </td>
                 </tr>
               ))}

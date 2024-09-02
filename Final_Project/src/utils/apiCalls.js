@@ -482,3 +482,27 @@ export async function createSummary(
     throw new Error(error);
   }
 }
+
+export async function createMeal(
+  kindergartenNumber,
+  date,
+  mealName,
+  mealDetail
+) {
+  try {
+    const response = await fetch(
+      `${SERVER_URL}/Editbydateandkindergarten/${kindergartenNumber}/${date}/${mealName}/${mealDetail}`,
+      {
+        method: "PUT",
+        headers: new Headers({
+          "Content-Type": "application/json; charset=UTF-8",
+        }),
+      }
+    );
+    const resp = await response.json();
+    return resp;
+  } catch (error) {
+    console.error(error);
+    throw new Error(error);
+  }
+}
