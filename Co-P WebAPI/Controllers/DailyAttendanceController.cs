@@ -40,7 +40,7 @@ namespace Co_P_WebAPI.Controllers
             {
                 // If no record is found, create a new one with status 1 (indicating morning presence)
                 DailyAttendance newAttendance = new DailyAttendance();
-                newAttendance.Date = date;
+                newAttendance.Date = Updatedate;
                 newAttendance.ChildId = childID;
                 newAttendance.AttendanceStatus = "1"; // Morning presence
                 db.DailyAttendances.Add(newAttendance);
