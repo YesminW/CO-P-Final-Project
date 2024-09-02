@@ -25,6 +25,7 @@ public partial class Child
 
     public string? ChildPhotoName { get; set; }
 
+
     public virtual ICollection<DailyAttendance> DailyAttendances { get; set; } = new List<DailyAttendance>();
 
     public virtual ICollection<DiagnosedWith> DiagnosedWiths { get; set; } = new List<DiagnosedWith>();

@@ -36,40 +36,40 @@ namespace CO_P_library.Models
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
-            var config = new ConfigurationBuilder().AddJsonFile("appsettings.json", false).Build();
-            string connStr = config.GetConnectionString("DefaultConnectionString");
-            optionsBuilder.UseSqlServer(connStr);
+            if (!optionsBuilder.IsConfigured)
+            {
+                var config = new ConfigurationBuilder().AddJsonFile("appsettings.json", false).Build();
+                string connStr = config.GetConnectionString("DefaultConnectionString");
+                optionsBuilder.UseSqlServer(connStr);
+            }
         }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
+            // AcademicYear entity
             modelBuilder.Entity<AcademicYear>(entity =>
             {
-                entity.HasKey(e => e.CurrentAcademicYear).HasName("PK__Academic__7E471AD32068CB9F");
+                entity.HasKey(e => e.CurrentAcademicYear).HasName("PK_AcademicYear");
 
                 entity.ToTable("AcademicYear");
 
                 entity.Property(e => e.CurrentAcademicYear).ValueGeneratedNever();
             });
 
+            // ActivityType entity
             modelBuilder.Entity<ActivityType>(entity =>
             {
-                entity.HasKey(e => e.ActivityNumber).HasName("PK__Activity__CA8A56128D65DECC");
+                entity.HasKey(e => e.ActivityNumber).HasName("PK_ActivityType");
 
                 entity.ToTable("ActivityType");
 
                 entity.Property(e => e.ActivityName).HasMaxLength(20);
             });
 
-            // הגדרת המודל של UserInKindergarten עם Number כמפתח ראשי
-            modelBuilder.Entity<UserInKindergarten>()
-                .HasKey(u => u.Number);  // הגדרת Number כמפתח ראשי
-            modelBuilder.Entity<UserInKindergarten>()
-                .ToTable("UserInKindergarten");
-
+            // ActualActivity entity
             modelBuilder.Entity<ActualActivity>(entity =>
             {
-                entity.HasKey(e => e.ActuaActivityNumber).HasName("PK__Actual A__0A3025C91B064C46");
+                entity.HasKey(e => e.ActuaActivityNumber).HasName("PK_ActualActivity");
 
                 entity.ToTable("ActualActivity");
 
@@ -79,21 +79,22 @@ namespace CO_P_library.Models
                 entity.HasOne(d => d.ActivityNumberNavigation).WithMany(p => p.ActualActivities)
                     .HasForeignKey(d => d.ActivityNumber)
                     .OnDelete(DeleteBehavior.ClientSetNull)
-                    .HasConstraintName("FK__Actual Ac__Activ__3D5E1FD2");
+                    .HasConstraintName("FK_ActualActivity_ActivityType");
 
                 entity.HasOne(d => d.KindergartenNumberNavigation).WithMany(p => p.ActualActivities)
                     .HasForeignKey(d => d.KindergartenNumber)
                     .OnDelete(DeleteBehavior.ClientSetNull)
-                    .HasConstraintName("FK__Actual Ac__Kinde__3E52440B");
+                    .HasConstraintName("FK_ActualActivity_Kindergarten");
 
                 entity.HasOne(d => d.MealNumberNavigation).WithMany(p => p.ActualActivities)
                     .HasForeignKey(d => d.MealNumber)
-                    .HasConstraintName("FK__Actual Ac__MealN__3F466844");
+                    .HasConstraintName("FK_ActualActivity_Meal");
             });
 
+            // Attendance entity
             modelBuilder.Entity<Attendance>(entity =>
             {
-                entity.HasKey(e => e.AttendanceCode).HasName("PK__Attendan__013780A3DDB9D27B");
+                entity.HasKey(e => e.AttendanceCode).HasName("PK_Attendance");
 
                 entity.ToTable("Attendance");
 
@@ -101,9 +102,10 @@ namespace CO_P_library.Models
                 entity.Property(e => e.AttendanceCodeName).HasMaxLength(50);
             });
 
+            // Child entity
             modelBuilder.Entity<Child>(entity =>
             {
-                entity.HasKey(e => e.ChildId).HasName("PK__Child__BEFA0736AA86AC72");
+                entity.HasKey(e => e.ChildId).HasName("PK_Child");
 
                 entity.ToTable("Child");
 
@@ -112,6 +114,7 @@ namespace CO_P_library.Models
                     .IsUnicode(false)
                     .IsFixedLength()
                     .HasColumnName("ChildID");
+
                 entity.Property(e => e.ChildBirthDate).HasColumnType("datetime");
                 entity.Property(e => e.ChildFirstName).HasMaxLength(10);
                 entity.Property(e => e.ChildGender)
@@ -137,21 +140,22 @@ namespace CO_P_library.Models
                 entity.HasOne(d => d.Parent1Navigation).WithMany(p => p.ChildParent1Navigations)
                     .HasForeignKey(d => d.Parent1)
                     .OnDelete(DeleteBehavior.ClientSetNull)
-                    .HasConstraintName("FK__Child__Parent_1__14270015");
+                    .HasConstraintName("FK_Child_Parent1");
 
                 entity.HasOne(d => d.Parent2Navigation).WithMany(p => p.ChildParent2Navigations)
                     .HasForeignKey(d => d.Parent2)
                     .OnDelete(DeleteBehavior.ClientSetNull)
-                    .HasConstraintName("FK__Child__Parent_2__151B244E");
+                    .HasConstraintName("FK_Child_Parent2");
             });
 
+            // DailyAttendance entity
             modelBuilder.Entity<DailyAttendance>(entity =>
             {
-                entity.HasKey(e => e.DailyAttendanceId).HasName("PK__DailyAtt__70B4ADABACA973F4");
+                entity.HasKey(e => e.DailyAttendanceId).HasName("PK_DailyAttendance");
 
                 entity.ToTable("DailyAttendance");
 
-                entity.HasIndex(e => new { e.ChildId, e.Date }, "UQ__DailyAtt__C98980E735B4A431").IsUnique();
+                entity.HasIndex(e => new { e.ChildId, e.Date }, "UQ_DailyAttendance_ChildDate").IsUnique();
 
                 entity.Property(e => e.DailyAttendanceId).HasColumnName("DailyAttendanceID");
                 entity.Property(e => e.ChildId)
@@ -167,12 +171,13 @@ namespace CO_P_library.Models
                 entity.HasOne(d => d.Child).WithMany(p => p.DailyAttendances)
                     .HasForeignKey(d => d.ChildId)
                     .OnDelete(DeleteBehavior.ClientSetNull)
-                    .HasConstraintName("FK__DailyAtte__Child__5165187F");
+                    .HasConstraintName("FK_DailyAttendance_Child");
             });
 
+            // DaySummary entity
             modelBuilder.Entity<DaySummary>(entity =>
             {
-                entity.HasKey(e => e.DaySummaryDate).HasName("PK__Day Summ__2F5D71782D9938D0");
+                entity.HasKey(e => e.DaySummaryDate).HasName("PK_DaySummary");
 
                 entity.ToTable("DaySummary");
 
@@ -182,17 +187,18 @@ namespace CO_P_library.Models
                 entity.HasOne(d => d.CurrentAcademicYearNavigation).WithMany(p => p.DaySummaries)
                     .HasForeignKey(d => d.CurrentAcademicYear)
                     .OnDelete(DeleteBehavior.ClientSetNull)
-                    .HasConstraintName("FK__Day Summa__Curre__04E4BC85");
+                    .HasConstraintName("FK_DaySummary_AcademicYear");
 
                 entity.HasOne(d => d.KindergartenNumberNavigation).WithMany(p => p.DaySummaries)
                     .HasForeignKey(d => d.KindergartenNumber)
                     .OnDelete(DeleteBehavior.ClientSetNull)
-                    .HasConstraintName("FK__Day Summa__Kinde__05D8E0BE");
+                    .HasConstraintName("FK_DaySummary_Kindergarten");
             });
 
+            // DiagnosedWith entity
             modelBuilder.Entity<DiagnosedWith>(entity =>
             {
-                entity.HasKey(e => new { e.ChildId, e.HealthProblemsNumber }).HasName("PK__Diagnose__BB2FE8CBA28E21EC");
+                entity.HasKey(e => new { e.ChildId, e.HealthProblemsNumber }).HasName("PK_DiagnosedWith");
 
                 entity.ToTable("DiagnosedWith");
 
@@ -206,17 +212,18 @@ namespace CO_P_library.Models
                 entity.HasOne(d => d.Child).WithMany(p => p.DiagnosedWiths)
                     .HasForeignKey(d => d.ChildId)
                     .OnDelete(DeleteBehavior.ClientSetNull)
-                    .HasConstraintName("FK__Diagnosed__Child__0C85DE4D");
+                    .HasConstraintName("FK_DiagnosedWith_Child");
 
                 entity.HasOne(d => d.HealthProblemsNumberNavigation).WithMany(p => p.DiagnosedWiths)
                     .HasForeignKey(d => d.HealthProblemsNumber)
                     .OnDelete(DeleteBehavior.ClientSetNull)
-                    .HasConstraintName("FK__Diagnosed__Healt__0D7A0286");
+                    .HasConstraintName("FK_DiagnosedWith_HealthProblem");
             });
 
+            // Duty entity
             modelBuilder.Entity<Duty>(entity =>
             {
-                entity.HasKey(e => e.DutyDate).HasName("PK__Duty__34617F93B942B0F6");
+                entity.HasKey(e => e.DutyDate).HasName("PK_Duty");
 
                 entity.ToTable("Duty");
 
@@ -235,46 +242,53 @@ namespace CO_P_library.Models
                 entity.HasOne(d => d.Child1Navigation).WithMany(p => p.DutyChild1Navigations)
                     .HasForeignKey(d => d.Child1)
                     .OnDelete(DeleteBehavior.ClientSetNull)
-                    .HasConstraintName("FK__Duty__Child_1__0F624AF8");
+                    .HasConstraintName("FK_Duty_Child1");
 
                 entity.HasOne(d => d.Child2Navigation).WithMany(p => p.DutyChild2Navigations)
                     .HasForeignKey(d => d.Child2)
                     .OnDelete(DeleteBehavior.ClientSetNull)
-                    .HasConstraintName("FK__Duty__Child_2__10566F31");
+                    .HasConstraintName("FK_Duty_Child2");
 
                 entity.HasOne(d => d.CurrentAcademicYearNavigation).WithMany(p => p.Duties)
                     .HasForeignKey(d => d.CurrentAcademicYear)
                     .OnDelete(DeleteBehavior.ClientSetNull)
-                    .HasConstraintName("FK__Duty__CurrentAca__00200768");
+                    .HasConstraintName("FK_Duty_AcademicYear");
 
                 entity.HasOne(d => d.KindergartenNumberNavigation).WithMany(p => p.Duties)
                     .HasForeignKey(d => d.KindergartenNumber)
                     .OnDelete(DeleteBehavior.ClientSetNull)
-                    .HasConstraintName("FK__Duty__Kindergart__01142BA1");
+                    .HasConstraintName("FK_Duty_Kindergarten");
             });
 
+            // HealthProblem entity
             modelBuilder.Entity<HealthProblem>(entity =>
             {
-                entity.HasKey(e => e.HealthProblemsNumber).HasName("PK__Health P__5D5EFFD1E38911BE");
+                entity.HasKey(e => e.HealthProblemsNumber).HasName("PK_HealthProblem");
+
+                entity.ToTable("HealthProblem");
 
                 entity.Property(e => e.Care)
                     .HasMaxLength(100)
-                    .HasColumnName("care");
+                    .HasColumnName("Care");
                 entity.Property(e => e.HealthProblemName).HasMaxLength(20);
             });
 
+            // Interest entity
             modelBuilder.Entity<Interest>(entity =>
             {
-                entity.HasKey(e => e.InterestsNumber).HasName("PK__Interest__00A5C748553F116A");
+                entity.HasKey(e => e.InterestsNumber).HasName("PK_Interest");
+
+                entity.ToTable("Interest");
 
                 entity.Property(e => e.InterestsName)
                     .HasMaxLength(20)
-                    .HasColumnName("[InterestsName");
+                    .HasColumnName("InterestsName");
             });
 
+            // Kindergarten entity
             modelBuilder.Entity<Kindergarten>(entity =>
             {
-                entity.HasKey(e => e.KindergartenNumber).HasName("PK__Kinderga__93EF919E32F59223");
+                entity.HasKey(e => e.KindergartenNumber).HasName("PK_Kindergarten");
 
                 entity.ToTable("Kindergarten");
 
@@ -284,11 +298,18 @@ namespace CO_P_library.Models
 
                 entity.Property(e => e.KindergartenAddress).HasMaxLength(30);
                 entity.Property(e => e.KindergartenName).HasMaxLength(20);
+
+                // הוספת נוויגציה ל-UserInKindergarten
+                entity.HasMany(k => k.UserInKindergartens)
+                      .WithOne(u => u.Kindergarten)
+                      .HasForeignKey(u => u.KindergartenNumber)
+                      .HasConstraintName("FK_UserInKindergarten_Kindergarten");
             });
 
+            // Meal entity
             modelBuilder.Entity<Meal>(entity =>
             {
-                entity.HasKey(e => e.MealNumber).HasName("PK__Meal__324604A062AF4F65");
+                entity.HasKey(e => e.MealNumber).HasName("PK_Meal");
 
                 entity.ToTable("Meal");
 
@@ -296,9 +317,10 @@ namespace CO_P_library.Models
                 entity.Property(e => e.MealType).HasMaxLength(20);
             });
 
+            // Photo entity
             modelBuilder.Entity<Photo>(entity =>
             {
-                entity.HasKey(e => e.PhotoCode).HasName("PK__Photo__D954591EFB10F981");
+                entity.HasKey(e => e.PhotoCode).HasName("PK_Photo");
 
                 entity.ToTable("Photo");
 
@@ -308,12 +330,13 @@ namespace CO_P_library.Models
                 entity.HasOne(d => d.KindergartenNumberNavigation).WithMany(p => p.Photos)
                     .HasForeignKey(d => d.KindergartenNumber)
                     .OnDelete(DeleteBehavior.ClientSetNull)
-                    .HasConstraintName("FK__Photo__Kindergar__02FC7413");
+                    .HasConstraintName("FK_Photo_Kindergarten");
             });
 
+            // ServedIn entity
             modelBuilder.Entity<ServedIn>(entity =>
             {
-                entity.HasKey(e => new { e.KindergartenNumber, e.MealType }).HasName("PK__Served I__2F0043293C83DAE4");
+                entity.HasKey(e => new { e.KindergartenNumber, e.MealType }).HasName("PK_ServedIn");
 
                 entity.ToTable("ServedIn");
 
@@ -324,12 +347,13 @@ namespace CO_P_library.Models
                 entity.HasOne(d => d.KindergartenNumberNavigation).WithMany(p => p.ServedIns)
                     .HasForeignKey(d => d.KindergartenNumber)
                     .OnDelete(DeleteBehavior.ClientSetNull)
-                    .HasConstraintName("FK__Served In__Kinde__0A9D95DB");
+                    .HasConstraintName("FK_ServedIn_Kindergarten");
             });
 
+            // User entity
             modelBuilder.Entity<User>(entity =>
             {
-                entity.HasKey(e => e.UserId).HasName("PK__User__1788CCACF3B68D81");
+                entity.HasKey(e => e.UserId).HasName("PK_User");
 
                 entity.ToTable("User");
 
@@ -338,9 +362,11 @@ namespace CO_P_library.Models
                     .IsUnicode(false)
                     .IsFixedLength()
                     .HasColumnName("UserID");
+
                 entity.Property(e => e.KindergartenNumber)
                     .HasColumnName("KindergartenNumber")
                     .HasColumnType("int");
+
                 entity.Property(e => e.UserAddress).HasMaxLength(30);
                 entity.Property(e => e.UserBirthDate).HasColumnType("datetime");
                 entity.Property(e => e.UserEmail)
@@ -366,14 +392,14 @@ namespace CO_P_library.Models
                         r => r.HasOne<Interest>().WithMany()
                             .HasForeignKey("InterestsNumber")
                             .OnDelete(DeleteBehavior.ClientSetNull)
-                            .HasConstraintName("FK__Interests__Inter__07C12930"),
+                            .HasConstraintName("FK_InterestsOfStaffMember_Interest"),
                         l => l.HasOne<User>().WithMany()
                             .HasForeignKey("UserId")
                             .OnDelete(DeleteBehavior.ClientSetNull)
-                            .HasConstraintName("FK__Interests__UserI__08B54D69"),
+                            .HasConstraintName("FK_InterestsOfStaffMember_User"),
                         j =>
                         {
-                            j.HasKey("UserId", "InterestsNumber").HasName("PK__Interest__878290D8EDB50D02");
+                            j.HasKey("UserId", "InterestsNumber").HasName("PK_InterestsOfStaffMember");
                             j.ToTable("InterestsOfStaffMember");
                             j.IndexerProperty<string>("UserId")
                                 .HasMaxLength(9)
@@ -381,6 +407,53 @@ namespace CO_P_library.Models
                                 .IsFixedLength()
                                 .HasColumnName("UserID");
                         });
+            });
+
+            // UserInKindergarten entity
+            modelBuilder.Entity<UserInKindergarten>(entity =>
+            {
+                entity.HasKey(u => u.Number).HasName("PK_UserInKindergarten");
+
+                entity.ToTable("UserInKindergarten");
+
+                entity.Property(u => u.ActivityDate).HasColumnType("datetime");
+
+                entity.Property(u => u.TeacherID)
+                    .HasMaxLength(9)
+                    .IsUnicode(false)
+                    .IsFixedLength();
+
+                entity.Property(u => u.Assistant1ID)
+                    .HasMaxLength(9)
+                    .IsUnicode(false)
+                    .IsFixedLength();
+
+                entity.Property(u => u.Assistant2ID)
+                    .HasMaxLength(9)
+                    .IsUnicode(false)
+                    .IsFixedLength();
+
+                // מיפוי של המפתחות הזרים לפי השמות הנכונים של המאפיינים במחלקה
+                entity.HasOne(u => u.User)
+                    .WithMany()
+                    .HasForeignKey(u => u.TeacherID)
+                    .HasConstraintName("FK_UserInKindergarten_Teacher");
+
+                entity.HasOne(u => u.User)
+                    .WithMany()
+                    .HasForeignKey(u => u.Assistant1ID)
+                    .HasConstraintName("FK_UserInKindergarten_Assistant1");
+
+                entity.HasOne(u => u.User)
+                    .WithMany()
+                    .HasForeignKey(u => u.Assistant2ID)
+                    .HasConstraintName("FK_UserInKindergarten_Assistant2");
+
+                entity.HasOne(u => u.Kindergarten)
+                    .WithMany(k => k.UserInKindergartens)
+                    .HasForeignKey(u => u.KindergartenNumber)
+                    .OnDelete(DeleteBehavior.ClientSetNull)
+                    .HasConstraintName("FK_UserInKindergarten_Kindergarten");
             });
 
             OnModelCreatingPartial(modelBuilder);

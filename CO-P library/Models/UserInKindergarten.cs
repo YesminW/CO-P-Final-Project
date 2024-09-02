@@ -11,7 +11,9 @@ namespace CO_P_library.Models
         public DateTime ActivityDate { get; set; }
         public int KindergartenNumber { get; set; }
         public int CurrentAcademicYear { get; set; }
-        public string? UserID { get; set; }
+        public string? TeacherID { get; set; } // שם השדה צריך להיות בכתיב נכון
+        public string? Assistant1ID { get; set; } // שם השדה צריך להיות בכתיב נכון
+        public string? Assistant2ID { get; set; } // שם השדה צריך להיות בכתיב נכון
 
         public int Number { get; set; }
 
