@@ -48,8 +48,8 @@ namespace Co_P_WebAPI.Controllers
 
 
         [HttpGet]
-        [Route("GetAllActivitiesByDate")]
-        public dynamic GetAllActivitiesByDate(int kindergartenNumber, DateTime date)
+        [Route("GetAllActivitiesByDate/{kindergartenNumber}/{Activitydate}")]
+        public dynamic GetAllActivitesByDate(int kindergartenNumber, DateTime date)
         {
             var activities = db.ActualActivities
                 .Where(a => a.KindergartenNumber == kindergartenNumber && a.ActivityDate.Date == date.Date).Select(aa => new
