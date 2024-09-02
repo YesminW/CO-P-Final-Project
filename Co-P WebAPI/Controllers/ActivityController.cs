@@ -18,36 +18,33 @@ namespace Co_P_WebAPI.Controllers
             return summary.SummaryDetails;
         }
 
-        [HttpPut]
-        [Route("UpdateSummary")]
-        public dynamic UpdateSummary(int kindernumber, DateTime today, string summaryupdates)
-        {
-            var summaryToUpdate = db.DaySummaries.Where(s => s.KindergartenNumber == kindernumber && s.DaySummaryDate == today).FirstOrDefault();
-            if (summaryToUpdate == null)
-            {
-                return "Summary Details not found";
-            }
-            summaryToUpdate.SummaryDetails = summaryupdates;
-            db.DaySummaries.Update(summaryToUpdate);
-            db.SaveChanges();
-            return summaryToUpdate;
-        }
-
         [HttpPost]
         [Route("createSummary/{CurrentAcademicYear}/{kindernumber}/{Daysummary}/{today}")]
         public dynamic createSummary(int CurrentAcademicYear, int kindernumber, string Daysummary, DateTime today)
         {
-            DaySummary newSummary = new DaySummary();
-            newSummary.DaySummaryDate = today;
-            newSummary.SummaryDetails = Daysummary;
-            newSummary.KindergartenNumber = kindernumber;
-            newSummary.CurrentAcademicYear = CurrentAcademicYear;
+            var existingSummary = db.DaySummaries
+                .FirstOrDefault(ds => ds.DaySummaryDate == today && ds.KindergartenNumber == kindernumber && ds.CurrentAcademicYear == CurrentAcademicYear);
 
-            db.DaySummaries.Add(newSummary);
-            db.SaveChanges();
-            return newSummary;
+            if (existingSummary != null)
+            {
+                existingSummary.SummaryDetails = Daysummary;
+                db.SaveChanges();
+                return existingSummary;
+            }
+            else
+            {
+                DaySummary newSummary = new DaySummary();
+                newSummary.DaySummaryDate = today;
+                newSummary.SummaryDetails = Daysummary;
+                newSummary.KindergartenNumber = kindernumber;
+                newSummary.CurrentAcademicYear = CurrentAcademicYear;
 
+                db.DaySummaries.Add(newSummary);
+                db.SaveChanges();
+                return newSummary;
+            }
         }
+
 
 
         [HttpGet]
