@@ -40,9 +40,9 @@ export default function ChatsList() {
           const data = doc.data();
 
           const child = await getChildByParent(doc.get("participants")[0]);
-          // const photo = await getChildPhoto(doc.get("childId"));
+          const photo = await getChildPhoto(doc.get("childId"));
 
-          // const url = photo ? URL.createObjectURL(photo) : "./default.png";
+          const url = photo ? URL.createObjectURL(photo) : "/Image/default.png";
 
           chatsToShow.push({
             id: doc.id,

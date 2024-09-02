@@ -17,6 +17,7 @@ import {
   updateChildAttendence,
 } from "../../utils/apiCalls";
 import { formatForCSharp } from "../../utils/functions";
+import { Link } from "react-router-dom";
 
 export default function Presence() {
   const [childrenData, setChildrenData] = useState([]);
@@ -79,7 +80,9 @@ export default function Presence() {
           <h2 className="presencetitleText">נוכחות</h2>
         </div>
         <Box className="header">
-          <button className="btnchat">צ'אט עם הורה</button>
+          <Link className="btnchat" to="/ChatList">
+            צ'אט עם הורה
+          </Link>
           <Box className="search-box">
             <input
               type="text"
