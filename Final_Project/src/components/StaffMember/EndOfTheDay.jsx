@@ -8,23 +8,25 @@ export default function EndOfTheDay() {
   const [summary, setSummary] = useState("");
   const kindergartenNumber = localStorage.getItem("kindergartenNumber");
 
-  // useEffect(() => {
-  //   async function getSummary() {
-  //     const data = await getDaySummaryByDate(
-  //       formatForCSharp(date),
-  //       kindergartenNumber
-  //     );
-  //     if (data == null) {
-  //       setSummary("");
-  //     } else {
-  //       setSummary(data);
-  //     }
-  //   }
-  //   getSummary();
-  // }, [date]);
+  useEffect(() => {
+    async function getSummary() {
+      const data = await getDaySummaryByDate(
+        formatForCSharp(date),
+        kindergartenNumber
+      );
+      if (data == null) {
+        setSummary("");
+      } else {
+        setSummary(data);
+      }
+    }
+    getSummary();
+  }, [date]);
 
   async function sendSummary(e) {
-    e.preventDefualt();
+    // e.preventDefualt();
+    console.log(summary);
+
     const response = await createSummary(
       date.getFullYear(),
       kindergartenNumber,

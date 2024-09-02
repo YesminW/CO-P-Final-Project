@@ -89,11 +89,12 @@ const WatchMeal = () => {
                 <tr key={nanoid()}>
                   <td className="meal-time">{mealKey}</td>
                   <td className="meal-description">
-                    <input
+                    {/* <input
                       name={mealKey}
                       defaultValue={mealData[mealKey]}
                       onChange={handleInputChange}
-                    />
+                    /> */}
+                    <select>{}</select>
                   </td>
                 </tr>
               ))}

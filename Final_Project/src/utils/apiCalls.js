@@ -357,7 +357,7 @@ export async function getDaySummaryByDate(date, kindergartenNumber) {
     const response = await fetch(
       `${SERVER_URL}/GetDaySummaryByDate/${date}/${kindergartenNumber}`
     );
-    const data = await response.json();
+    const data = await response.text();
     return data;
   } catch (error) {
     console.error(error);
