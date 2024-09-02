@@ -37,17 +37,8 @@ export default function EditProfileS2() {
   return (
     <>
       <form onSubmit={handleSubmit}>
-        <div
-          style={{
-            backgroundColor: "#cce7e8",
-            padding: 10,
-            borderRadius: 5,
-            marginBottom: 30,
-          }}
-        >
-          <h2 style={{ textAlign: "center", margin: 0 }}>
-            פרטים אישיים {details.userPrivetName}
-          </h2>
+        <div className="privatediv">
+          <h2 className="h2private">פרטים אישיים {details.userPrivetName}</h2>
         </div>
         <input
           placeholder="כתובת"
@@ -57,15 +48,14 @@ export default function EditProfileS2() {
           value={details.userAddress}
           onChange={handleChange}
         />
-        <TextField
-          fullWidth
-          margin="normal"
-          label="מין"
+        <br />
+        <input
+          placeholder="מין"
           name="userGender"
-          value={details.userGender}
-          onChange={handleChange}
+          className="register-input"
           variant="outlined"
-          className="register-textfield"
+          value={details.userGender}
+          inputprops={{ readOnly: true }}
         />
         <br />
         <input
@@ -78,7 +68,7 @@ export default function EditProfileS2() {
         />
         <br />
         <input
-          placeholder="בעיות בריאותיןת"
+          placeholder="בעיות בריאותיות"
           name="UserEmail"
           className="register-input"
           variant="outlined"

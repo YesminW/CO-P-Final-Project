@@ -1,13 +1,32 @@
 .screen-container {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-    background-color: #e9e0e5;
-    margin-bottom: 20px;
-  }
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  background-color: #e9e0e5;
+  margin-bottom: 20px;
+}
 
-  .bonusExplanation {
-    color: #E16162;
-    font-size: 25px;
+.bonusExplanation {
+  color: #e16162;
+  font-size: 25px;
+}
+
+.privatediv {
+  color: white;
+  background-color: #b9dcd1;
+  box-shadow: 0 4px 4px rgba(0, 0, 0, 0.25);
+  border: none;
+  width: 285px;
+  height: 132px;
+  border-radius: 10px;
+  margin-bottom: 50px;
+  display: flex;
+  justify-content: center;
+}
+
+.h2private {
+  font-size: 48px;
+  margin-top: 35px;
+  text-align: center;
 }

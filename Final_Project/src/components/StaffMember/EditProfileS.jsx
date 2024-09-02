@@ -72,17 +72,8 @@ export default function EditProfileS() {
   ) : (
     <>
       <form onSubmit={handleSubmit}>
-        <div
-          style={{
-            backgroundColor: "#cce7e8",
-            padding: 10,
-            borderRadius: 5,
-            marginBottom: 30,
-          }}
-        >
-          <h2 style={{ textAlign: "center", margin: 0 }}>
-            פרטים אישיים {userData.userPrivetName}
-          </h2>
+        <div className="privatediv">
+          <h2 className="h2private">פרטים אישיים {userData.userPrivetName}</h2>
         </div>
         <input
           name="UserPrivetName"

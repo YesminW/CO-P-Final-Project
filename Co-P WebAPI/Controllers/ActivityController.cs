@@ -9,7 +9,7 @@ namespace Co_P_WebAPI.Controllers
         CoPFinalProjectContext db = new CoPFinalProjectContext();
 
         [HttpGet]
-        [Route("GetDaySummaryByDate")]
+        [Route("GetDaySummaryByDate/{today}/{kindernumber}")]
         public dynamic GetDaySummaryByDate(DateTime today, int kindernumber)
         {
             var summary = db.DaySummaries
@@ -34,7 +34,7 @@ namespace Co_P_WebAPI.Controllers
         }
 
         [HttpPost]
-        [Route("createSummary")]
+        [Route("createSummary/{CurrentAcademicYear}/{kindernumber}/{Daysummary}/{today}")]
         public dynamic createSummary(int CurrentAcademicYear, int kindernumber, string Daysummary, DateTime today)
         {
             DaySummary newSummary = new DaySummary();

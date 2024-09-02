@@ -1,26 +1,36 @@
 import { useEffect, useState } from "react";
 import EfooterS from "../../Elements/EfooterS";
-import { getDaySummaryByDate } from "../../utils/apiCalls";
+import { createSummary, getDaySummaryByDate } from "../../utils/apiCalls";
+import { formatForCSharp } from "../../utils/functions";
 
 export default function EndOfTheDay() {
   const [date, setDate] = useState(new Date());
   const [summary, setSummary] = useState("");
   const kindergartenNumber = localStorage.getItem("kindergartenNumber");
 
-  useEffect(() => {
-    async function getSummary() {
-      const data = await getDaySummaryByDate(date, kindergartenNumber);
-      if (data == null) {
-        setSummary("");
-      } else {
-        setSummary(data);
-      }
-    }
-    getSummary();
-  }, [date]);
+  // useEffect(() => {
+  //   async function getSummary() {
+  //     const data = await getDaySummaryByDate(
+  //       formatForCSharp(date),
+  //       kindergartenNumber
+  //     );
+  //     if (data == null) {
+  //       setSummary("");
+  //     } else {
+  //       setSummary(data);
+  //     }
+  //   }
+  //   getSummary();
+  // }, [date]);
 
   async function sendSummary(e) {
     e.preventDefualt();
+    const response = await createSummary(
+      date.getFullYear(),
+      kindergartenNumber,
+      summary,
+      formatForCSharp(date)
+    );
   }
   const changeDate = (days) => {
     const newDate = new Date(date);

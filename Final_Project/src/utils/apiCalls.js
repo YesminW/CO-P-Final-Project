@@ -458,3 +458,27 @@ export async function getTodayBirthday(kindergartenNumber, date) {
     throw new Error(error);
   }
 }
+
+export async function createSummary(
+  CurrentAcademicYear,
+  kindernumber,
+  Daysummary,
+  today
+) {
+  try {
+    const response = await fetch(
+      `${SERVER_URL}/createSummary/${CurrentAcademicYear}/${kindernumber}/${Daysummary}/${today}`,
+      {
+        method: "POST",
+        headers: new Headers({
+          "Content-Type": "application/json; charset=UTF-8",
+        }),
+      }
+    );
+    const resp = await response.json();
+    return resp;
+  } catch (error) {
+    console.error(error);
+    throw new Error(error);
+  }
+}
