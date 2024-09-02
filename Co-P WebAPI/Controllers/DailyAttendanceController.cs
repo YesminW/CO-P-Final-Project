@@ -10,7 +10,7 @@ namespace Co_P_WebAPI.Controllers
         CoPFinalProjectContext db = new CoPFinalProjectContext();
 
         [HttpGet]
-        [Route("GetDailyAttendance/{DailyAttendancedate}")]
+        [Route("GetDailyAttendance/{date}")]
         public dynamic GetAttendance(DateTime date)
         {
             var attendace = db.DailyAttendances.Where(x => x.Date == date);
@@ -29,7 +29,7 @@ namespace Co_P_WebAPI.Controllers
 
 
         [HttpPost]
-        [Route("UpdateAttendanceStatus/{childID}/{Attendancedate}")]
+        [Route("UpdateAttendanceStatus/{childID}/{date}")]
         public dynamic UpdateAttendanceStatus(string childID,  DateTime date)
         {
             var dailyAttendance = db.DailyAttendances
