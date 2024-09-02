@@ -1,6 +1,25 @@
+import { useEffect, useState } from "react";
 import EfooterS from "../../Elements/EfooterS";
+import { GetStaffofKindergarten } from "../../utils/apiCalls";
 
 export default function TeamStaff() {
+  const [team, setTeam] = useState([]);
+  const kindergartenNumber = localStorage.getItem("kindergartenNumber");
+  useEffect(() => {
+    async function getStream() {
+      try {
+        const t = await GetStaffofKindergarten(kindergartenNumber);
+        console.log(t);
+
+        setTeam(t);
+      } catch (error) {
+        console.error(error);
+      }
+    }
+
+    getStream();
+  }, []);
+
   return (
     <div className="page-container flex-column">
       <div className="padded-container flex-column radius-25">

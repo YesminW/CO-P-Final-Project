@@ -49,18 +49,20 @@ namespace Co_P_WebAPI.Controllers
 
         [HttpGet]
         [Route("GetStaffofKindergarten/{kindergartenNumber}")]
-        public dynamic GetStaffofKindergarten(int kindergartenNumber)
+        public List<UserInKindergarten> GetStaffofKindergarten(int kindergartenNumber)
         {
-            var staff = db.UserInKindergartens.Where(s => s.KindergartenNumber == kindergartenNumber).Select(ss => new UserInKindergarten()
-            {
-                TeacherID = ss.TeacherID,
-                Assistant1ID = ss.Assistant1ID,
-                Assistant2ID = ss.Assistant2ID 
-
-            });
+            var staff = db.UserInKindergartens
+                .Where(s => s.KindergartenNumber == kindergartenNumber)
+                .Select(ss => new UserInKindergarten()
+                {
+                    TeacherID = ss.TeacherID,
+                    Assistant1ID = ss.Assistant1ID,
+                    Assistant2ID = ss.Assistant2ID,
+                    ActivityDate = ss.ActivityDate
+                })
+                .ToList(); 
 
             return staff;
-
         }
 
         [HttpPut]

@@ -557,3 +557,16 @@ export async function AssignStaffDates(kindergartenNumber) {
     throw new Error(error);
   }
 }
+
+export async function GetStaffofKindergarten(kindergartenNumber) {
+  try {
+    const response = await fetch(
+      `${SERVER_URL}/GetStaffofKindergarten/${kindergartenNumber}`
+    );
+    const data = await response.json();
+    return data;
+  } catch (error) {
+    console.error(error);
+    throw new Error(error);
+  }
+}
