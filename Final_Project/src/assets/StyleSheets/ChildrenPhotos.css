@@ -1,0 +1,17 @@
+.photo-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 0;
+}
+
+.photo-grid-item {
+  aspect-ratio: 1;
+  width: 100%;
+  background-color: aqua;
+}
+
+.photo-grid-item img {
+  height: 100%;
+  width: 100%;
+  object-fit: cover;
+}

@@ -424,6 +424,54 @@ export async function deleteChild(childId) {
   }
 }
 
+export async function getPhotosByKindergarten(kindergartenNumber) {
+  const response = await fetch(
+    `${SERVER_URL}/GetPhotosByKindergarten/${kindergartenNumber}`
+  );
+  if (response.status === 404) return null;
+  console.log(response);
+  const data = response.json();
+  // const arrayBuffer = await response.arrayBuffer();
+  // const dataView = new DataView(arrayBuffer);
+  // const filesList = [];
+  // let start = 0;
+
+  // while (start < dataView.byteLength) {
+  //   // Find the start of the JPEG file (0xFFD8)
+  //   while (
+  //     start < dataView.byteLength &&
+  //     !(
+  //       dataView.getUint8(start) === 0xff &&
+  //       dataView.getUint8(start + 1) === 0xd8
+  //     )
+  //   ) {
+  //     start++;
+  //   }
+
+  //   // Find the end of the JPEG file (0xFFD9)
+  //   let end = start;
+  //   while (
+  //     end < dataView.byteLength &&
+  //     !(dataView.getUint8(end) === 0xff && dataView.getUint8(end + 1) === 0xd9)
+  //   ) {
+  //     end++;
+  //   }
+  //   end += 2; // Include the 0xFFD9 marker
+
+  //   if (start < end) {
+  //     // Extract the file
+  //     const fileBytes = arrayBuffer.slice(start, end);
+  //     const blob = new Blob([fileBytes], { type: "image/jpeg" });
+  //     filesList.push(blob);
+
+  //     // Move to the next potential file
+  //     start = end;
+  //   }
+  // }
+
+  return data;
+}
+
 export async function getChildPhoto(childId) {
   const response = await fetch(`${SERVER_URL}/GetChildimage/${childId}`);
   if (response.status === 404) return null;

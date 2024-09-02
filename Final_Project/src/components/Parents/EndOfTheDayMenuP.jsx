@@ -10,8 +10,9 @@ export default function EndOfTheDayMenuP() {
       <Link className="menulink" to="/EndOfTheDayP">
         מה היה לנו היום?
       </Link>
-      <Link className="menulink">צפייה בתמונות</Link>
-
+      <Link to={"/ChildPhoto"} className="menulink">
+        צפייה בתמונות
+      </Link>
       {EfooterP}
     </div>
   );

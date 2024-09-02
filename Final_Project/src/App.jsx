@@ -44,6 +44,7 @@ import ActivitiesList from "./components/ActivitiesList/ActivitiesList";
 import CalendarStaff from "./components/CalendarStaff/CalendarStaff";
 import ChatsList from "./components/chat/ChatsList";
 import Chat from "./components/chat/Chat";
+import ChildPhoto from "./components/Parents/ChildPhoto";
 
 function App() {
   return (
@@ -92,6 +93,7 @@ function App() {
       <Route path="/EndOfTheDayMenuP" element={<EndOfTheDayMenuP />} />
       <Route path="/EndOfTheDayP" element={<EndOfTheDayP />} />
       <Route path="/WatchTeamStaff" element={<WatchTeamStaff />} />
+      <Route path="/ChildPhoto" element={<ChildPhoto />} />
     </Routes>
   );
 }
