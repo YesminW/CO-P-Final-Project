@@ -19,4 +19,6 @@ public partial class Kindergarten
     public virtual ICollection<Photo> Photos { get; set; } = new List<Photo>();
 
     public virtual ICollection<ServedIn> ServedIns { get; set; } = new List<ServedIn>();
+    public virtual ICollection<UserInKindergarten> UserInKindergartens { get; set; } = new List<UserInKindergarten>();
+
 }

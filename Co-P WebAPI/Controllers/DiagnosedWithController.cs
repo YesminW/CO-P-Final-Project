@@ -49,7 +49,7 @@ namespace Co_P_WebAPI.Controllers
         //}
 
         [HttpPost]
-        [Route("AddHealthProblemToChild")]
+        [Route("AddHealthProblemToChild/{parentId}/{healthProblemsNumber}/{severity}/{care}")]
         public bool AddHealthProblemToChild(string parentId, int healthProblemsNumber, int severity, string care)
         {
             var childId = db.Children

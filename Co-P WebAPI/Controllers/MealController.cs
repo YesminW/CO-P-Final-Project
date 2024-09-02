@@ -18,7 +18,7 @@ namespace Co_P_WebAPI.Controllers
         }
 
         [HttpPut]
-        [Route("Updatemeal")]
+        [Route("Updatemeal/{mealName}/{mealD}")]
         public dynamic UpdateMeal(string mealName, string mealD)
         {
             var M = db.Meals.Where(x => x.MealType == mealName).FirstOrDefault();
@@ -33,7 +33,7 @@ namespace Co_P_WebAPI.Controllers
         }
 
         [HttpPost]
-        [Route("createMeal")]
+        [Route("createMeal/{mealName}/{mealD}")]
         public dynamic CreateMeal(string mealName, string mealD)
         {
             Meal M = new Meal();
@@ -49,7 +49,7 @@ namespace Co_P_WebAPI.Controllers
 
         }
         [HttpDelete]
-        [Route("deleteMeal")]
+        [Route("deleteMeal/{mealName}")]
         public dynamic DeleteMeal(string mealName)
         {
             if (mealName == null)
