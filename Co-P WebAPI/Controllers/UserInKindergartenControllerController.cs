@@ -48,7 +48,7 @@ namespace Co_P_WebAPI.Controllers
         }
 
         [HttpGet]
-        [Route("GetStaffofKindergarten")]
+        [Route("GetStaffofKindergarten/{kindergartenNumber}")]
         public dynamic GetStaffofKindergarten(int kindergartenNumber)
         {
             var staff = db.UserInKindergartens.Where(s => s.KindergartenNumber == kindergartenNumber).Select(ss => new UserInKindergarten()
@@ -110,7 +110,7 @@ namespace Co_P_WebAPI.Controllers
         }
 
         [HttpPut]
-        [Route("SwapAssistantsForDate")]
+        [Route("SwapAssistantsForDate/{date}/{date}/{currentAssistantId}/{newAssistantId}")]
         public IActionResult SwapAssistantsForDate(DateTime date, string currentAssistantId, string newAssistantId)
         {
             // בדיקה שהסייעת החדשה אינה זהה לסייעת הקיימת

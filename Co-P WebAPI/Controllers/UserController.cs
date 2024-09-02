@@ -358,7 +358,7 @@ namespace Co_P_WebAPI.Controllers
         //DELETE - מחיקת משתמש //
 
         [HttpDelete]
-        [Route("DeleteUser")]
+        [Route("DeleteUser/{ID}")]
         public dynamic DeleteUser(string ID)
         {
             var us = db.Users.Where(u => u.UserId == ID).FirstOrDefault();

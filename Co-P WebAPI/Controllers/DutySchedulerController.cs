@@ -75,7 +75,7 @@ namespace Co_P_WebAPI.Controllers
             }
         }
         [HttpGet]
-        [Route("dutiesByMonth")]
+        [Route("dutiesByMonth/{year}/{month}")]
         public async Task<ActionResult<IEnumerable<DutyChildInfoDTO>>> GetDutiesByMonth(int year, int month)
         {
             try

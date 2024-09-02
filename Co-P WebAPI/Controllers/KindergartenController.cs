@@ -22,7 +22,7 @@ namespace Co_P_WebAPI.Controllers
         }
 
         [HttpPost]
-        [Route("AddKindergarten/{KindergartenName}/{KindergartenAddressKindergartenAddress}")]
+        [Route("AddKindergarten/{KindergartenName}/{KindergartenAddress}")]
         public dynamic AddKindergarten(string KindergartenName, string KindergartenAddress)
         {
             var kinder = db.Kindergartens;
