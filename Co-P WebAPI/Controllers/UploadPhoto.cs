@@ -105,7 +105,7 @@ namespace Co_P_WebAPI.Controllers
                 return BadRequest("No file uploaded");
 
             // יצירת נתיב לתיקיית המשתמש בתוך UserPhotos
-            var userFolderPath = Path.Combine(Directory.GetCurrentDirectory(), "UserPhotos", ID);
+            var userFolderPath = Path.Combine(Directory.GetCurrentDirectory(), "UsersPhoto", ID);
 
             if (!Directory.Exists(userFolderPath))
             {
@@ -134,7 +134,7 @@ namespace Co_P_WebAPI.Controllers
         public IActionResult GetUserimage(string primaryKey)
         {
             // יצירת נתיב לתיקיית המשתמש בתוך UserPhotos
-            var userFolderPath = Path.Combine(Directory.GetCurrentDirectory(), "UserPhotos", primaryKey);
+            var userFolderPath = Path.Combine(Directory.GetCurrentDirectory(), "UsersPhoto", primaryKey);
             var file = Directory.GetFiles(userFolderPath, $"{primaryKey}.*").FirstOrDefault();
 
             if (file == null)
@@ -167,7 +167,7 @@ namespace Co_P_WebAPI.Controllers
         public dynamic DeleteUserPhoto(string primaryKey)
         {
             // יצירת נתיב לתיקיית המשתמש בתוך UserPhotos
-            var userFolderPath = Path.Combine(Directory.GetCurrentDirectory(), "UserPhotos", primaryKey);
+            var userFolderPath = Path.Combine(Directory.GetCurrentDirectory(), "UsersPhoto", primaryKey);
             if (!Directory.Exists(userFolderPath))
             {
                 return NotFound();

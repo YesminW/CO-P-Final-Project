@@ -59,10 +59,11 @@ namespace Co_P_WebAPI.Controllers
         public dynamic GetAllActivitesByDate(int kindergartenNumber, DateTime Activitydate)
         {
             var activities = db.ActualActivities
-                .Where(a => a.KindergartenNumber == kindergartenNumber && a.ActivityDate.Date == Activitydate.Date).Select(aa => new
+                .Where(a => a.KindergartenNumber == kindergartenNumber && a.ActivityDate == Activitydate.Date)
+                .Select(aa => new
                 {
-                    activityName = aa.ActivityNumberNavigation.ActivityName,
-                    activityHour = aa.ActivityDate.Hour
+                    activityName = aa.ActivityNumberNavigation != null ? aa.ActivityNumberNavigation.ActivityName : "No Activity",
+                    activityHour = aa.ActivityHour // כעת, סוג הנתונים הוא TimeSpan ולא DateTime
                 })
                 .ToList();
 

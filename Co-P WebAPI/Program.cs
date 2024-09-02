@@ -1,5 +1,4 @@
 ﻿using Microsoft.EntityFrameworkCore;
-using Co_P_WebAPI.Schedulers;
 using CO_P_library.Services;
 using Quartz;
 using Quartz.Impl;
@@ -28,12 +27,7 @@ namespace Co_P_WebAPI
             builder.Services.AddDbContext<CoPFinalProjectContext>(options =>
                 options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection")));
 
-            // הוספת Quartz.NET
-            builder.Services.AddTransient<DutyScheduler>();
-            builder.Services.AddTransient<DutySchedulerJob>();
-            builder.Services.AddSingleton<IJobFactory, JobFactory>();
-            builder.Services.AddHostedService<QuartzHostedService>();
-
+           
             var app = builder.Build();
 
             // Configure the HTTP request pipeline.
