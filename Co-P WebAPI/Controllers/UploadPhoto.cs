@@ -138,7 +138,7 @@ namespace Co_P_WebAPI.Controllers
 
             if (file == null)
             {
-                return NotFound();
+                return ("אין תמונה");
             }
 
             var fileType = Path.GetExtension(file).ToLower();
