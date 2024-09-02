@@ -365,18 +365,20 @@ export async function getDaySummaryByDate(date, kindergartenNumber) {
   }
 }
 
-export async function uploaspictures(file) {
+export async function uploaspictures(files, kindergartenNumber) {
   try {
     const formData = new FormData();
-    formData.append("file", file);
-    const files = await fetch(
-      `${SERVER_URL}/api/FaceRecognition/ProcessImage`,
+    for (const file of files) {
+      formData.append("files", file);
+    }
+    const filesResponse = await fetch(
+      `${SERVER_URL}/UploadChildrenPhotos/${kindergartenNumber}`,
       {
         method: "POST",
         body: formData,
       }
     );
-    const filesData = await files.json();
+    const filesData = await filesResponse.json();
     return filesData;
   } catch (error) {
     console.error(error);
