@@ -1,4 +1,4 @@
-import logo from "/logo.png";
+import logo from "/Images/logo.png";
 
 const Elogo1 = (
   <>

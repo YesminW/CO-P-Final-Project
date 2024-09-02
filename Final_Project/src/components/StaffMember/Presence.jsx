@@ -9,7 +9,6 @@ import {
 } from "@mui/material";
 import SearchIcon from "@mui/icons-material/Search";
 import EfooterS from "../../Elements/EfooterS";
-import defaultimg from "/default.png";
 
 import "../../assets/StyleSheets/Presence.css";
 import {
@@ -116,7 +115,7 @@ export default function Presence() {
                   onClick={() => handleStudentClick(student.childId)}
                 >
                   <Avatar
-                    src={student.imgSrc || defaultimg}
+                    src={student.imgSrc || "/Images/default.png"}
                     alt={`${student.childFirstName} ${student.childSurname}`}
                     className="student-avatar"
                   />

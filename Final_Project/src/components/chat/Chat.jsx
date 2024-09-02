@@ -59,8 +59,8 @@ export default function Chat() {
         const child = await getChildByParent(chat.get("participants")[0]);
         // const childImage = await getChildPhoto(child.childId);
         // const teacherImage = await getChildPhoto(chat.admin);
-        const childImage = "/default.png";
-        const teacherImage = "/logo.png";
+        const childImage = "/Images/default.png";
+        const teacherImage = "/Images/logo.png";
 
         setImages({ child: childImage, teacher: teacherImage });
 
