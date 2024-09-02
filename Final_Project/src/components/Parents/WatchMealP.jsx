@@ -23,7 +23,7 @@ const WatchMealP = () => {
           date,
           kindergartenNumber
         );
-        const meals = { בוקר: "", צהריים: "", ארבע: "", פינוק: "" };
+        const meals = { בוקר: "", עשר: "", צהריים: "", ארבע: "" };
         for (const meal of data) {
           meals[meal.maelName] = meal.mealDetails;
         }
@@ -40,7 +40,7 @@ const WatchMealP = () => {
 
   function handleSubmit(e) {
     e.preventDefault();
-    navigate("/Meals");
+    navigate("/MealsP");
   }
 
   return (
@@ -56,7 +56,7 @@ const WatchMealP = () => {
                 <tr key={nanoid()}>
                   <td className="meal-time">{mealKey}</td>
                   <td className="meal-description">
-                    <p name={mealKey} defaultValue={mealData[mealKey]}></p>
+                    <p>{mealData[mealKey]}</p>
                   </td>
                 </tr>
               ))}

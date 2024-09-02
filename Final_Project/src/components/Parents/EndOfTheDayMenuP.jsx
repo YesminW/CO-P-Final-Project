@@ -7,7 +7,7 @@ import EfooterP from "../../Elements/EfooterP";
 export default function EndOfTheDayMenuP() {
   return (
     <div className="menudiv flex-column center">
-      <Link className="menulink" to="/EndOfTheDay">
+      <Link className="menulink" to="/EndOfTheDayP">
         מה היה לנו היום?
       </Link>
       <Link className="menulink">צפייה בתמונות</Link>

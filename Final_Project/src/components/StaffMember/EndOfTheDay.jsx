@@ -14,7 +14,7 @@ export default function EndOfTheDay() {
         formatForCSharp(date),
         kindergartenNumber
       );
-      if (data == null) {
+      if (data == "Day summary not found") {
         setSummary("");
       } else {
         setSummary(data);
@@ -24,9 +24,7 @@ export default function EndOfTheDay() {
   }, [date]);
 
   async function sendSummary(e) {
-    // e.preventDefualt();
-    console.log(summary);
-
+    e.preventDefualt();
     const response = await createSummary(
       date.getFullYear(),
       kindergartenNumber,
