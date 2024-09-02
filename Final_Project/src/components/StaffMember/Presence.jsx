@@ -118,7 +118,7 @@ export default function Presence() {
                   onClick={() => handleStudentClick(student.childId)}
                 >
                   <Avatar
-                    src={student.imgSrc || "/Images/default.png"}
+                    src={student.imgSrc || "./Images/default.png"}
                     alt={`${student.childFirstName} ${student.childSurname}`}
                     className="student-avatar"
                   />
