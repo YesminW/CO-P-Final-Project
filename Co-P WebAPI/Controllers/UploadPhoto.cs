@@ -52,7 +52,8 @@ namespace Co_P_WebAPI.Controllers
 
             if (file == null)
             {
-                return ("אין תמונה");
+                return Ok("אין תמונה");
+
             }
 
             var fileType = Path.GetExtension(file).ToLower();
@@ -138,7 +139,7 @@ namespace Co_P_WebAPI.Controllers
 
             if (file == null)
             {
-                return ("אין תמונה");
+                return Ok("אין תמונה");
             }
 
             var fileType = Path.GetExtension(file).ToLower();

@@ -43,7 +43,7 @@ namespace Co_P_WebAPI.Controllers
             return Ok(newk);
         }
         [HttpPut]
-        [Route("UpdateKindergarten")]
+        [Route("UpdateKindergarten/{Name}/{address}/{newName}")]
         public dynamic UpdateKindergarten(string Name, string address, string newName)
         {
             Kindergarten k = db.Kindergartens.Where(x => x.KindergartenName == Name).FirstOrDefault();

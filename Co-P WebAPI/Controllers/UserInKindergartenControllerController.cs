@@ -110,7 +110,7 @@ namespace Co_P_WebAPI.Controllers
         }
 
         [HttpPut]
-        [Route("SwapAssistantsForDate/{date}/{date}/{currentAssistantId}/{newAssistantId}")]
+        [Route("SwapAssistantsForDate/{date}/{SwapAssistantsdate}/{currentAssistantId}/{newAssistantId}")]
         public IActionResult SwapAssistantsForDate(DateTime date, string currentAssistantId, string newAssistantId)
         {
             // בדיקה שהסייעת החדשה אינה זהה לסייעת הקיימת

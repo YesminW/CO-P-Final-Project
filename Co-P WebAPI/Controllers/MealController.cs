@@ -67,7 +67,7 @@ namespace Co_P_WebAPI.Controllers
         }
 
         [HttpGet]
-        [Route("getbydateandkindergarten/{kindergartenNumber}/{date}")]
+        [Route("getbydateandkindergarten/{kindergartenNumber}/{getMaelbydate}")]
         public dynamic Getbydateandkindergarten(int kindergartenNumber, DateTime date)
         {
             var actualActivities = db.ActualActivities
@@ -86,7 +86,7 @@ namespace Co_P_WebAPI.Controllers
 
 
         [HttpPut]
-        [Route("Editbydateandkindergarten/{kindergartenNumber}/{date}/{mealName}/{mealDetail}")]
+        [Route("Editbydateandkindergarten/{kindergartenNumber}/{EditMealdate}/{mealName}/{mealDetail}")]
         public dynamic Editbydateandkindergarten(int kindergartenNumber, DateTime date, string mealName, string mealDetail)
         {
             var activity = db.ActualActivities
