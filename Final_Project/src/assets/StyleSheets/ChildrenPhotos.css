@@ -7,7 +7,6 @@
 .photo-grid-item {
   aspect-ratio: 1;
   width: 100%;
-  background-color: aqua;
 }
 
 .photo-grid-item img {

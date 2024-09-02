@@ -86,8 +86,8 @@ namespace Co_P_WebAPI.Controllers
 
 
         [HttpPut]
-        [Route("Editbydateandkindergarten/{kindergartenNumber}/{EditMealdate}/{mealName}/{mealDetail}")]
-        public dynamic Editbydateandkindergarten(int kindergartenNumber, DateTime EditMealdate, string mealName, string mealDetail)
+        [Route("Editbydateandkindergarten/{kindergartenNumber}/{EditMealdate}/{mealName}/{mealDetail}/{mealNumber}")]
+        public dynamic Editbydateandkindergarten(int kindergartenNumber, DateTime EditMealdate, string mealName, string mealDetail, int mealNumber)
         {
             var activity = db.ActualActivities
                 .Where(a => a.ActivityDate.Date == EditMealdate.Date
@@ -98,6 +98,22 @@ namespace Co_P_WebAPI.Controllers
             if (activity != null)
             {
                 activity.MealNumberNavigation.MealDetails = mealDetail;
+                db.SaveChanges();
+            }
+            else
+            {
+                var actualActivity = new ActualActivity();
+                var meal = new Meal();
+                meal.MealType = mealName;
+                meal.MealDetails = mealDetail;
+                meal.MealNumber = mealNumber;
+                actualActivity.MealNumberNavigation = meal;
+                actualActivity.MealNumber = mealNumber;
+                actualActivity.ActivityNumber = 10;
+                actualActivity.ActivityDate = EditMealdate.Date;
+                actualActivity.KindergartenNumber = kindergartenNumber;
+
+                db.ActualActivities.Add(actualActivity);
                 db.SaveChanges();
             }
 

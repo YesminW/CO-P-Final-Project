@@ -65,6 +65,7 @@ namespace Co_P_WebAPI.Controllers
                     activityName = aa.ActivityNumberNavigation != null ? aa.ActivityNumberNavigation.ActivityName : "No Activity",
                     activityHour = aa.ActivityHour // כעת, סוג הנתונים הוא TimeSpan ולא DateTime
                 })
+                .OrderBy(aaa => aaa.activityHour)
                 .ToList();
 
             return activities;

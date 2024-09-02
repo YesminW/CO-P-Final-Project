@@ -1,5 +1,9 @@
 import React, { useEffect, useState } from "react";
-import { formatDate, formatForCSharp } from "../../utils/functions";
+import {
+  formatDate,
+  formatDateForUs,
+  formatForCSharp,
+} from "../../utils/functions";
 import Calendar from "react-calendar";
 import "react-calendar/dist/Calendar.css";
 import EfooterS from "../../Elements/EfooterS";
@@ -28,6 +32,8 @@ export default function CalendarStaff() {
     getactivitiesData();
   }, [date, kindergartenNumber]);
 
+  console.log(activities);
+
   return (
     <div className="page-container page-height-with-footer flex-column gap-20">
       <div className="week-calendar-container height-50-percent padding-20 rounded-corners-25">
@@ -44,8 +50,8 @@ export default function CalendarStaff() {
                 key={nanoid()}
                 className="rounded-teal-container activity-background"
               >
-                <h2 className="font-30">{activity.equipment}</h2>
-                <p>{new Date(activity.activityDate).toLocaleTimeString()}</p>
+                <h2 className="font-30">{activity.activityName}</h2>
+                <p>{activity.activityHour}</p>
               </button>
             ))
           ) : (

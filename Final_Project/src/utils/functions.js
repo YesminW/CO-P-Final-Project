@@ -43,6 +43,10 @@ export const formatForCSharp = (date) => {
   return `${date.getFullYear()}-${date.getMonth() + 1}-${date.getDate()}`;
 };
 
+export const formatDateForUs = (date) => {
+  return `${date.getFullYear()}-${date.getDate()}-${date.getMonth() + 1}`;
+};
+
 export const fullHourFormat = (hour, minutes) =>
   `${hour.toString().padStart(2, "0")}:${minutes.toString().padStart(2, "0")}`;
 
