@@ -1,5 +1,7 @@
 import { Link } from "react-router-dom";
 import EfooterS from "../../Elements/EfooterS";
+import EfooterP from "../../Elements/EfooterP";
+
 import "./chat.css";
 import { useEffect, useState } from "react";
 import { db } from "../../utils/firebase";
@@ -40,6 +42,8 @@ export default function ChatsList() {
           const child = await getChildByParent(doc.get("participants")[0]);
           // const photo = await getChildPhoto(doc.get("childId"));
 
+          // const url = photo ? URL.createObjectURL(photo) : "./default.png";
+
           chatsToShow.push({
             id: doc.id,
             ...data,
@@ -67,29 +71,32 @@ export default function ChatsList() {
           {chats.length === 0 ? (
             <h2>אין שיחות</h2>
           ) : (
-            chats.map((chat) => (
-              <Link
-                to={`/chat/${chat.id}`}
-                key={chat.id}
-                className="chat-container"
-              >
-                <img
-                  className="chat-img"
-                  src={chat.childImage}
-                  alt={chat.childFirstName}
-                />
-                <h3 className="chat-text-container">
-                  ההורים של {chat.childFirstName}
-                </h3>
-              </Link>
-            ))
+            chats
+              .sort((a, b) => b.participants.length - a.participants.length)
+              .map((chat) => (
+                <Link
+                  to={`/chat/${chat.id}`}
+                  key={chat.id}
+                  className="chat-container"
+                >
+                  <img
+                    className="chat-img"
+                    src={chat.childImage}
+                    alt={chat.childFirstName}
+                  />
+                  <h3 className="chat-text-container">
+                    {chat.childId
+                      ? localStorage.getItem("role_code") === "111"
+                        ? `צ’אט עם ההורים של ${chat.childFirstName}`
+                        : "צ’אט עם הגננת"
+                      : "צ'אט כללי"}
+                  </h3>
+                </Link>
+              ))
           )}
         </div>
       )}
-      <Link className="generalchat" to="/ChatGeneral">
-        לצ'אט הכללי
-      </Link>
-      {EfooterS}
+      {localStorage.getItem("role_code") === "111" ? EfooterS : EfooterP}
     </div>
   );
 }

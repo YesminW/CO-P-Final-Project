@@ -105,17 +105,19 @@ export default function ChatGeneral() {
             ))
           )}
         </div>
-        <div className="chat-input-container">
-          <button className="chat-send-btn" onClick={createMessage}>
-            ⇨
-          </button>
-          <input
-            className="chat-input"
-            type="text"
-            ref={inputRef}
-            placeholder="שלחו הודעה..."
-          />
-        </div>
+        {localStorage.getItem("role_code") === "111" && (
+          <div className="chat-input-container">
+            <button className="chat-send-btn" onClick={createMessage}>
+              ⇨
+            </button>
+            <input
+              className="chat-input"
+              type="text"
+              ref={inputRef}
+              placeholder="שלחו הודעה..."
+            />
+          </div>
+        )}
       </div>
     </div>
   );
