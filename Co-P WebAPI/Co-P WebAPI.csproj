@@ -18,7 +18,6 @@
 
   <ItemGroup>
     <Folder Include="ChildPhotos\" />
-    <Folder Include="UserPhotos\" />
   </ItemGroup>
 
 </Project>
