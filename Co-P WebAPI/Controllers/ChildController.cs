@@ -174,6 +174,12 @@ namespace Co_P_WebAPI.Controllers
             {
                 return ("Child not found");
             }
+            var parent1 = c.Parent1;
+            var parent2 = c.Parent2;
+            var p1 = db.Users.Where(p => p.UserId == parent1);
+            var p2 = db.Users.Where(p => p.UserId == parent2);
+            db.Users.Remove((User)p1);
+            db.Users.Remove((User)p2);
             db.Children.Remove(c);
             db.SaveChanges();
             return (new { message = c.ChildFirstName + " " + c.ChildSurname + " deleted" });
