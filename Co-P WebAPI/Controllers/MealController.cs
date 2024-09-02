@@ -106,7 +106,6 @@ namespace Co_P_WebAPI.Controllers
                 var meal = new Meal();
                 meal.MealType = mealName;
                 meal.MealDetails = mealDetail;
-                meal.MealNumber = mealNumber;
                 actualActivity.MealNumberNavigation = meal;
                 actualActivity.MealNumber = mealNumber;
                 actualActivity.ActivityNumber = 10;

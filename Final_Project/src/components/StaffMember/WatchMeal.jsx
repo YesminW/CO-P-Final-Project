@@ -40,8 +40,6 @@ const WatchMeal = () => {
         for (const meal of data) {
           meals[meal.maelName] = meal.mealDetails;
         }
-        console.log(meals);
-
         setMealData(meals);
         setIsDataLoaded(true);
       } catch (error) {
@@ -68,6 +66,8 @@ const WatchMeal = () => {
     try {
       const mealPromise = Object.keys(data).map((mealName) => {
         const mealDetails = data[mealName];
+        console.log(data);
+
         return createMeal(
           kindergartenNumber,
           formatForCSharp(date),
