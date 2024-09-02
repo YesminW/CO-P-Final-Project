@@ -163,7 +163,7 @@ namespace Co_P_WebAPI.Controllers
 
 
         [HttpDelete]
-        [Route("DeleteUserPhoto")]
+        [Route("DeleteUserPhoto/{primaryKey}")]
         public dynamic DeleteUserPhoto(string primaryKey)
         {
             // יצירת נתיב לתיקיית המשתמש בתוך UserPhotos

@@ -33,7 +33,7 @@ namespace Co_P_WebAPI.Controllers
         [Route("WhosCelebratingToday/{kindergartenNumber}/{today}")]
         public dynamic WhosCelebratingToday (int kindergartenNumber, DateTime today)
         {
-            var celebratingChild = db.Children.Where(cc => cc.ChildBirthDate == today).Select(x => new Child()
+            var celebratingChild = db.Children.Where(cc => cc.ChildBirthDate == today && cc.kindergartenNumber == kindergartenNumber).Select(x => new Child()
             {
                 ChildFirstName = x.ChildFirstName,
                 ChildSurname = x.ChildSurname,

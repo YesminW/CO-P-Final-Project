@@ -67,11 +67,11 @@ namespace Co_P_WebAPI.Controllers
         }
 
         [HttpGet]
-        [Route("getbydateandkindergarten/{kindergartenNumber}/{date}")]
-        public dynamic Getbydateandkindergarten(int kindergartenNumber, DateTime date)
+        [Route("getbydateandkindergarten/{kindergartenNumber}/{Maeldate}")]
+        public dynamic Getbydateandkindergarten(int kindergartenNumber, DateTime Maeldate)
         {
             var actualActivities = db.ActualActivities
-                .Where(a => a.ActivityDate.Date == date.Date && a.KindergartenNumber == kindergartenNumber)
+                .Where(a => a.ActivityDate.Date == Maeldate.Date && a.KindergartenNumber == kindergartenNumber)
                 .Select(m => new MealsInKindergartenDTO()
                 {
                     ActivityDate = m.ActivityDate,
@@ -87,10 +87,10 @@ namespace Co_P_WebAPI.Controllers
 
         [HttpPut]
         [Route("Editbydateandkindergarten/{kindergartenNumber}/{EditMealdate}/{mealName}/{mealDetail}")]
-        public dynamic Editbydateandkindergarten(int kindergartenNumber, DateTime date, string mealName, string mealDetail)
+        public dynamic Editbydateandkindergarten(int kindergartenNumber, DateTime EditMealdate, string mealName, string mealDetail)
         {
             var activity = db.ActualActivities
-                .Where(a => a.ActivityDate.Date == date.Date
+                .Where(a => a.ActivityDate.Date == EditMealdate.Date
                             && a.KindergartenNumber == kindergartenNumber
                             && a.MealNumberNavigation.MealType == mealName)
                 .FirstOrDefault();

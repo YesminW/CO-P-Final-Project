@@ -110,8 +110,8 @@ namespace Co_P_WebAPI.Controllers
         }
 
         [HttpPut]
-        [Route("SwapAssistantsForDate/{date}/{SwapAssistantsdate}/{currentAssistantId}/{newAssistantId}")]
-        public IActionResult SwapAssistantsForDate(DateTime date, string currentAssistantId, string newAssistantId)
+        [Route("SwapAssistantsForDate/{SwapAssistantsdate}/{currentAssistantId}/{newAssistantId}")]
+        public IActionResult SwapAssistantsForDate(DateTime SwapAssistantsdate, string currentAssistantId, string newAssistantId)
         {
             // בדיקה שהסייעת החדשה אינה זהה לסייעת הקיימת
             if (currentAssistantId == newAssistantId)
@@ -121,7 +121,7 @@ namespace Co_P_WebAPI.Controllers
 
             // חיפוש הרשומה המתאימה לפי התאריך ות"ז של הסייעת הקיימת
             var userInKindergarten = db.UserInKindergartens
-                .Where(uik => uik.ActivityDate == date &&
+                .Where(uik => uik.ActivityDate == SwapAssistantsdate &&
                               (uik.Assistant1ID == currentAssistantId || uik.Assistant2ID == currentAssistantId))
                 .FirstOrDefault();
 
