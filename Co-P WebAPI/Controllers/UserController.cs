@@ -45,15 +45,12 @@ namespace Co_P_WebAPI.Controllers
         [Route("GetAllTeacher")]
         public IActionResult GetAllUsersWithCode111()
         {
-            var usersWithCode111 = db.Users
-                                     .Where(u => u.UserCode == 111)
-                                     .Select(u => new
-                                     {
-                                         u.UserPrivetName,
-                                         u.UserSurname,
-                                         u.UserId
-                                     })
-                                     .ToList();
+            var usersWithCode111 = db.Users.Where(u => u.UserCode == 111 && u.KindergartenNumber == null).Select(u => new
+              {
+                 u.UserPrivetName,
+                 u.UserSurname,
+                 u.UserId
+              }).ToList();
 
             return Ok(usersWithCode111);
         }
@@ -62,16 +59,12 @@ namespace Co_P_WebAPI.Controllers
         [Route("GetAllAssistants")]
         public IActionResult GetAllAssistants()
         {
-            var assistants = db.Users
-                               .Where(u => u.UserCode == 333)
-                               .Select(u => new
-                               {
-                                   u.UserPrivetName,
-                                   u.UserSurname,
-                                   u.UserId
-                                  
-                               })
-                               .ToList();
+            var assistants = db.Users.Where(u => u.UserCode == 333 && u.KindergartenNumber == null).Select(u => new
+              {
+                u.UserPrivetName,
+                u.UserSurname,
+                u.UserId
+              }).ToList();
 
             return Ok(assistants);
         }
