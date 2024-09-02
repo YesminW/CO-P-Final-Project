@@ -22,7 +22,8 @@ namespace Co_P_WebAPI.Controllers
                 {
                     FullName = $"{child.ChildFirstName} {child.ChildSurname}",
                     PhotoName = child.ChildPhotoName,
-                    BirthDate = child.ChildBirthDate.ToString("yyyy-MM-dd")
+                    BirthDate = child.ChildBirthDate.ToString("yyyy-MM-dd"),
+                    childId = child.ChildId
                 })
                 .ToList();
 

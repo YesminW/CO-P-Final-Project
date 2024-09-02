@@ -1,21 +1,28 @@
 import { useEffect, useState } from "react";
 import EfooterS from "../../Elements/EfooterS";
 import "../../assets/StyleSheets/BirthDayList.css";
-import { fetchBirthdays } from "../../utils/apiCalls";
+import { fetchBirthdays, getChildPhoto } from "../../utils/apiCalls";
 import { nanoid } from "nanoid";
+
 export default function BirthDayChild() {
   const [birthdays, setBirthdays] = useState([]);
+  const [photos, setPhotos] = useState([]);
 
   useEffect(() => {
-    async function getBirthdays() {
+    async function fetchData() {
       try {
-        const birth = await fetchBirthdays();
-        setBirthdays(birth);
+        const birthdaysData = await fetchBirthdays();
+        setBirthdays(birthdaysData);
+        const childIds = birthdaysData.map((birthday) => birthday.childId);
+        const photoPromises = childIds.map((childId) => getChildPhoto(childId));
+        const photosData = await Promise.all(photoPromises);
+        setPhotos(photosData);
       } catch (error) {
-        console.error(error);
+        console.error("Error fetching birthdays or photos:", error);
       }
     }
-    getBirthdays();
+
+    fetchData();
   }, []);
 
   return (

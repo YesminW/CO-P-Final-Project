@@ -42,13 +42,15 @@ export default function ChatsList() {
           const child = await getChildByParent(doc.get("participants")[0]);
           const photo = await getChildPhoto(doc.get("childId"));
 
-          const url = photo ? URL.createObjectURL(photo) : "/Image/default.png";
+          const url = photo
+            ? URL.createObjectURL(photo)
+            : "./Image/default.png";
 
           chatsToShow.push({
             id: doc.id,
             ...data,
             childFirstName: child.childFirstName,
-            childImage: "",
+            childImage: url,
           });
         }
         setChats(chatsToShow);

@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react";
 import EfooterS from "../../Elements/EfooterS";
 import { GetStaffofKindergarten } from "../../utils/apiCalls";
+import "../../assets/StyleSheets/TeamStaff.css";
 
 export default function TeamStaff() {
   const [team, setTeam] = useState([]);
@@ -8,7 +9,11 @@ export default function TeamStaff() {
   useEffect(() => {
     async function getStream() {
       try {
-        const t = await GetStaffofKindergarten(kindergartenNumber);
+        const currentMonth = new Date().getMonth() + 1;
+        const t = await GetStaffofKindergarten(
+          kindergartenNumber,
+          currentMonth
+        );
         console.log(t);
 
         setTeam(t);

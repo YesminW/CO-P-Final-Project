@@ -48,11 +48,11 @@ namespace Co_P_WebAPI.Controllers
         }
 
         [HttpGet]
-        [Route("GetStaffofKindergarten/{kindergartenNumber}")]
-        public List<UserInKindergarten> GetStaffofKindergarten(int kindergartenNumber)
+        [Route("GetStaffofKindergarten/{kindergartenNumber}/{month}")]
+        public List<UserInKindergarten> GetStaffofKindergarten(int kindergartenNumber, int month)
         {
             var staff = db.UserInKindergartens
-                .Where(s => s.KindergartenNumber == kindergartenNumber)
+                .Where(s => s.KindergartenNumber == kindergartenNumber && s.ActivityDate.Month == month)
                 .Select(ss => new UserInKindergarten()
                 {
                     TeacherID = ss.TeacherID,
@@ -60,7 +60,7 @@ namespace Co_P_WebAPI.Controllers
                     Assistant2ID = ss.Assistant2ID,
                     ActivityDate = ss.ActivityDate
                 })
-                .ToList(); 
+                .ToList();
 
             return staff;
         }

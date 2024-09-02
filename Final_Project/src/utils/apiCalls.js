@@ -558,10 +558,10 @@ export async function AssignStaffDates(kindergartenNumber) {
   }
 }
 
-export async function GetStaffofKindergarten(kindergartenNumber) {
+export async function GetStaffofKindergarten(kindergartenNumber, currentMonth) {
   try {
     const response = await fetch(
-      `${SERVER_URL}/GetStaffofKindergarten/${kindergartenNumber}`
+      `${SERVER_URL}/GetStaffofKindergarten/${kindergartenNumber}/${currentMonth}`
     );
     const data = await response.json();
     return data;
