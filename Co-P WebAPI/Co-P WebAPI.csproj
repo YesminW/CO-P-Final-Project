@@ -17,8 +17,8 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Folder Include="123123123\" />
-    <Folder Include="456456456\" />
+    <Folder Include="ChildPhotos\" />
+    <Folder Include="UserPhotos\" />
   </ItemGroup>
 
 </Project>
