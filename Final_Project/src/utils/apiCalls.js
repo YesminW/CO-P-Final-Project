@@ -506,3 +506,16 @@ export async function createMeal(
     throw new Error(error);
   }
 }
+
+export async function getAllActivitiesByDate(kindergartenNumber, date) {
+  try {
+    const response = await fetch(
+      `${SERVER_URL}/GetAllActivitiesByDate/${kindergartenNumber}/${date}`
+    );
+    const resp = await response.json();
+    return resp;
+  } catch (error) {
+    console.error(error);
+    throw new Error(error);
+  }
+}

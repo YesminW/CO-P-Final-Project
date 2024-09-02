@@ -122,3 +122,7 @@
 .confirm-button:hover {
   background-color: #8f9f9f;
 }
+
+.meal-time {
+  width: 30%;
+}

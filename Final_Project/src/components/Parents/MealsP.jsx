@@ -37,10 +37,6 @@ export default function MealsP() {
     navigate("/WatchMealP", { state: date });
   };
 
-  const handleAddMealClick = () => {
-    navigate("/AddMeal");
-  };
-
   return (
     <div className="container flex-column center">
       <header className="headermeals">מה אוכלים היום</header>
