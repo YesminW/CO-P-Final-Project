@@ -56,7 +56,7 @@ const WatchMealP = () => {
                 <tr key={nanoid()}>
                   <td className="meal-time">{mealKey}</td>
                   <td className="meal-description">
-                    <p name={mealKey} defaultValue={mealData[mealKey]}></p>
+                    <p>{mealData[mealKey]}</p>
                   </td>
                 </tr>
               ))}

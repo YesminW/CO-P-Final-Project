@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { Await, useLocation, useNavigate } from "react-router-dom";
+import { useLocation, useNavigate } from "react-router-dom";
 import "../../assets/StyleSheets/Meals.css";
 import EfooterS from "../../Elements/EfooterS";
 import { hebrewWeekDays } from "../../utils/constants";
@@ -34,11 +34,14 @@ const WatchMeal = () => {
           kindergartenNumber
         );
         const options = await getMealList();
+        console.log(options);
         setMealOptions(options);
         const meals = { בוקר: "", עשר: "", צהריים: "", ארבע: "" };
         for (const meal of data) {
           meals[meal.maelName] = meal.mealDetails;
         }
+        console.log(meals);
+
         setMealData(meals);
         setIsDataLoaded(true);
       } catch (error) {
@@ -60,16 +63,21 @@ const WatchMeal = () => {
 
   async function handleSubmit(e) {
     e.preventDefault();
+    const data = Object.fromEntries(new FormData(e.target));
+
     try {
-      for (const mealName of Object.keys(mealData)) {
-        const mealDetails = mealData[mealName];
-        await createMeal(
+      const mealPromise = Object.keys(data).map((mealName) => {
+        const mealDetails = data[mealName];
+        return createMeal(
           kindergartenNumber,
           formatForCSharp(date),
           mealName,
           mealDetails
         );
-      }
+      });
+
+      await Promise.all(mealPromise);
+
       navigate("/Meals");
     } catch (error) {
       console.error("Error submitting meal data:", error);
@@ -85,16 +93,20 @@ const WatchMeal = () => {
         {isDataLoaded ? (
           <table className="meal-table">
             <tbody>
-              {Object.keys(mealData).map((mealKey) => (
+              {Object.keys(mealData).map((mealKey, index) => (
                 <tr key={nanoid()}>
                   <td className="meal-time">{mealKey}</td>
                   <td className="meal-description">
-                    {/* <input
+                    <select
+                      className="meal-select"
                       name={mealKey}
                       defaultValue={mealData[mealKey]}
-                      onChange={handleInputChange}
-                    /> */}
-                    <select>{}</select>
+                    >
+                      <option value="">בחר ארוחה</option>
+                      <option value={mealOptions[index].mealDetails}>
+                        {mealOptions[index].mealDetails}
+                      </option>
+                    </select>
                   </td>
                 </tr>
               ))}
