@@ -15,17 +15,21 @@ namespace Co_P_WebAPI.Controllers
 
         [HttpGet]
         [Route("getdutyList/{kinderNumber}")]
-        public async Task<ActionResult<IEnumerable<Duty>>> GetDutyList(int kinderNumber)
+        public async Task<ActionResult> GetDutyList(int kinderNumber)
         {
             try
             {
-                var dutyList = await db.Duties.Where(d => d.KindergartenNumber == kinderNumber).Select(dl=> new()
-                {
-                    child1id = dl.Child1,
-                    child1Name = dl.Child1Navigation.ChildFirstName + dl.Child1Navigation.ChildSurname,
-                    child2id = dl.Child2,
-                    child2Name = dl.Child2Navigation.ChildFirstName + dl.Child2Navigation.ChildSurname
-                }).ToListAsync();
+                var dutyList = await db.Duties
+                    .Where(d => d.KindergartenNumber == kinderNumber)
+                    .Select(dl => new
+                    {
+                        Child1Id = dl.Child1,
+                        Child1Name = dl.Child1Navigation.ChildFirstName + " " + dl.Child1Navigation.ChildSurname,
+                        Child2Id = dl.Child2,
+                        Child2Name = dl.Child2Navigation.ChildFirstName + " " + dl.Child2Navigation.ChildSurname
+                    })
+                    .ToListAsync();
+
                 return Ok(dutyList);
             }
             catch (Exception ex)
