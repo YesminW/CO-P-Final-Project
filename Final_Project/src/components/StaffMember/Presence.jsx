@@ -12,7 +12,8 @@ import EfooterS from "../../Elements/EfooterS";
 
 import "../../assets/StyleSheets/Presence.css";
 import {
-  getAllChild,
+  getChildByKindergarten,
+  getChildPhoto,
   getDailyAttendance,
   updateChildAttendence,
 } from "../../utils/apiCalls";
@@ -29,9 +30,15 @@ export default function Presence() {
     const fetchData = async () => {
       try {
         const [children, attendance] = await Promise.all([
-          getAllChild(),
+          getChildByKindergarten(kindergartenNumber),
           getDailyAttendance(formatForCSharp(new Date())),
         ]);
+
+        console.log(children);
+        for (const child of children) {
+          const photo = await getChildPhoto(child.childId);
+          child.img = URL.createObjectURL(photo);
+        }
 
         setChildrenData(children);
         setAttendance(attendance);
@@ -117,8 +124,9 @@ export default function Presence() {
                   }`}
                   onClick={() => handleStudentClick(student.childId)}
                 >
-                  <Avatar
-                    src={student.imgSrc || "./Images/default.png"}
+                  <img
+                    src={student.img}
+                    onError={(e) => (e.target.srcset = "./Images/default.png")}
                     alt={`${student.childFirstName} ${student.childSurname}`}
                     className="student-avatar"
                   />
