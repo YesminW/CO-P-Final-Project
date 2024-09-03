@@ -7,12 +7,7 @@ import Elogo1 from "../../Elements/Elogo1";
 import EfooterS from "../../Elements/EfooterS";
 import "../../assets/StyleSheets/MainStaff.css";
 import { CircularProgress } from "@mui/material";
-import {
-  getTodayBirthday,
-  getTodayDuty,
-  getUserById,
-} from "../../utils/apiCalls";
-import { formatForCSharp } from "../../utils/functions";
+import { getUserById } from "../../utils/apiCalls";
 
 export default function MainStaffMember() {
   const getGreeting = () => {
@@ -47,24 +42,8 @@ export default function MainStaffMember() {
         setLoading(false);
       }
     }
-    async function getTodayDutyData() {
-      const todayDuty = await getTodayDuty(
-        localStorage.getItem("kindergartenNumber"),
-        formatForCSharp(today)
-      );
-    }
-
-    async function getTodayBirthdayData() {
-      const todayBirthday = await getTodayBirthday(
-        localStorage.getItem("kindergartenNumber"),
-        formatForCSharp(today)
-      );
-      setCelebratingChildren(todayBirthday.map((t) => t.childFirstName));
-    }
 
     getUserData();
-    getTodayBirthdayData();
-    getTodayDutyData();
     setCurrentDay(format(today, "EEEE", { locale: he }));
     setCurrentDate(format(today, "dd/MM/yyyy"));
   }, []);
@@ -93,9 +72,6 @@ export default function MainStaffMember() {
         </Link>
         <Link to="/BirthDayChild" className="grid-item-full">
           מי חוגג היום
-          {celebratingChildren.map((c) => (
-            <span key={c}>{c}</span>
-          ))}
         </Link>
         <Link to="/EditProfileS" className="grid-item-full">
           עריכת פרטים אישיים

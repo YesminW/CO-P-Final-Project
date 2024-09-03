@@ -82,7 +82,7 @@ export default function ChatsList() {
                     className="chat-img"
                     src={chat.childImage}
                     alt={chat.childFirstName}
-                    onError={(e) => (e.target.srcset = "./Image/default.png")}
+                    onError={(e) => (e.target.srcset = "./Images/default.png")}
                   />
                   <h3 className="chat-text-container">
                     {chat.childId

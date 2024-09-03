@@ -31,7 +31,6 @@ import EditProfileP from "./components/Parents/EditProfileP";
 import WatchMealP from "./components/Parents/WatchMealP";
 import EndOfTheDayMenuP from "./components/Parents/EndOfTheDayMenuP";
 import EndOfTheDayP from "./components/Parents/EndOfTheDayP";
-import WatchTeamStaff from "./components/Parents/WatchTeamStaff";
 import MealsP from "./components/Parents/MealsP";
 
 import "./assets/StyleSheets/Register.css";
@@ -86,7 +85,6 @@ function App() {
       <Route path="/WatchMealP" element={<WatchMealP />} />
       <Route path="/EndOfTheDayMenuP" element={<EndOfTheDayMenuP />} />
       <Route path="/EndOfTheDayP" element={<EndOfTheDayP />} />
-      <Route path="/WatchTeamStaff" element={<WatchTeamStaff />} />
       <Route path="/ChildPhoto" element={<ChildPhoto />} />
     </Routes>
   );

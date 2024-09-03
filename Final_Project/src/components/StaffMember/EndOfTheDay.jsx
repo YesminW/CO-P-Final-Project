@@ -53,7 +53,7 @@ export default function EndOfTheDay() {
           <button
             type="button"
             className="datesbtn flex-row center"
-            onClick={() => changeDate(1)}
+            onClick={() => changeDate(-1)}
           >
             {"<"}
           </button>
@@ -61,7 +61,7 @@ export default function EndOfTheDay() {
           <button
             type="button"
             className="datesbtn flex-row center"
-            onClick={() => changeDate(-1)}
+            onClick={() => changeDate(1)}
           >
             {">"}
           </button>

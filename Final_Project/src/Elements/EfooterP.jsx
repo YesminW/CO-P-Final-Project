@@ -13,7 +13,7 @@ const EfooterP = (
     <Link style={{ width: "10%" }} to="/MainParent">
       <img src={logo} alt="My Logo" className="logofooter" />
     </Link>
-    <Link to="/WatchTeamStaff">
+    <Link to="/TeamStaff">
       <IconButton>
         <People sx={{ fontSize: 30 }} className="footer-icon" />
       </IconButton>
