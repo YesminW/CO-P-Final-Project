@@ -19,10 +19,11 @@ export default function ChildDuty() {
           const date = new Date(duty.dutyDate);
           const url1 = URL.createObjectURL(image1);
           const url2 = URL.createObjectURL(image2);
+
           dutiesToSave.push({
             ...d,
-            child1Name: "Yoshi",
-            child2Name: "Yoshi2",
+            child1Name: duty.child1Name,
+            child2Name: duty.child2Name,
             url1,
             url2,
             dutyDate: date,
