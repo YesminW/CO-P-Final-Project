@@ -90,7 +90,6 @@ export default function MainStaffMember() {
 
     async function geyTodayPrecence() {
       const CAttencense = await countAttendance();
-      console.log(CAttencense);
       setCount(CAttencense);
     }
 

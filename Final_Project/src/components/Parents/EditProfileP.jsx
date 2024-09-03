@@ -1,10 +1,11 @@
-import React, { useEffect, useState } from "react";
+import React, { useState } from "react";
 import { useLocation, useNavigate } from "react-router-dom";
-import { Button, CircularProgress, TextField } from "@mui/material";
+import { Button, CircularProgress } from "@mui/material";
 import EfooterP from "../../Elements/EfooterP";
 import CloudUploadIcon from "@mui/icons-material/CloudUpload";
 import { updateUserById, uploadUserPhoto } from "../../utils/apiCalls";
 import { BsEye, BsEyeSlash } from "react-icons/bs";
+import "../../assets/StyleSheets/RegisterStaff.css";
 
 export default function EditProfileP() {
   const navigate = useNavigate();
@@ -56,7 +57,7 @@ export default function EditProfileP() {
   return (
     <>
       <form onSubmit={handleSubmit} className="scroll">
-        <div className="privatediv">
+        <div className="profileP">
           <h2 className="h2private">פרטים אישיים {details.userPrivetName}</h2>
         </div>
         <input

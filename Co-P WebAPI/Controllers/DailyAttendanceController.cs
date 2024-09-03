@@ -24,7 +24,7 @@ namespace Co_P_WebAPI.Controllers
         {
             var kids = db.Children.Count();
             var Attendance = db.DailyAttendances.Where(x => x.Date == DateTime.Today && x.AttendanceStatus == "1").Count();
-            return $"{Attendance} / {kids}";
+            return $"{kids} / {Attendance}";
         }
 
 
