@@ -499,11 +499,12 @@ export async function createMeal(
   kindergartenNumber,
   date,
   mealName,
-  mealDetail
+  mealDetail,
+  mealNumber
 ) {
   try {
     const response = await fetch(
-      `${SERVER_URL}/Editbydateandkindergarten/${kindergartenNumber}/${date}/${mealName}/${mealDetail}`,
+      `${SERVER_URL}/Editbydateandkindergarten/${kindergartenNumber}/${date}/${mealName}/${mealDetail}/${mealNumber}`,
       {
         method: "PUT",
         headers: new Headers({
