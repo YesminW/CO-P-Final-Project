@@ -47,7 +47,7 @@ namespace Co_P_WebAPI.Controllers
                     })
                     .ToListAsync();
 
-                return Ok(dutyChildren);
+                return Ok(dutyChildren[0]);
             }
             catch (Exception ex)
             {

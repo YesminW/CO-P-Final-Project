@@ -33,6 +33,7 @@ export default function MainStaffMember() {
   const [currentDay, setCurrentDay] = useState("");
   const [loading, setLoading] = useState(true);
   const [celebratingChildren, setCelebratingChildren] = useState([]);
+  const [dutyChildren, setDutyChildren] = useState({});
 
   useEffect(() => {
     const today = new Date();
@@ -53,6 +54,17 @@ export default function MainStaffMember() {
         localStorage.getItem("kindergartenNumber"),
         formatForCSharp(today)
       );
+      const image1 = await getChildPhoto(todayDuty.childId1);
+      const image2 = await getChildPhoto(todayDuty.childId2);
+      const url1 = URL.createObjectURL(image1);
+      const url2 = URL.createObjectURL(image2);
+
+      setDutyChildren({
+        child1Name: todayDuty.child1Name,
+        child2Name: todayDuty.child2Name,
+        img1: url1,
+        img2: url2,
+      });
     }
 
     async function getTodayBirthdayData() {
@@ -60,7 +72,6 @@ export default function MainStaffMember() {
         localStorage.getItem("kindergartenNumber"),
         formatForCSharp(today)
       );
-      console.log(todayBirthday);
       const birthday = [];
       for (const b of todayBirthday) {
         const image = await getChildPhoto(b.childId);
@@ -103,6 +114,24 @@ export default function MainStaffMember() {
       <div className="flex-column">
         <Link to="/ChildDuty" className="grid-item-full">
           תורנים להיום
+          <div className="flex-row gap-20">
+            <div className="flex-column">
+              <img
+                className="photoBirthMain"
+                src={dutyChildren.img1}
+                onError={(e) => (e.target.srcset = "./Images/default.png")}
+              />
+              <span className="spanMain">{dutyChildren.child1Name}</span>
+            </div>
+            <div className="flex-column">
+              <img
+                className="photoBirthMain"
+                src={dutyChildren.img2}
+                onError={(e) => (e.target.srcset = "./Images/default.png")}
+              />
+              <span className="spanMain">{dutyChildren.child2Name}</span>
+            </div>
+          </div>
         </Link>
         <Link to="/BirthDayChild" className="grid-item-full">
           מי חוגג היום
