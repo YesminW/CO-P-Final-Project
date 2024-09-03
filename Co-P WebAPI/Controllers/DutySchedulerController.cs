@@ -5,28 +5,23 @@ using System.Threading.Tasks;
 using Microsoft.EntityFrameworkCore;
 using CO_P_library.Models;
 using Microsoft.AspNetCore.Mvc;
-using CO_P_library.Services;
-using System;
-using System.Threading.Tasks;
 using Co_P_WebAPI.DTO;
-using System.Linq;
-
 
 namespace Co_P_WebAPI.Controllers
 {
     public class DutySchedulerController : Controller
     {
-        CoPFinalProjectContext db = new CoPFinalProjectContext();
+        private readonly CoPFinalProjectContext db = new CoPFinalProjectContext();
 
         [HttpGet]
         [Route("getdutyList/{kinderNumber}")]
-
         public async Task<ActionResult<IEnumerable<Duty>>> GetDutyList(int kinderNumber)
         {
             try
             {
-
-                var dutyList = await db.Duties.Where(d => d.KindergartenNumber == kinderNumber).ToListAsync();
+                var dutyList = await db.Duties
+                    .Where(d => d.KindergartenNumber == kinderNumber)
+                    .ToListAsync();
                 return Ok(dutyList);
             }
             catch (Exception ex)
@@ -37,16 +32,32 @@ namespace Co_P_WebAPI.Controllers
 
         [HttpGet]
         [Route("Whosondutytoday/{kindergartenNumber}/{today}")]
-        public async Task<ActionResult<IEnumerable<Duty>>> Whosondutytoday(int kindergartenNumber, DateTime today)
+        public async Task<ActionResult<IEnumerable<DutyChildrenDTO>>> Whosondutytoday(int kindergartenNumber, DateTime today)
         {
-            var dutyChildren = await db.Duties.Where(d => d.KindergartenNumber == kindergartenNumber && d.DutyDate == today).ToListAsync();
-            return Ok(dutyChildren);
+            try
+            {
+                var dutyChildren = await db.Duties
+                    .Where(d => d.KindergartenNumber == kindergartenNumber && d.DutyDate == today)
+                    .Select(dd => new DutyChildrenDTO
+                    {
+                        ChildId1 = dd.Child1,
+                        Child1Name = dd.Child1Navigation.ChildFirstName + " " + dd.Child1Navigation.ChildSurname,
+                        ChildId2 = dd.Child2,
+                        Child2Name = dd.Child2Navigation.ChildFirstName + " " + dd.Child2Navigation.ChildSurname
+                    })
+                    .ToListAsync();
 
+                return Ok(dutyChildren);
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(500, $"Internal server error: {ex.Message}");
+            }
         }
 
         [HttpGet]
         [Route("allDuties")]
-        public async Task<ActionResult<IEnumerable<DutyChildInfoDTO>>> GetAllDuties()
+        public async Task<ActionResult<IEnumerable<DutyChildrenDTO>>> GetAllDuties()
         {
             try
             {
@@ -55,12 +66,13 @@ namespace Co_P_WebAPI.Controllers
                     .Include(d => d.Child2Navigation)
                     .ToListAsync();
 
-                var result = duties.Select(d => new DutyChildInfoDTO
+                var result = duties.Select(d => new DutyChildrenDTO
                 {
-                    Date = d.DutyDate,
+                    ChildId1 = d.Child1,
                     Child1Name = d.Child1Navigation.ChildFirstName + " " + d.Child1Navigation.ChildSurname,
+                    ChildId2 = d.Child2,
                     Child2Name = d.Child2Navigation.ChildFirstName + " " + d.Child2Navigation.ChildSurname
-                });
+                }).ToList();
 
                 return Ok(result);
             }
@@ -69,9 +81,10 @@ namespace Co_P_WebAPI.Controllers
                 return StatusCode(500, $"Internal server error: {ex.Message}");
             }
         }
+
         [HttpGet]
         [Route("dutiesByMonth/{year}/{month}")]
-        public async Task<ActionResult<IEnumerable<DutyChildInfoDTO>>> GetDutiesByMonth(int year, int month)
+        public async Task<ActionResult<IEnumerable<DutyChildrenDTO>>> GetDutiesByMonth(int year, int month)
         {
             try
             {
@@ -81,12 +94,13 @@ namespace Co_P_WebAPI.Controllers
                     .Include(d => d.Child2Navigation)
                     .ToListAsync();
 
-                var result = duties.Select(d => new DutyChildInfoDTO
+                var result = duties.Select(d => new DutyChildrenDTO
                 {
-                    Date = d.DutyDate,
+                    ChildId1 = d.Child1,
                     Child1Name = d.Child1Navigation.ChildFirstName + " " + d.Child1Navigation.ChildSurname,
+                    ChildId2 = d.Child2,
                     Child2Name = d.Child2Navigation.ChildFirstName + " " + d.Child2Navigation.ChildSurname
-                });
+                }).ToList();
 
                 return Ok(result);
             }
@@ -96,10 +110,7 @@ namespace Co_P_WebAPI.Controllers
             }
         }
 
-
-        [HttpPost]
-        [Route("manual/{Schedulerdate}/{kindergartenNumber}")]
-       
+        [HttpPost("manual/{Schedulerdate}/{kindergartenNumber}")]
         public async Task<IActionResult> RunManualScheduler(DateTime Schedulerdate, int kindergartenNumber)
         {
             try
@@ -107,49 +118,63 @@ namespace Co_P_WebAPI.Controllers
                 int year = Schedulerdate.Year;
                 int month = Schedulerdate.Month;
 
-                var lastDuty = await db.Duties
-                    .Where(d => d.DutyDate.Year == year && d.DutyDate.Month == month && d.KindergartenNumber == kindergartenNumber)
-                    .OrderByDescending(d => d.DutyDate)
-                    .FirstOrDefaultAsync();
-
-                var startDate = lastDuty?.DutyDate.AddDays(1) ?? new DateTime(year, month, 1);
-
-                if (startDate < DateTime.Now)
+                using (var context = new CoPFinalProjectContext())
                 {
-                    startDate = DateTime.Now;
-                }
-
-                var remainingDays = Enumerable.Range(startDate.Day, DateTime.DaysInMonth(year, month) - startDate.Day + 1)
-                                              .Select(day => new DateTime(year, month, day)).ToList();
-
-                var children = await db.Children.Where(c => c.kindergartenNumber == kindergartenNumber).ToListAsync();
-
-                List<(DateTime, Child, Child)> dutyPairs = GenerateDutyPairsForRemainingDays(children, remainingDays);
-
-                foreach (var (dutyDate, child1, child2) in dutyPairs)
-                {
-                    var existingDuty = await db.Duties
+                    var lastDuty = await context.Duties
+                        .Where(d => d.KindergartenNumber == kindergartenNumber)
+                        .OrderByDescending(d => d.DutyDate)
                         .AsNoTracking()
-                        .FirstOrDefaultAsync(d => d.DutyDate == dutyDate && d.KindergartenNumber == kindergartenNumber);
+                        .FirstOrDefaultAsync();
 
-                    if (existingDuty != null)
+                    var startDate = lastDuty?.DutyDate.AddDays(1) ?? new DateTime(year, month, 1);
+
+                    if (startDate < DateTime.Now)
                     {
-                        db.Entry(existingDuty).State = EntityState.Detached;
+                        startDate = DateTime.Now;
                     }
 
-                    var duty = new Duty
+                    var remainingDays = Enumerable.Range(startDate.Day, DateTime.DaysInMonth(year, month) - startDate.Day + 1)
+                                                  .Select(day => new DateTime(year, month, day)).ToList();
+
+                    var children = await context.Children
+                        .Where(c => c.kindergartenNumber == kindergartenNumber)
+                        .AsNoTracking()
+                        .ToListAsync();
+
+                    if (children.Count < 2)
                     {
-                        DutyDate = dutyDate,
-                        Child1 = child1.ChildId,
-                        Child2 = child2.ChildId,
-                        CurrentAcademicYear = child1.CurrentAcademicYear,
-                        KindergartenNumber = kindergartenNumber
-                    };
+                        return BadRequest("Not enough children to create duty pairs.");
+                    }
 
-                    db.Duties.Add(duty);
+                    int childCount = children.Count;
+                    for (int i = 0; i < remainingDays.Count; i++)
+                    {
+                        // בכל יום, נבחר זוג ילדים מהגן לפי מחזור (עם חישוב מודולרי)
+                        var child1 = children[i % childCount];
+                        var child2 = children[(i + 1) % childCount];
+
+                        using (var insertContext = new CoPFinalProjectContext())
+                        {
+                            var existingDuty = await insertContext.Duties
+                                .FirstOrDefaultAsync(d => d.DutyDate == remainingDays[i] && d.KindergartenNumber == kindergartenNumber);
+
+                            if (existingDuty == null)
+                            {
+                                var duty = new Duty
+                                {
+                                    DutyDate = remainingDays[i],
+                                    Child1 = child1.ChildId,
+                                    Child2 = child2.ChildId,
+                                    CurrentAcademicYear = child1.CurrentAcademicYear,
+                                    KindergartenNumber = kindergartenNumber
+                                };
+
+                                insertContext.Duties.Add(duty);
+                                await insertContext.SaveChangesAsync();
+                            }
+                        }
+                    }
                 }
-
-                await db.SaveChangesAsync();
 
                 return Ok("Scheduler ran successfully.");
             }
@@ -158,8 +183,6 @@ namespace Co_P_WebAPI.Controllers
                 return StatusCode(500, $"Internal server error: {ex.Message}");
             }
         }
-
-
 
         private List<(DateTime, Child, Child)> GenerateDutyPairsForRemainingDays(List<Child> children, List<DateTime> remainingDays)
         {
@@ -207,9 +230,4 @@ namespace Co_P_WebAPI.Controllers
         public int Year { get; set; }
         public int Month { get; set; }
     }
-
-
 }
-
-
-
