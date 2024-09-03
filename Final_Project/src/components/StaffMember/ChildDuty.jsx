@@ -1,7 +1,8 @@
 import { useEffect, useState } from "react";
 import EfooterS from "../../Elements/EfooterS";
-import { getAllChildDuty } from "../../utils/apiCalls";
+import { getAllChildDuty, getChildPhoto } from "../../utils/apiCalls";
 import { nanoid } from "nanoid";
+import "../../assets/StyleSheets/childDuty.css";
 
 export default function ChildDuty() {
   const [duties, setDuties] = useState([]);
@@ -11,7 +12,25 @@ export default function ChildDuty() {
     async function getChildDuties() {
       try {
         const d = await getAllChildDuty(kindergartenNumber);
-        setDuties(d);
+        const dutiesToSave = [];
+        for (const duty of d) {
+          const image1 = await getChildPhoto(duty.child1);
+          const image2 = await getChildPhoto(duty.child2);
+          const date = new Date(duty.dutyDate);
+          const url1 = URL.createObjectURL(image1);
+          const url2 = URL.createObjectURL(image2);
+          dutiesToSave.push({
+            ...d,
+            child1Name: "Yoshi",
+            child2Name: "Yoshi2",
+            url1,
+            url2,
+            dutyDate: date,
+          });
+        }
+        console.log(dutiesToSave);
+
+        setDuties(dutiesToSave);
       } catch (error) {
         console.error(error);
       }
@@ -37,11 +56,11 @@ export default function ChildDuty() {
 }
 
 export function GridItem({ duty }) {
-  const date = new Date(duty.date);
-
   return (
     <div className="flex-column space-evenly duty-grid-item radius-25">
-      <h2 className="white">{`${date.getDate()}-${date.getMonth() + 1}`}</h2>
+      <h2 className="h2duty">{`${duty.dutyDate.getDate()}-${
+        duty.dutyDate.getMonth() + 1
+      }`}</h2>
       <div className="flex-row space-evenly">
         <div className="flex-column">
           <img

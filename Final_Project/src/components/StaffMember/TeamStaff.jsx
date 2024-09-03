@@ -9,8 +9,10 @@ import "../../assets/StyleSheets/TeamStaff.css";
 import { nanoid } from "nanoid";
 import { formatDate } from "../../utils/functions";
 import EfooterP from "../../Elements/EfooterP";
+import { CircularProgress } from "@mui/material";
 
 export default function TeamStaff() {
+  const [loading, setLoading] = useState(true);
   const [team, setTeam] = useState([]);
   const kindergartenNumber = localStorage.getItem("kindergartenNumber");
   useEffect(() => {
@@ -53,6 +55,8 @@ export default function TeamStaff() {
         setTeam(finalTeam);
       } catch (error) {
         console.error(error);
+      } finally {
+        setLoading(false);
       }
     }
 
@@ -68,11 +72,15 @@ export default function TeamStaff() {
             {new Date().toLocaleString("he-il", { month: "long" })}
           </h1>
         </div>
-        <div className="one-column-grid scroll">
-          {team.map((t) => (
-            <GridItem key={nanoid()} team={t} />
-          ))}
-        </div>
+        {loading ? (
+          <CircularProgress />
+        ) : (
+          <div className="one-column-grid scroll">
+            {team.map((t) => (
+              <GridItem key={nanoid()} team={t} />
+            ))}
+          </div>
+        )}
       </div>
       {localStorage.getItem("role_code") === "111" ? EfooterS : EfooterP}
     </div>

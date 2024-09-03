@@ -40,7 +40,6 @@ export default function EndOfTheDayMenu() {
       <label htmlFor="upload-button" className="menulink">
         העלאת תמונות
       </label>
-      <Link className="menulink">התראות להורים</Link>
       {EfooterS}
     </div>
   );

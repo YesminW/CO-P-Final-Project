@@ -12,7 +12,11 @@ import {
 } from "firebase/firestore";
 import { CircularProgress } from "@mui/material";
 import { db } from "../../utils/firebase";
-import { getChildByParent, getChildPhoto } from "../../utils/apiCalls";
+import {
+  getChildByParent,
+  getChildPhoto,
+  getUserimage,
+} from "../../utils/apiCalls";
 
 export default function Chat() {
   const { id } = useParams();
@@ -57,10 +61,10 @@ export default function Chat() {
       try {
         const chat = await getDoc(doc(db, "chats", id));
         const child = await getChildByParent(chat.get("participants")[0]);
-        // const childImage = await getChildPhoto(child.childId);
-        // const teacherImage = await getChildPhoto(chat.admin);
-        const childImage = "./Images/default.png";
-        const teacherImage = "./Images/logo.png";
+        const childImage = await getChildPhoto(child.childId);
+        const teacherImage = await getUserimage(chat.admin);
+        // const childImage = "./Images/default.png";
+        // const teacherImage = "./Images/logo.png";
 
         setImages({ child: childImage, teacher: teacherImage });
 
@@ -114,6 +118,7 @@ export default function Chat() {
               ? images.child
               : images.teacher
           }
+          onError={(e) => (e.target.srcset = "./Images/default.png")}
         />
         <h1 className="chat-message">
           {chat.participants.length > 2
@@ -136,7 +141,12 @@ export default function Chat() {
                   "reverse"
                 }`}
               >
-                <img className="chat-img" src={message.url} alt="user" />
+                <img
+                  className="chat-img"
+                  src={message.url}
+                  alt="user"
+                  onError={(e) => (e.target.srcset = "./Images/default.png")}
+                />
                 <div className="flex-column width-full">
                   <span className="chat-text-container chat-message-text">
                     {message.text}
