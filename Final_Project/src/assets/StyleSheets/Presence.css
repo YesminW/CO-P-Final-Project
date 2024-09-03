@@ -107,4 +107,5 @@ input::placeholder {
   color: #07676d;
   display: flex;
   justify-content: center;
+  align-items: center;
 }
