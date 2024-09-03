@@ -27,6 +27,11 @@ export default function KindergartenManagement() {
 
   return (
     <form>
+      <div className="linkbackdeyails">
+        <Link className="linkback" to="/AddSAndP">
+          {"<"}
+        </Link>
+      </div>
       <h2 className="registerh2">ניהול גנים</h2>
       {kindergartens.map((kindergarten, index) => (
         <Link

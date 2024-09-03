@@ -176,6 +176,11 @@ export default function KindergartenDetails() {
 
   return (
     <form>
+      <div className="linkbackdeyails">
+        <Link className="linkback" to="/KindergartenManagement">
+          {"<"}
+        </Link>
+      </div>
       <h2 className="registerh2">ניהול גנים</h2>
       <div className="registerdiv">
         <h2 style={{ textAlign: "center", margin: 0 }}>
@@ -249,7 +254,7 @@ export default function KindergartenDetails() {
           <Button
             variant="contained"
             component="span"
-            style={{ marginBottom: 20 }}
+            style={{ marginBottom: 10 }}
             sx={{
               fontFamily: "Karantina",
               fontSize: "20px",
@@ -285,7 +290,6 @@ export default function KindergartenDetails() {
           <Button
             variant="contained"
             component="span"
-            style={{ marginBottom: 20 }}
             sx={{
               fontFamily: "Karantina",
               fontSize: "20px",
@@ -311,19 +315,18 @@ export default function KindergartenDetails() {
           )}
         </label>
       </FormControl>
-
-      <Link className="childlistbtn" to="/ChildList" state={kindergarten}>
-        רשימת ילדים
-      </Link>
-      <br />
-      <button
-        type="button"
-        className="childlistbtn"
-        onClick={assignStaffToDates}
-      >
-        שיבוץ גננות וסייעות לפי תאריכים
-      </button>
-
+      <div className="flex-row gap-20 center">
+        <Link className="childlistbtn" to="/ChildList" state={kindergarten}>
+          רשימת ילדים
+        </Link>
+        <button
+          type="button"
+          className="childlistbtn"
+          onClick={assignStaffToDates}
+        >
+          שיבוץ לפי תאריכים
+        </button>
+      </div>
       <Button
         variant="contained"
         style={{
@@ -346,7 +349,8 @@ export default function KindergartenDetails() {
           backgroundColor: "#E16162",
           fontFamily: "Karantina",
           color: "white",
-          marginTop: "20px",
+          marginTop: "10px",
+          marginBottom: "30px",
           width: "100%",
           height: "60px",
           fontSize: "30px",

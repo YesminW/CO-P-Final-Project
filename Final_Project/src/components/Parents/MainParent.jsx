@@ -50,6 +50,11 @@ export default function MainParent() {
     <CircularProgress />
   ) : (
     <div className="home-container flex-column center">
+      <div className="logOutdiv">
+        <Link className="logOut" to="/">
+          התנתק
+        </Link>
+      </div>
       {Elogo1}
       <br />
       <div className="info-card">

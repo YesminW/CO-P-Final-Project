@@ -1,7 +1,7 @@
 import { formatForCSharp } from "./functions";
 
-// const SERVER_URL = "https://proj.ruppin.ac.il/bgroup31/test2/tar1";
-const SERVER_URL = "http://localhost:5068";
+const SERVER_URL = "https://proj.ruppin.ac.il/bgroup31/test2/tar1";
+// const SERVER_URL = "http://localhost:5068";
 
 export async function login(data) {
   try {

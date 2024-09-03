@@ -3,6 +3,7 @@ import { Button, FormControl } from "@mui/material";
 import CloudUploadIcon from "@mui/icons-material/CloudUpload";
 import { Link, useNavigate } from "react-router-dom";
 import { uploadStaffExcel } from "../../utils/apiCalls";
+import "../../assets/StyleSheets/MainStaff.css";
 
 export default function AddsAndP() {
   const [errors, setErrors] = useState({});
@@ -38,56 +39,63 @@ export default function AddsAndP() {
   };
 
   return (
-    <form onSubmit={handleSubmit}>
-      <div className="registerdiv">
-        <h2 style={{ textAlign: "center", margin: 0 }}>הוספת משתמשים</h2>
-      </div>
+    <>
+      <form onSubmit={handleSubmit}>
+        <div className="registerdiv">
+          <h2 style={{ textAlign: "center", margin: 0 }}>הוספת משתמשים</h2>
+        </div>
 
-      <FormControl fullWidth margin="normal">
-        <label htmlFor="profileFile">
-          <input
-            accept=".xls,.xlsx"
-            type="file"
-            id="profileFile"
-            style={{ display: "none" }}
-            onChange={handleChange}
-          />
-          <Button
-            variant="contained"
-            component="span"
-            style={{ marginBottom: 20 }}
-            sx={{
-              fontFamily: "Karantina",
-              fontSize: "20px",
-              margin: "20px",
-              color: "white",
-              backgroundColor: "#076871",
-              "&:hover": {
-                backgroundColor: "#6196A6",
-              },
-            }}
-          >
-            העלאת קובץ צוות
-            <CloudUploadIcon style={{ margin: "10px" }} />
-          </Button>
-        </label>
-        {errors.file && <p>{errors.file}</p>}
-      </FormControl>
+        <FormControl fullWidth margin="normal">
+          <label htmlFor="profileFile">
+            <input
+              accept=".xls,.xlsx"
+              type="file"
+              id="profileFile"
+              style={{ display: "none" }}
+              onChange={handleChange}
+            />
+            <Button
+              variant="contained"
+              component="span"
+              style={{ marginBottom: 20 }}
+              sx={{
+                fontFamily: "Karantina",
+                fontSize: "20px",
+                margin: "20px",
+                color: "white",
+                backgroundColor: "#076871",
+                "&:hover": {
+                  backgroundColor: "#6196A6",
+                },
+              }}
+            >
+              העלאת קובץ צוות
+              <CloudUploadIcon style={{ margin: "10px" }} />
+            </Button>
+          </label>
+          {errors.file && <p>{errors.file}</p>}
+        </FormControl>
 
-      <div
-        style={{
-          display: "flex",
-          justifyContent: "space-between",
-          marginTop: 20,
-        }}
-      >
-        <button className="btn1" onClick={handleSubmit}>
-          המשך
-        </button>
-        <Link to="/KindergartenManagement">
-          <button className="btn1">דלג</button>
+        <div
+          style={{
+            display: "flex",
+            justifyContent: "space-between",
+            marginTop: 20,
+          }}
+        >
+          <button className="btn1" onClick={handleSubmit}>
+            המשך
+          </button>
+          <Link to="/KindergartenManagement">
+            <button className="btn1">דלג</button>
+          </Link>
+        </div>
+      </form>
+      <div className="logOutdivManag">
+        <Link className="logOutManag" to="/">
+          התנתק
         </Link>
       </div>
-    </form>
+    </>
   );
 }

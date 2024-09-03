@@ -105,6 +105,11 @@ export default function MainStaffMember() {
     <CircularProgress />
   ) : (
     <div className="home-container flex-column center">
+      <div className="logOutdiv">
+        <Link className="logOut" to="/">
+          התנתק
+        </Link>
+      </div>
       {Elogo1}
       <div className="info-card">
         <h2 className="h2main">

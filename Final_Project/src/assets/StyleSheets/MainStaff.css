@@ -77,3 +77,37 @@
 .spanMain {
   font-size: 18px;
 }
+
+.logOut {
+  background-color: rgba(7, 103, 109, 0.3);
+  border: none;
+  color: white;
+  font-size: 24px;
+  width: 60px;
+  height: 30px;
+  border-radius: 10px;
+  margin-right: 20px;
+}
+
+.logOutdiv {
+  display: flex;
+  align-items: start;
+  width: 100%;
+}
+
+.logOutManag {
+  background-color: rgba(7, 103, 109, 0.5);
+  border: none;
+  color: white;
+  font-size: 24px;
+  width: 60px;
+  height: 30px;
+  border-radius: 10px;
+  margin-right: 20px;
+}
+
+.logOutdivManag {
+  display: flex;
+  justify-content: center;
+  width: 100%;
+}
