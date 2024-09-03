@@ -397,10 +397,8 @@ export async function deleteKindergarten(kindergartenNumber) {
         }),
       }
     );
-    console.log(response);
 
     const resp = await response.json();
-    console.log(resp);
     return resp;
   } catch (error) {
     console.error(error);
@@ -429,7 +427,6 @@ export async function getPhotosByKindergarten(kindergartenNumber) {
     `${SERVER_URL}/GetPhotosByKindergarten/${kindergartenNumber}`
   );
   if (response.status === 404) return null;
-  console.log(response);
   const data = response.json();
   return data;
 }

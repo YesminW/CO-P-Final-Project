@@ -34,7 +34,6 @@ const WatchMeal = () => {
           kindergartenNumber
         );
         const options = await getMealList();
-        console.log(options);
         setMealOptions(options);
         const meals = { בוקר: "", עשר: "", צהריים: "", ארבע: "" };
         for (const meal of data) {
@@ -58,7 +57,6 @@ const WatchMeal = () => {
     try {
       const mealPromise = Object.keys(data).map((mealName) => {
         const mealDetails = data[mealName];
-        console.log(data);
 
         return createMeal(
           kindergartenNumber,

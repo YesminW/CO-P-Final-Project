@@ -34,7 +34,6 @@ export default function Presence() {
           getDailyAttendance(formatForCSharp(new Date())),
         ]);
 
-        console.log(children);
         for (const child of children) {
           const photo = await getChildPhoto(child.childId);
           child.img = URL.createObjectURL(photo);

@@ -69,7 +69,6 @@ export default function Chat() {
             await Promise.all(
               chat.data().messages?.map(async (mId) => {
                 const message = await getDoc(doc(db, "messages", mId));
-                console.log(message.get("sender"), chat.get("admin"));
                 return {
                   id: mId,
                   ...message.data(),

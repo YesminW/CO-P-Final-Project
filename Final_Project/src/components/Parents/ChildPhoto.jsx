@@ -10,7 +10,6 @@ export default function ChildPhoto() {
   useEffect(() => {
     async function getImages() {
       const ImagesData = await getPhotosByKindergarten(kindergartenNumber);
-      console.log(ImagesData);
       setImages(ImagesData.map((image) => image.base64Image));
     }
     getImages();

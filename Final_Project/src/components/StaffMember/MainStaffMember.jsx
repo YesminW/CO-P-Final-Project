@@ -59,7 +59,6 @@ export default function MainStaffMember() {
         localStorage.getItem("kindergartenNumber"),
         formatForCSharp(today)
       );
-      console.log(todayBirthday);
       setCelebratingChildren(todayBirthday.map((t) => t.childFirstName));
     }
 

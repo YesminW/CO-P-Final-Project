@@ -42,10 +42,7 @@ export default function ChatsList() {
           const child = await getChildByParent(doc.get("participants")[0]);
           const photo = await getChildPhoto(doc.get("childId"));
 
-          const url = photo
-            ? URL.createObjectURL(photo)
-            : "./Image/default.png";
-
+          const url = URL.createObjectURL(photo);
           chatsToShow.push({
             id: doc.id,
             ...data,
@@ -85,6 +82,7 @@ export default function ChatsList() {
                     className="chat-img"
                     src={chat.childImage}
                     alt={chat.childFirstName}
+                    onError={(e) => (e.target.srcset = "./Image/default.png")}
                   />
                   <h3 className="chat-text-container">
                     {chat.childId

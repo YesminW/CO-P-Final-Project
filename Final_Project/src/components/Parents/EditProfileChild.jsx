@@ -47,17 +47,8 @@ export default function EditProfileChild() {
   return (
     <>
       <form>
-        <div
-          style={{
-            backgroundColor: "#cce7e8",
-            padding: 10,
-            borderRadius: 5,
-            marginBottom: 30,
-          }}
-        >
-          <h2 style={{ textAlign: "center", margin: 0 }}>
-            פרטים אישיים {details.childFirstName}
-          </h2>
+        <div className="privatediv">
+          <h2 className="h2private">פרטים אישיים {details.childFirstName}</h2>
         </div>
         <input
           name="childFirstName"
@@ -115,13 +106,7 @@ export default function EditProfileChild() {
             onChange={handleFileUpload}
           />
         </Button>
-        <Button
-          variant="contained"
-          onClick={() => navigate("/Allergies")}
-          className="btn"
-        >
-          אלרגיות
-        </Button>
+
         <Button type="submit" variant="contained" onClick={handleSubmit}>
           אישור
         </Button>

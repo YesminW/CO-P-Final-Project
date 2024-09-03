@@ -68,7 +68,6 @@
   background-color: #b9dcd199;
   padding: 20px;
   border-radius: 10px;
-  width: 100%;
   height: 520px;
   width: 348px;
   text-align: center;
@@ -83,7 +82,7 @@
 .meal-table td {
   background: none;
   padding: 20px;
-  font-size: 30px;
+  font-size: 20px;
   border: 2px solid #07676d;
   color: white;
 }

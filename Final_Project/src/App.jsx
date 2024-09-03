@@ -28,7 +28,6 @@ import MainParent from "./components/Parents/MainParent";
 import EditProfile from "./components/Parents/EditProfile";
 import EditProfileChild from "./components/Parents/EditProfileChild";
 import EditProfileP from "./components/Parents/EditProfileP";
-import Allergies from "./components/Parents/Allergies";
 import WatchMealP from "./components/Parents/WatchMealP";
 import EndOfTheDayMenuP from "./components/Parents/EndOfTheDayMenuP";
 import EndOfTheDayP from "./components/Parents/EndOfTheDayP";
@@ -39,8 +38,6 @@ import "./assets/StyleSheets/Register.css";
 import "./assets/StyleSheets/Main.css";
 import "./App.css";
 import WeekCalendar from "./components/WeekCalendar/WeekCalendar";
-import DayHoursList from "./components/DayHoursList/DayHoursList";
-import ActivitiesList from "./components/ActivitiesList/ActivitiesList";
 import CalendarStaff from "./components/CalendarStaff/CalendarStaff";
 import ChatsList from "./components/chat/ChatsList";
 import Chat from "./components/chat/Chat";
@@ -53,8 +50,6 @@ function App() {
       <Route path="/chat/:id" element={<Chat />} />
       <Route path="/ChatList" element={<ChatsList />} />
       <Route path="/WeekCalendar" element={<WeekCalendar />} />
-      <Route path="/WatchDayHourList" element={<DayHoursList />} />
-      <Route path="/ActivitiesList" element={<ActivitiesList />} />
       <Route path="/EndOfTheDayMenu" element={<EndOfTheDayMenu />} />
       <Route path="/EndOfTheDay" element={<EndOfTheDay />} />
 
@@ -86,7 +81,6 @@ function App() {
       <Route path="/EditProfile" element={<EditProfile />} />
       <Route path="/EditProfileChild" element={<EditProfileChild />} />
       <Route path="/EditProfileP" element={<EditProfileP />} />
-      <Route path="/Allergies" element={<Allergies />} />
       <Route path="/CalendarStaff" element={<CalendarStaff />} />
       <Route path="/MealsP" element={<MealsP />} />
       <Route path="/WatchMealP" element={<WatchMealP />} />

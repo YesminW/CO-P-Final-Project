@@ -20,7 +20,6 @@ export default function BirthDayChild() {
           const url = URL.createObjectURL(photo);
           birthday.img = url;
         }
-        console.log(birthdaysData);
 
         setBirthdays(birthdaysData);
       } catch (error) {
