@@ -546,7 +546,6 @@ export async function getMealList() {
 
 export async function AssignStaffDates(kindergartenNumber) {
   try {
-    console.log(kindergartenNumber);
     const response = await fetch(
       `${SERVER_URL}/AssignStaffToDates/${kindergartenNumber}/`,
       {

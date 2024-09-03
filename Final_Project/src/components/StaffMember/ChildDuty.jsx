@@ -28,8 +28,6 @@ export default function ChildDuty() {
             dutyDate: date,
           });
         }
-        console.log(dutiesToSave);
-
         setDuties(dutiesToSave);
       } catch (error) {
         console.error(error);
