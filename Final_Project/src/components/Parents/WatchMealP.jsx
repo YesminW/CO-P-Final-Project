@@ -25,7 +25,9 @@ const WatchMealP = () => {
         );
         const meals = { בוקר: "", עשר: "", צהריים: "", ארבע: "" };
         for (const meal of data) {
-          meals[meal.maelName] = meal.mealDetails;
+          if (meal.mealDetails !== null) {
+            meals[meal.maelName] = meal.mealDetails;
+          }
         }
         setMealData(meals);
         setIsDataLoaded(true);

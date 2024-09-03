@@ -3,10 +3,12 @@ import EfooterS from "../../Elements/EfooterS";
 import { getAllChildDuty, getChildPhoto } from "../../utils/apiCalls";
 import { nanoid } from "nanoid";
 import "../../assets/StyleSheets/childDuty.css";
+import { CircularProgress } from "@mui/material";
 
 export default function ChildDuty() {
   const [duties, setDuties] = useState([]);
   const kindergartenNumber = localStorage.getItem("kindergartenNumber");
+  const [loading, setLoading] = useState(true);
 
   useEffect(() => {
     async function getChildDuties() {
@@ -32,6 +34,8 @@ export default function ChildDuty() {
         setDuties(dutiesToSave);
       } catch (error) {
         console.error(error);
+      } finally {
+        setLoading(false);
       }
     }
     getChildDuties();
@@ -43,11 +47,15 @@ export default function ChildDuty() {
         <h1 className="white">
           {new Date().toLocaleString("he-il", { month: "long" })}
         </h1>
-        <div className="two-column-grid scroll">
-          {duties.map((duty) => (
-            <GridItem key={nanoid()} duty={duty} />
-          ))}
-        </div>
+        {loading ? (
+          <CircularProgress />
+        ) : (
+          <div className="two-column-grid scroll">
+            {duties.map((duty) => (
+              <GridItem key={nanoid()} duty={duty} />
+            ))}
+          </div>
+        )}
       </div>
       {EfooterS}
     </div>
