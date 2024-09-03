@@ -18,14 +18,15 @@ namespace Co_P_WebAPI.Controllers
             return attendace;
         }
 
-        //[HttpGet]
-        //[Route("CountAttendance")]
-        //public dynamic CountAttendance()
-        //{
-        //    var kids = db.Children.Count();
-        //    var Attendance = db.DailyAttendances.Where(x => x.Date == DateTime.Today && x.AttendanceStatus = 1).Count();
-        //    return ($"{Attendance} / {kids}");
-        //}
+        [HttpGet]
+        [Route("CountAttendance")]
+        public string CountAttendance()
+        {
+            var kids = db.Children.Count();
+            var Attendance = db.DailyAttendances.Where(x => x.Date == DateTime.Today && x.AttendanceStatus == "1").Count();
+            return $"{Attendance} / {kids}";
+        }
+
 
 
         [HttpPost]
