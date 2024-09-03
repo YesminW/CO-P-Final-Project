@@ -316,7 +316,11 @@ export default function KindergartenDetails() {
         רשימת ילדים
       </Link>
       <br />
-      <button className="childlistbtn" onClick={assignStaffToDates}>
+      <button
+        type="button"
+        className="childlistbtn"
+        onClick={assignStaffToDates}
+      >
         שיבוץ גננות וסייעות לפי תאריכים
       </button>
 

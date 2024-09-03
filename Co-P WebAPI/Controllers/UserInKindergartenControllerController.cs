@@ -68,7 +68,7 @@ namespace Co_P_WebAPI.Controllers
         [HttpPut]
         [Route("AssignStaffToDates/{kindergartenNumber}")]
 
-        public void AssignStaffToDates(int kindergartenNumber)
+        public string AssignStaffToDates(int kindergartenNumber)
         {
             // קבל את תאריך היום
             DateTime today = DateTime.Today;
@@ -108,6 +108,7 @@ namespace Co_P_WebAPI.Controllers
 
             // שמירת השינויים בבסיס הנתונים
             db.SaveChanges();
+            return "בוצע בהצלחה.";
 
         }
 
