@@ -45,7 +45,7 @@ namespace Co_P_WebAPI.Controllers
         [Route("GetAllTeacher")]
         public IActionResult GetAllTeacher()
         {
-            var usersWithCode111 = db.Users.Where(u => u.UserCode == 111 && u.KindergartenNumber == null).Select(u => new
+            var usersWithCode111 = db.Users.Where(u => u.UserCode == 111 && u.KindergartenNumber == 0).Select(u => new
               {
                  u.UserPrivetName,
                  u.UserSurname,
@@ -59,7 +59,7 @@ namespace Co_P_WebAPI.Controllers
         [Route("GetAllAssistants")]
         public IActionResult GetAllAssistants()
         {
-            var assistants = db.Users.Where(u => u.UserCode == 333 && u.KindergartenNumber == null).Select(u => new
+            var assistants = db.Users.Where(u => u.UserCode == 333 && u.KindergartenNumber == 0).Select(u => new
               {
                 u.UserPrivetName,
                 u.UserSurname,
