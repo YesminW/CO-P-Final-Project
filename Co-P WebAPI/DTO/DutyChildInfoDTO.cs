@@ -1,9 +1,10 @@
 ﻿namespace Co_P_WebAPI.DTO
 {
-    public class DutyChildInfoDTO
+    public class DutyChildrenDTO
     {
-        public DateTime Date { get; set; }
+        public string ChildId1 { get; set; }
         public string Child1Name { get; set; }
+        public string ChildId2 { get; set; }
         public string Child2Name { get; set; }
     }
 }
