@@ -1,7 +1,7 @@
 import { formatForCSharp } from "./functions";
 
-const SERVER_URL = "https://proj.ruppin.ac.il/bgroup31/test2/tar1";
-// const SERVER_URL = "http://localhost:5068";
+// const SERVER_URL = "https://proj.ruppin.ac.il/bgroup31/test2/tar1";
+const SERVER_URL = "http://localhost:5068";
 
 export async function login(data) {
   try {
@@ -545,8 +545,9 @@ export async function getMealList() {
 
 export async function AssignStaffDates(kindergartenNumber) {
   try {
+    console.log(kindergartenNumber);
     const response = await fetch(
-      `${SERVER_URL}/AssignStaffDates/${kindergartenNumber}/`,
+      `${SERVER_URL}/AssignStaffToDates/${kindergartenNumber}/`,
       {
         method: "PUT",
         headers: new Headers({
@@ -554,7 +555,7 @@ export async function AssignStaffDates(kindergartenNumber) {
         }),
       }
     );
-    const resp = await response.json();
+    const resp = await response.text();
     return resp;
   } catch (error) {
     console.error(error);
