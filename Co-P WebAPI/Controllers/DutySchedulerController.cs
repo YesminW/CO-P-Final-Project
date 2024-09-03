@@ -6,6 +6,7 @@ using Microsoft.EntityFrameworkCore;
 using CO_P_library.Models;
 using Microsoft.AspNetCore.Mvc;
 using Co_P_WebAPI.DTO;
+using Microsoft.VisualBasic;
 
 namespace Co_P_WebAPI.Controllers
 {
@@ -26,7 +27,8 @@ namespace Co_P_WebAPI.Controllers
                         Child1Id = dl.Child1,
                         Child1Name = dl.Child1Navigation.ChildFirstName + " " + dl.Child1Navigation.ChildSurname,
                         Child2Id = dl.Child2,
-                        Child2Name = dl.Child2Navigation.ChildFirstName + " " + dl.Child2Navigation.ChildSurname
+                        Child2Name = dl.Child2Navigation.ChildFirstName + " " + dl.Child2Navigation.ChildSurname,
+                        DutyDate = dl.DutyDate
                     })
                     .ToListAsync();
 
