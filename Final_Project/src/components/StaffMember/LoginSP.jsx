@@ -20,10 +20,10 @@ export default function LoginStaffMember() {
       localStorage.setItem("user_id", user_Data.userId);
       localStorage.setItem("role_code", user_Data.userCode);
       localStorage.setItem("kindergartenNumber", user_Data.kindergartenNumber);
-      if (user_Data.userCode == "222") {
-        navigate("/MainParent");
-      } else {
+      if (user_Data.userCode !== "222") {
         navigate("/MainStaffMember");
+      } else {
+        navigate("/MainParent");
       }
     } catch (error) {
       setErrors("המייל / הסיסמא שגויים");

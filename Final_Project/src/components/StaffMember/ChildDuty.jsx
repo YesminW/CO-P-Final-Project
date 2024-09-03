@@ -16,18 +16,17 @@ export default function ChildDuty() {
         const d = await getAllChildDuty(kindergartenNumber);
         const dutiesToSave = [];
         for (const duty of d) {
-          const image1 = await getChildPhoto(duty.child1);
-          const image2 = await getChildPhoto(duty.child2);
+          const image1 = await getChildPhoto(duty.child1Id);
+          const image2 = await getChildPhoto(duty.child2Id);
           const date = new Date(duty.dutyDate);
           const url1 = URL.createObjectURL(image1);
           const url2 = URL.createObjectURL(image2);
-
           dutiesToSave.push({
             ...d,
             child1Name: duty.child1Name,
             child2Name: duty.child2Name,
-            url1,
-            url2,
+            url1: url1,
+            url2: url2,
             dutyDate: date,
           });
         }
@@ -72,14 +71,22 @@ export function GridItem({ duty }) {
         <div className="flex-column">
           <img
             className="avatar"
-            src="https://media.istockphoto.com/id/1353379172/photo/cute-little-african-american-girl-looking-at-camera.jpg?s=612x612&w=0&k=20&c=RCOYytwS2nMGfEb80oyeiCcIiqMQu6wnTluAaxMBye4="
+            src={duty.url1}
+            onError={(e) =>
+              (e.target.srcset =
+                "https://images.pexels.com/photos/35537/child-children-girl-happy.jpg?cs=srgb&dl=pexels-bess-hamiti-83687-35537.jpg&fm=jpg")
+            }
           />
           <p className="white">{duty.child1Name}</p>
         </div>
         <div className="flex-column">
           <img
             className="avatar"
-            src="https://images.pexels.com/photos/35537/child-children-girl-happy.jpg?cs=srgb&dl=pexels-bess-hamiti-83687-35537.jpg&fm=jpg"
+            src={duty.url2}
+            onError={(e) =>
+              (e.target.srcset =
+                "https://images.pexels.com/photos/35537/child-children-girl-happy.jpg?cs=srgb&dl=pexels-bess-hamiti-83687-35537.jpg&fm=jpg")
+            }
           />
           <p className="white">{duty.child2Name}</p>
         </div>

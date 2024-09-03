@@ -36,7 +36,7 @@ namespace Co_P_WebAPI.Controllers
         {
             var celebratingChild = db.Children.Where(cc => cc.ChildBirthDate.Month == today.Month && cc.ChildBirthDate.Day == today.Day && cc.kindergartenNumber == kindergartenNumber).Select(x => new
             {
-                ChildFirstName = x.ChildFirstName + x.ChildSurname,
+                ChildFirstName = x.ChildFirstName + " " + x.ChildSurname,
                 ChildId = x.ChildId
 
             }).ToList();

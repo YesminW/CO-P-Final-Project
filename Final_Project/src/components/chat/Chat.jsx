@@ -61,12 +61,14 @@ export default function Chat() {
       try {
         const chat = await getDoc(doc(db, "chats", id));
         const child = await getChildByParent(chat.get("participants")[0]);
+
         const childImage = await getChildPhoto(child.childId);
         const teacherImage = await getUserimage(chat.admin);
-        // const childImage = "./Images/default.png";
-        // const teacherImage = "./Images/logo.png";
 
-        setImages({ child: childImage, teacher: teacherImage });
+        setImages({
+          child: URL.createObjectURL(childImage),
+          teacher: URL.createObjectURL(teacherImage),
+        });
 
         if (chat.data().messages?.length > 0) {
           setMessages(
