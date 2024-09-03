@@ -164,7 +164,9 @@ namespace Co_P_WebAPI.Controllers
                                 {
                                     DutyDate = remainingDays[i],
                                     Child1 = child1.ChildId,
+                                    Child1FirstName = child1.ChildFirstName + child1.ChildSurname,
                                     Child2 = child2.ChildId,
+                                    Child2FirstName = child2.ChildFirstName + child2.ChildSurname,
                                     CurrentAcademicYear = child1.CurrentAcademicYear,
                                     KindergartenNumber = kindergartenNumber
                                 };
