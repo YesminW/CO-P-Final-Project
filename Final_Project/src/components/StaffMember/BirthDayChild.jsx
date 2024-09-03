@@ -6,17 +6,23 @@ import { nanoid } from "nanoid";
 
 export default function BirthDayChild() {
   const [birthdays, setBirthdays] = useState([]);
-  const [photos, setPhotos] = useState([]);
 
   useEffect(() => {
     async function fetchData() {
       try {
         const birthdaysData = await fetchBirthdays();
-        setBirthdays(birthdaysData);
+
         const childIds = birthdaysData.map((birthday) => birthday.childId);
         const photoPromises = childIds.map((childId) => getChildPhoto(childId));
-        const photosData = await Promise.all(photoPromises);
-        setPhotos(photosData);
+
+        for (const birthday of birthdaysData) {
+          const photo = await getChildPhoto(birthday.childId);
+          const url = URL.createObjectURL(photo);
+          birthday.img = url;
+        }
+        console.log(birthdaysData);
+
+        setBirthdays(birthdaysData);
       } catch (error) {
         console.error("Error fetching birthdays or photos:", error);
       }
@@ -52,7 +58,11 @@ export function BirthdayRow({ child }) {
       <div className="flex-row gap-8 center">
         <img
           className="avatar"
-          src="https://images.pexels.com/photos/35537/child-children-girl-happy.jpg?cs=srgb&dl=pexels-bess-hamiti-83687-35537.jpg&fm=jpg"
+          src={child.img}
+          onError={(e) =>
+            (e.target.srcset =
+              "https://images.pexels.com/photos/35537/child-children-girl-happy.jpg?cs=srgb&dl=pexels-bess-hamiti-83687-35537.jpg&fm=jpg")
+          }
         />
         <h2>{child.fullName}</h2>
       </div>
