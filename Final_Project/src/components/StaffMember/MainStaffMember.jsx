@@ -31,6 +31,7 @@ export default function MainStaffMember() {
   const [currentDate, setCurrentDate] = useState("");
   const [currentDay, setCurrentDay] = useState("");
   const [loading, setLoading] = useState(true);
+  const [celebratingChildren, setCelebratingChildren] = useState([]);
 
   useEffect(() => {
     const today = new Date();
@@ -58,9 +59,10 @@ export default function MainStaffMember() {
         localStorage.getItem("kindergartenNumber"),
         formatForCSharp(today)
       );
+      console.log(todayBirthday);
+      setCelebratingChildren(todayBirthday.map((t) => t.childFirstName));
     }
 
-    
     getUserData();
     getTodayBirthdayData();
     getTodayDutyData();
@@ -92,6 +94,9 @@ export default function MainStaffMember() {
         </Link>
         <Link to="/BirthDayChild" className="grid-item-full">
           מי חוגג היום
+          {celebratingChildren.map((c) => (
+            <span key={c}>{c}</span>
+          ))}
         </Link>
         <Link to="/EditProfileS" className="grid-item-full">
           עריכת פרטים אישיים
