@@ -2,9 +2,9 @@ import { Button, TextField } from "@mui/material";
 import React, { useState } from "react";
 import { useLocation, useNavigate } from "react-router-dom";
 import EfooterS from "../../Elements/EfooterS";
-import "../../assets/StyleSheets/RegisterStaff.css";
 import { BsEye, BsEyeSlash } from "react-icons/bs";
 import { updateUserById } from "../../utils/apiCalls";
+import "../../assets/StyleSheets/RegisterStaff.css";
 
 export default function EditProfileS2() {
   const location = useLocation();
@@ -54,7 +54,7 @@ export default function EditProfileS2() {
           name="userGender"
           className="register-input"
           variant="outlined"
-          value={details.userGender}
+          defaultValue={details.userGender}
           inputprops={{ readOnly: true }}
         />
         <br />

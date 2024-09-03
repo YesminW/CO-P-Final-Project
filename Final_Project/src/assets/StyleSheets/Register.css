@@ -54,6 +54,7 @@ button[type="submit"]:hover,
 }
 
 .register-input {
+  width: 100%;
   background-color: #b9dcd1;
   border: none;
   outline: none;

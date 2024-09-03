@@ -54,16 +54,13 @@ export default function EditProfileS() {
     }
   };
 
-  const handleSubmit = () => {
-    if (file) {
-      try {
-        uploadUserPhoto({ userId: userData.userId, file });
-        navigate("/EditProfileS2", { state: userData });
-      } catch (error) {
-        console.error(error);
-      }
-    } else {
+  const handleSubmit = async (e) => {
+    try {
+      e.preventDefault();
+      if (file) await uploadUserPhoto({ userId: userData.userId, file });
       navigate("/EditProfileS2", { state: userData });
+    } catch (error) {
+      console.error(error);
     }
   };
 
