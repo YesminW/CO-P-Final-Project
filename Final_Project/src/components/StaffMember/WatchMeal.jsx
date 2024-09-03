@@ -35,6 +35,7 @@ const WatchMeal = () => {
         );
         const options = await getMealList();
         setMealOptions(options);
+
         const meals = { בוקר: "", עשר: "", צהריים: "", ארבע: "" };
         for (const meal of data) {
           meals[meal.maelName] = meal.mealDetails;
@@ -55,20 +56,30 @@ const WatchMeal = () => {
     const data = Object.fromEntries(new FormData(e.target));
 
     try {
-      const mealPromise = Object.keys(data).map((mealName) => {
+      const mealPromises = [];
+
+      for (const mealName of Object.keys(data)) {
         const mealDetails = data[mealName];
+        console.log(mealDetails);
+        const meal = mealOptions.find((m) => m.mealDetails === mealDetails);
+        if (!meal) continue;
 
-        return createMeal(
-          kindergartenNumber,
-          formatForCSharp(date),
-          mealName,
-          mealDetails
+        mealPromises.push(
+          createMeal(
+            kindergartenNumber,
+            formatForCSharp(date),
+            mealName,
+            mealDetails,
+            meal.mealNumber
+          )
         );
-      });
+      }
 
-      await Promise.all(mealPromise);
+      console.log(mealPromises);
 
-      navigate("/Meals");
+      await Promise.all(mealPromises);
+
+      // navigate("/Meals");
     } catch (error) {
       console.error("Error submitting meal data:", error);
     }

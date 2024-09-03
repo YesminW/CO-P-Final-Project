@@ -24,7 +24,8 @@ export default function EndOfTheDay() {
   }, [date]);
 
   async function sendSummary(e) {
-    e.preventDefualt();
+    e.preventDefault();
+
     const response = await createSummary(
       date.getFullYear(),
       kindergartenNumber,
