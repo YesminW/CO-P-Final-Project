@@ -8,6 +8,7 @@ import EfooterS from "../../Elements/EfooterS";
 import "../../assets/StyleSheets/MainStaff.css";
 import { CircularProgress } from "@mui/material";
 import {
+  countAttendance,
   getChildPhoto,
   getTodayBirthday,
   getTodayDuty,
@@ -34,6 +35,7 @@ export default function MainStaffMember() {
   const [loading, setLoading] = useState(true);
   const [celebratingChildren, setCelebratingChildren] = useState([]);
   const [dutyChildren, setDutyChildren] = useState({});
+  const [count, setCount] = useState("");
 
   useEffect(() => {
     const today = new Date();
@@ -86,6 +88,13 @@ export default function MainStaffMember() {
       setCelebratingChildren(birthday);
     }
 
+    async function geyTodayPrecence() {
+      const CAttencense = await countAttendance();
+      console.log(CAttencense);
+      setCount(CAttencense);
+    }
+
+    geyTodayPrecence();
     getUserData();
     getTodayBirthdayData();
     getTodayDutyData();
@@ -107,7 +116,8 @@ export default function MainStaffMember() {
         <Link to="/CalendarStaff" className="grid-item">
           {currentDay} <br /> {currentDate}
         </Link>
-        <Link to="/presence" className="grid-item h3main">
+        <Link to="/presence" className="grid-item h3main flex-column">
+          <span>{count}</span>
           נוכחים בגן
         </Link>
       </div>

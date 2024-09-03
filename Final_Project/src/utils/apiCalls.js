@@ -576,3 +576,14 @@ export async function GetStaffofKindergarten(kindergartenNumber, currentMonth) {
     throw new Error(error);
   }
 }
+
+export async function countAttendance() {
+  try {
+    const response = await fetch(`${SERVER_URL}/CountAttendance`);
+    const resp = await response.text();
+    return resp;
+  } catch (error) {
+    console.error(error);
+    throw new Error(error);
+  }
+}
