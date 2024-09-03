@@ -7,10 +7,6 @@ public partial class Duty
 {
     public DateTime DutyDate { get; set; }
 
-    public string Child1FirstName { get; set; } = null!;
-
-    public string Child2FirstName { get; set; } = null!;
-
     public string Child1 { get; set; } = null!;
 
     public string Child2 { get; set; } = null!;

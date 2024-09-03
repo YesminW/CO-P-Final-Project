@@ -19,9 +19,13 @@ namespace Co_P_WebAPI.Controllers
         {
             try
             {
-                var dutyList = await db.Duties
-                    .Where(d => d.KindergartenNumber == kinderNumber)
-                    .ToListAsync();
+                var dutyList = await db.Duties.Where(d => d.KindergartenNumber == kinderNumber).Select(dl=> new()
+                {
+                    child1id = dl.Child1,
+                    child1Name = dl.Child1Navigation.ChildFirstName + dl.Child1Navigation.ChildSurname,
+                    child2id = dl.Child2,
+                    child2Name = dl.Child2Navigation.ChildFirstName + dl.Child2Navigation.ChildSurname
+                }).ToListAsync();
                 return Ok(dutyList);
             }
             catch (Exception ex)
@@ -164,9 +168,7 @@ namespace Co_P_WebAPI.Controllers
                                 {
                                     DutyDate = remainingDays[i],
                                     Child1 = child1.ChildId,
-                                    Child1FirstName = child1.ChildFirstName + child1.ChildSurname,
                                     Child2 = child2.ChildId,
-                                    Child2FirstName = child2.ChildFirstName + child2.ChildSurname,
                                     CurrentAcademicYear = child1.CurrentAcademicYear,
                                     KindergartenNumber = kindergartenNumber
                                 };
