@@ -7,7 +7,12 @@ import Elogo1 from "../../Elements/Elogo1";
 import EfooterS from "../../Elements/EfooterS";
 import "../../assets/StyleSheets/MainStaff.css";
 import { CircularProgress } from "@mui/material";
-import { getTodayBirthday, getTodayDuty, getUserById } from "../../utils/apiCalls";
+import {
+  getChildPhoto,
+  getTodayBirthday,
+  getTodayDuty,
+  getUserById,
+} from "../../utils/apiCalls";
 import { formatForCSharp } from "../../utils/functions";
 
 export default function MainStaffMember() {
@@ -55,7 +60,19 @@ export default function MainStaffMember() {
         localStorage.getItem("kindergartenNumber"),
         formatForCSharp(today)
       );
-      setCelebratingChildren(todayBirthday.map((t) => t.childFirstName));
+      console.log(todayBirthday);
+      const birthday = [];
+      for (const b of todayBirthday) {
+        const image = await getChildPhoto(b.childId);
+        const url = URL.createObjectURL(image);
+
+        birthday.push({
+          childFirstName: b.childFirstName,
+          img: url,
+        });
+      }
+
+      setCelebratingChildren(birthday);
     }
 
     getUserData();
@@ -90,7 +107,14 @@ export default function MainStaffMember() {
         <Link to="/BirthDayChild" className="grid-item-full">
           מי חוגג היום
           {celebratingChildren.map((c) => (
-            <span key={c}>{c}</span>
+            <div className="flex-column" key={c.childFirstName}>
+              <img
+                className="photoBirthMain"
+                src={c.img}
+                onError={(e) => (e.target.srcset = "./Images/default.png")}
+              />
+              <span className="spanMain">{c.childFirstName}</span>
+            </div>
           ))}
         </Link>
         <Link to="/EditProfileS" className="grid-item-full">

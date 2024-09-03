@@ -512,7 +512,7 @@ export async function createMeal(
         }),
       }
     );
-    const resp = await response.json();
+    const resp = await response.text();
     return resp;
   } catch (error) {
     console.error(error);

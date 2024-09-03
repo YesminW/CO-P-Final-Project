@@ -65,3 +65,15 @@
   align-items: center;
   justify-content: center;
 }
+
+.photoBirthMain {
+  width: 48px;
+  aspect-ratio: 1;
+  border-radius: 50%;
+  object-fit: cover;
+  margin-top: 5px;
+}
+
+.spanMain {
+  font-size: 18px;
+}

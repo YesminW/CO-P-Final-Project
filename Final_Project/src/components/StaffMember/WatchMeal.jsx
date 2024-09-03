@@ -60,7 +60,7 @@ const WatchMeal = () => {
 
       for (const mealName of Object.keys(data)) {
         const mealDetails = data[mealName];
-        console.log(mealDetails);
+
         const meal = mealOptions.find((m) => m.mealDetails === mealDetails);
         if (!meal) continue;
 
@@ -75,11 +75,9 @@ const WatchMeal = () => {
         );
       }
 
-      console.log(mealPromises);
-
       await Promise.all(mealPromises);
 
-      // navigate("/Meals");
+      navigate("/Meals");
     } catch (error) {
       console.error("Error submitting meal data:", error);
     }
