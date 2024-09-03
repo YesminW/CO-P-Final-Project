@@ -84,7 +84,6 @@ namespace Co_P_WebAPI.Controllers
             return actualActivities;
         }
 
-
         [HttpPut]
         [Route("Editbydateandkindergarten/{kindergartenNumber}/{EditMealdate}/{mealName}/{mealDetail}/{mealNumber}")]
         public dynamic Editbydateandkindergarten(int kindergartenNumber, DateTime EditMealdate, string mealName, string mealDetail, int mealNumber)
@@ -97,7 +96,19 @@ namespace Co_P_WebAPI.Controllers
 
             if (activity != null)
             {
-                activity.MealNumberNavigation.MealDetails = mealDetail;
+                if (activity.MealNumberNavigation != null)
+                {
+                    activity.MealNumberNavigation.MealDetails = mealDetail;
+                }
+                else
+                {
+                    // במקרה ש-MealNumberNavigation הוא null, מאתחלים אותו
+                    var meal = new Meal();
+                    meal.MealType = mealName;
+                    meal.MealDetails = mealDetail;
+                    activity.MealNumberNavigation = meal;
+                }
+
                 db.SaveChanges();
             }
             else
@@ -118,7 +129,6 @@ namespace Co_P_WebAPI.Controllers
 
             return "Update";
         }
-
 
     }
 }
