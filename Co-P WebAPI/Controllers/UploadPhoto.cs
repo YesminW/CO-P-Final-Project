@@ -137,7 +137,7 @@ namespace Co_P_WebAPI.Controllers
 
 
         [HttpGet]
-        [Route("GetUserimage")]
+        [Route("GetUserimage/{primaryKey}")]
         public IActionResult GetUserimage(string primaryKey)
         {
             // יצירת נתיב לתיקיית המשתמש בתוך UsersPhoto

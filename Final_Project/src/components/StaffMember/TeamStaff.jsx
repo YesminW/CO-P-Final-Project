@@ -1,7 +1,14 @@
 import { useEffect, useState } from "react";
 import EfooterS from "../../Elements/EfooterS";
-import { GetStaffofKindergarten } from "../../utils/apiCalls";
+import {
+  GetStaffofKindergarten,
+  getUserById,
+  getUserimage,
+} from "../../utils/apiCalls";
 import "../../assets/StyleSheets/TeamStaff.css";
+import { nanoid } from "nanoid";
+import { formatDate } from "../../utils/functions";
+import EfooterP from "../../Elements/EfooterP";
 
 export default function TeamStaff() {
   const [team, setTeam] = useState([]);
@@ -10,13 +17,40 @@ export default function TeamStaff() {
     async function getStream() {
       try {
         const currentMonth = new Date().getMonth() + 1;
-        const t = await GetStaffofKindergarten(
+        const teamData = await GetStaffofKindergarten(
           kindergartenNumber,
           currentMonth
         );
-        console.log(t);
 
-        setTeam(t);
+        const finalTeam = [];
+        for (const t of teamData) {
+          const [
+            teacher,
+            assistant1,
+            assistant2,
+            teacherImg,
+            assistant1Img,
+            assistant2Img,
+          ] = await Promise.all([
+            getUserById(t.teacherID),
+            getUserById(t.assistant1ID),
+            getUserById(t.assistant2ID),
+            getUserimage(t.teacherID),
+            getUserimage(t.assistant1ID),
+            getUserimage(t.assistant2ID),
+          ]);
+          finalTeam.push({
+            activityDate: t.activityDate,
+            teacher,
+            assistant1,
+            assistant2,
+            teacherImg: URL.createObjectURL(teacherImg),
+            assistant1Img: URL.createObjectURL(assistant1Img),
+            assistant2Img: URL.createObjectURL(assistant2Img),
+          });
+        }
+
+        setTeam(finalTeam);
       } catch (error) {
         console.error(error);
       }
@@ -29,33 +63,51 @@ export default function TeamStaff() {
     <div className="page-container flex-column">
       <div className="padded-container flex-column radius-25">
         <div className="flex-row space-between center-a">
-          <h1 className="white">אפריל</h1>
-          <button className="rounded-btn radius-15 flex-row center">
-            עריכת צוות
-          </button>
+          <h1 className="white">
+            {" "}
+            {new Date().toLocaleString("he-il", { month: "long" })}
+          </h1>
         </div>
         <div className="one-column-grid scroll">
-          <GridItem />
-          <GridItem />
-          <GridItem />
-          <GridItem />
+          {team.map((t) => (
+            <GridItem key={nanoid()} team={t} />
+          ))}
         </div>
       </div>
-      {EfooterS}
+      {localStorage.getItem("role_code") === "111" ? EfooterS : EfooterP}
     </div>
   );
 }
 
-function GridItem() {
+function GridItem({ team }) {
   return (
-    <div className="flex-column space-evenly duty-grid-item radius-25">
-      <h2 className="white">2.4</h2>
-      <div className="flex-column space-evenly">
-        <img
-          className="avatar"
-          src="https://images.pexels.com/photos/35537/child-children-girl-happy.jpg?cs=srgb&dl=pexels-bess-hamiti-83687-35537.jpg&fm=jpg"
-        />
-        <p className="white">אביהו</p>
+    <div className="flex-column center duty-grid-item radius-25">
+      <h2 className="white">{formatDate(new Date(team.activityDate))}</h2>
+      <div className="flex-row space-between width-full padding-h-10px">
+        <div className="flex-column">
+          <img
+            className="avatar"
+            src={team.teacherImg}
+            onError={(e) => (e.target.srcset = "./Images/default.png")}
+          />
+          <p className="white">{team.teacher.userPrivetName}</p>
+        </div>
+        <div className="flex-column ">
+          <img
+            className="avatar"
+            src={team.assistant1Img}
+            onError={(e) => (e.target.srcset = "./Images/default.png")}
+          />
+          <p className="white">{team.assistant1.userPrivetName}</p>
+        </div>
+        <div className="flex-column ">
+          <img
+            className="avatar"
+            src={team.assistant2Img}
+            onError={(e) => (e.target.srcset = "./Images/default.png")}
+          />
+          <p className="white">{team.assistant2.userPrivetName}</p>
+        </div>
       </div>
     </div>
   );

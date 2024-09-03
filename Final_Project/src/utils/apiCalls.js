@@ -441,6 +441,13 @@ export async function getChildPhoto(childId) {
   return resp;
 }
 
+export async function getUserimage(id) {
+  const response = await fetch(`${SERVER_URL}/GetUserimage/${id}`);
+  if (response.status === 404) return null;
+  const resp = await response.blob();
+  return resp;
+}
+
 export async function getTodayDuty(kindergartenNumber, date) {
   try {
     const response = await fetch(

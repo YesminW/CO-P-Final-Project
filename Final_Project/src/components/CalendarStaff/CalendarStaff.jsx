@@ -1,15 +1,12 @@
 import React, { useEffect, useState } from "react";
-import {
-  formatDate,
-  formatDateForUs,
-  formatForCSharp,
-} from "../../utils/functions";
+import { formatDate, formatForCSharp } from "../../utils/functions";
 import Calendar from "react-calendar";
 import "react-calendar/dist/Calendar.css";
 import EfooterS from "../../Elements/EfooterS";
 import { getAllActivitiesByDate } from "../../utils/apiCalls";
 import { nanoid } from "nanoid";
 import "../CalendarStaff/CalendarStaff.css";
+import EfooterP from "../../Elements/EfooterP";
 
 export default function CalendarStaff() {
   const [date, setDate] = useState(new Date());
@@ -31,8 +28,6 @@ export default function CalendarStaff() {
 
     getactivitiesData();
   }, [date, kindergartenNumber]);
-
-  console.log(activities);
 
   return (
     <div className="page-container page-height-with-footer flex-column gap-20">
@@ -59,7 +54,7 @@ export default function CalendarStaff() {
           )}
         </div>
       </div>
-      {EfooterS}
+      {localStorage.getItem("role_code") === "111" ? EfooterS : EfooterP}
     </div>
   );
 }
